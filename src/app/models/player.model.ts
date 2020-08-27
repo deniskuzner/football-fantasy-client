@@ -1,3 +1,5 @@
+import { Club } from './club.model';
+
 export class Player {
 
     constructor(public id: number,
@@ -12,7 +14,7 @@ export class Player {
         public height: string,
         public weight: string,
         public image: string,
-        public club: Object) {
+        public club: Club) {
     }
 
 }
