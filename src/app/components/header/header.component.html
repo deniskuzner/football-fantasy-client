@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <button routerLink="/" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>home</mat-icon>
+    </button>
+    <span>Football Fantasy</span>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="menu">
+        ADMIN
+        <mat-icon>admin_panel_settings</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button routerLink="/players" mat-menu-item>Players</button>
+        <button mat-menu-item>Fixtures</button>
+    </mat-menu>
+</mat-toolbar>
