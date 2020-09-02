@@ -7,6 +7,8 @@ import { Club } from '../../models/club.model';
 import { PlayerService } from 'src/app/services/player.service';
 import { ClubService } from 'src/app/services/club.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPlayerDialogComponent } from '../dialogs/edit-player-dialog/edit-player-dialog.component';
 
 @Component({
   selector: 'app-players',
@@ -26,7 +28,11 @@ export class PlayersComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private playerService: PlayerService, private clubService: ClubService) {}
+  constructor(
+    private playerService: PlayerService,
+    private clubService: ClubService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getAllPlayers();
@@ -55,6 +61,9 @@ export class PlayersComponent implements OnInit {
       res => {
         this.clubs = res;
         // UBACITI SPINER DOK SE NE IZVRSI
+      },
+      err => {
+        console.log(err);
       }
     );
   }
@@ -66,6 +75,9 @@ export class PlayersComponent implements OnInit {
         this.getAllClubs();
         // POSLATI PORUKU USPESNOG IZVRSENJA
         // I UBACITI SPINER DOK SE NE IZVRSI
+      },
+      err => {
+        console.log(err);
       }
     );
   }
@@ -75,8 +87,11 @@ export class PlayersComponent implements OnInit {
       res => {
         this.getAllPlayers();
         this.getAllClubs();
+      },
+      err => {
+        console.log(err);
       }
-    )
+    );
   }
 
   applyFilter(event: Event) {
@@ -88,13 +103,20 @@ export class PlayersComponent implements OnInit {
     }
   }
 
-  filter(eventValue) {
-    if(eventValue == "all") {
+  filterByClub(eventValue) {
+    if (eventValue == "all") {
       this.playersData = this.players;
     } else {
       this.playersData = this.players.filter(p => p.club.name == eventValue);
     }
     this.setTableData(this.playersData);
+  }
+
+  showPlayerDetails(player: Player) {
+    const dialogRef =this.dialog.open(EditPlayerDialogComponent, { data: {player: player, clubs: this.clubs} });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllPlayers();
+    });
   }
 
 }

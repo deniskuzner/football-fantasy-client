@@ -9,10 +9,18 @@ import { Player } from '../models/player.model';
 })
 export class PlayerService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     getPlayers() {
         return this.http.get<Player[]>(AppConstants.serverUrl + '/players/all');
+    }
+
+    updatePlayer(player: Player) {
+        return this.http.post(AppConstants.serverUrl + '/players/player', player);
+    }
+
+    deletePlayer(id: Number) {
+        return this.http.delete(AppConstants.serverUrl + '/players/player/' + id);
     }
 
 }

@@ -11,7 +11,7 @@ export class ClubService {
     constructor(private http: HttpClient) {}
 
     parseSeasonClubs() {
-        return this.http.get(AppConstants.serverUrl + '/clubs/parse-season-clubs');
+        return this.http.get<Club[]>(AppConstants.serverUrl + '/clubs/parse-season-clubs');
     }
 
     getAll() {
@@ -20,6 +20,14 @@ export class ClubService {
 
     deleteAll() {
         return this.http.delete(AppConstants.serverUrl + '/clubs/all');
+    }
+
+    parseClub(url: String) {
+        return this.http.post(AppConstants.serverUrl + '/clubs/parse', url);
+    }
+
+    deleteClub(id: number) {
+        return this.http.delete(AppConstants.serverUrl + '/clubs/club/' + id);
     }
 
 }

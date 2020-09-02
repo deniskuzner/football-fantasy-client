@@ -1,90 +1,89 @@
-<div class="container">
-  <div class="row">
-    <button mat-raised-button color="primary" (click)="parseSeasonPlayers()">
-      Parse season players
-      <mat-icon>accessibility</mat-icon>
-    </button>
-    <button mat-raised-button color="warn" (click)="deleteAllPlayers()" style="margin-left: 5px;">
-      Delete all
-      <mat-icon>delete</mat-icon>
-    </button>
+<div class="row">
+  <button mat-raised-button color="primary" (click)="parseSeasonPlayers()">
+    Parse season players
+    <mat-icon>accessibility</mat-icon>
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteAllPlayers()" style="margin-left: 5px;">
+    Delete all
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+<div class="row">
+  <div class="col-md-11 col-lg-11">
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+    </mat-form-field>
+
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <img [src]="element.image" class="img-responsive">
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nationality">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nationality </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nationality}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="birthDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.birthDate}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDe mat-sort-headerf> Position </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="height">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.height}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="club">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Club </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.club.name}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showPlayerDetails(row)" style="cursor: pointer"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
   </div>
-  <div class="row">
-    <div class="col-md-11 col-lg-11">
-
-      <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
-      </mat-form-field>
-
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="image">
-          <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <img [src]="element.image" class="img-responsive">
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="nationality">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Nationality </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nationality}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="birthDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.birthDate}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="age">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="position">
-          <mat-header-cell *matHeaderCellDe mat-sort-headerf> Position </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="height">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.height}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="weight">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="club">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Club </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.club.name}} </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-
-      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-    </div>
-    <div class="col-md-1 col-lg-1">
-      <div class="row">
-        <label id="example-radio-group-label">Select club</label>
-        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" (change)="filter($event.value)">
-          <mat-radio-button class="example-radio-button" value="all" [checked]="true">All</mat-radio-button>
-          <mat-radio-button class="example-radio-button" *ngFor="let club of clubs" [value]="club.name">
-            {{club.name}}
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
+  <div class="col-md-1 col-lg-1">
+    <div class="row">
+      <label id="example-radio-group-label">Select club</label>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        (change)="filterByClub($event.value)">
+        <mat-radio-button class="example-radio-button" value="all" [checked]="true">All</mat-radio-button>
+        <mat-radio-button class="example-radio-button" *ngFor="let club of clubs" [value]="club.name">
+          {{club.name}}
+        </mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>

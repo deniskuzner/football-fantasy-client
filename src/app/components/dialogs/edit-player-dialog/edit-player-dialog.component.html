@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>Player details</h1>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-6">
+            <img [src]="formPlayer.image" class="img-responsive" style="max-height: 200px;">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ formPlayer.name }}</h1>
+        </div>
+    </div>
+    <div class="row" style="margin: auto;">
+        <form class="example-form" (ngSubmit)="update(f)" #f="ngForm">
+            <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="{{formPlayer.name}}" [(ngModel)]="formPlayer.name" name="name" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Image</mat-label>
+                <input matInput placeholder="{{formPlayer.image}}" [(ngModel)]="formPlayer.image" name="image">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Nationality</mat-label>
+                <input matInput placeholder="{{formPlayer.nationality}}" [(ngModel)]="formPlayer.nationality"
+                    name="nationality">
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Birth Date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="formPlayer.birthDate" name="birthDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Age</mat-label>
+                <input matInput placeholder="{{formPlayer.age}}" [(ngModel)]="formPlayer.age" name="age">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Height</mat-label>
+                <input matInput placeholder="{{formPlayer.height}" [(ngModel)]="formPlayer.height" name="height">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Weight</mat-label>
+                <input matInput placeholder="{{formPlayer.weight}}" [(ngModel)]="formPlayer.weight" name="weight">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Club</mat-label>
+                <mat-select [(value)]="selectedClub" required>
+                    <mat-option *ngFor="let club of clubs" [value]="club.id">
+                        {{club.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close>Cancel</button>
+                <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary"
+                    type="submit">Update</button>
+                <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="warn" (click)="delete()">Delete</button>
+            </mat-dialog-actions>
+        </form>
+
+    </div>
+</div>

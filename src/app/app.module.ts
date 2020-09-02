@@ -18,6 +18,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
@@ -25,12 +31,16 @@ import { ClubService } from './services/club.service';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PlayersComponent } from './components/players/players.component';
+import { ClubsComponent } from './components/clubs/clubs.component';
+import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dialog/edit-player-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayersComponent,
-    HeaderComponent
+    HeaderComponent,
+    ClubsComponent,
+    EditPlayerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +60,13 @@ import { PlayersComponent } from './components/players/players.component';
     MatInputModule,
     MatSortModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule,
+    MatSelectModule
   ],
   providers: [
     PlayerService,
