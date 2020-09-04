@@ -42,11 +42,9 @@
             <mat-cell *matCellDef="let club">
                 <button mat-raised-button color="primary" (click)="updateClub(club.url)">
                     UPDATE
-                    <mat-icon>update</mat-icon>
                 </button>
                 <button mat-raised-button color="warn" style="margin-left: 5px;" (click)="deleteClub(club.id)">
                     DELETE
-                    <mat-icon>delete</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>

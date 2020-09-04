@@ -27,12 +27,14 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
+import { FixturesService } from './services/fixtures.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PlayersComponent } from './components/players/players.component';
 import { ClubsComponent } from './components/clubs/clubs.component';
 import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dialog/edit-player-dialog.component';
+import { FixturesComponent } from './fixtures/fixtures.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dial
     PlayersComponent,
     HeaderComponent,
     ClubsComponent,
-    EditPlayerDialogComponent
+    EditPlayerDialogComponent,
+    FixturesComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dial
   ],
   providers: [
     PlayerService,
-    ClubService
+    ClubService,
+    FixturesService
   ],
   bootstrap: [AppComponent]
 })
