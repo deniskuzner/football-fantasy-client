@@ -24,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
@@ -35,6 +36,7 @@ import { PlayersComponent } from './components/players/players.component';
 import { ClubsComponent } from './components/clubs/clubs.component';
 import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dialog/edit-player-dialog.component';
 import { FixturesComponent } from './fixtures/fixtures.component';
+import { MatchEventsComponent } from './components/match-events/match-events.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { FixturesComponent } from './fixtures/fixtures.component';
     HeaderComponent,
     ClubsComponent,
     EditPlayerDialogComponent,
-    FixturesComponent
+    FixturesComponent,
+    MatchEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import { FixturesComponent } from './fixtures/fixtures.component';
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [
     PlayerService,

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FixturesService } from '../services/fixtures.service';
+import { MatchEventService } from '../services/match-event.service';
 import { Gameweek } from '../models/gameweek.model';
 import { Match } from '../models/match.model';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatchEvent } from '../models/match-event.model';
 
 @Component({
   selector: 'app-fixtures',
@@ -10,18 +13,25 @@ import { Match } from '../models/match.model';
 })
 export class FixturesComponent implements OnInit {
 
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   gameweeks: Gameweek[] = [];
   currentGameweekNumber: number = 1;
   currentGameweekMatches: Match[] = [];
-  
+  matchEvents: MatchEvent[] = [];
 
-  constructor(private fixturesService: FixturesService) { }
+  constructor(private fixturesService: FixturesService, private matchEventService: MatchEventService) { }
 
   ngOnInit(): void {
+    this.getFixtures();
+  }
+
+  getFixtures() {
     this.fixturesService.getAll().subscribe(
       res => {
         this.gameweeks = res;
-        this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == 1)[0].matches;
+        if (this.gameweeks.length > 0) {
+          this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == 1)[0].matches;
+        }
       },
       err => {
         console.log(err);
@@ -34,6 +44,18 @@ export class FixturesComponent implements OnInit {
       res => {
         this.gameweeks = res;
         this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == 1)[0].matches;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  syncGameweekMatchEvents() {
+    let currentGameweekId = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].id;
+    this.matchEventService.parseGameweekMatchEvents(currentGameweekId).subscribe(
+      res => {
+        this.getFixtures();
       },
       err => {
         console.log(err);

@@ -1,0 +1,82 @@
+<div class="row">
+    <h4>Match Summary</h4>
+</div>
+<div class="row" *ngFor="let event of events">
+    <div class="col-md-5">
+        <div *ngIf="isHost(event)" class="row" style="text-align: right;">
+            <div *ngIf="getType(event) == 'Goal'">
+                <div class="col-md-8">
+                    {{event.goalPlayer.name}}
+                </div>
+                <div class="col-md-2">
+                    <img [src]="goalImg" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+            </div>
+            <div *ngIf="getType(event) == 'Card'">
+                <div class="col-md-8">
+                    {{event.player.name}}
+                </div>
+                <div class="col-md-2">
+                    <img [src]="getCardImg(event)" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+            </div>
+            <div *ngIf="getType(event) == 'Substitution'">
+                <div class="col-md-8">
+                    {{event.inPlayer.name}} <span style="font-size: 10px;">for {{event.outPlayer.name}}</span>
+                </div>
+                <div class="col-md-2">
+                    <img [src]="substitutionImg" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <p style="background-color: lightgray;"><b>{{event.minute}}</b> | {{event.result}}</p>
+    </div>
+    <div class="col-md-5">
+        <div *ngIf="isGuest(event)" class="row" style="text-align: left;">
+            <div *ngIf="getType(event) == 'Goal'">
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="goalImg" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-8">
+                    {{event.goalPlayer.name}}
+                </div>
+            </div>
+            <div *ngIf="getType(event) == 'Card'">
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="getCardImg(event)" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-8">
+                    {{event.player.name}}
+                </div>
+            </div>
+            <div *ngIf="getType(event) == 'Substitution'">
+                <div class="col-md-2">
+                    <img [src]="event.club.image" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-2">
+                    <img [src]="substitutionImg" alt="" class="img-responsive" style="max-height: 25px;">
+                </div>
+                <div class="col-md-8">
+                    {{event.inPlayer.name}} <span style="font-size: 10px;">for {{event.outPlayer.name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

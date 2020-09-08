@@ -1,5 +1,6 @@
 import { Club } from './club.model';
 import { Gameweek } from './gameweek.model';
+import { MatchEvent } from './match-event.model';
 
 export class Match {
 
@@ -13,8 +14,8 @@ export class Match {
         public venue: String,
         public host: Club,
         public guest: Club,
-        public gameweek: Gameweek
-        // DODATI EVENTS LISTU
+        public gameweek: Gameweek,
+        public events: MatchEvent[]
     ) {}
 
 }

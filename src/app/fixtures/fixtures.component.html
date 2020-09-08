@@ -1,44 +1,70 @@
 <div class="row">
-    <button mat-raised-button color="primary" (click)="syncFixtures()">
-        Sync season fixtures
-        <mat-icon>sync</mat-icon>
-    </button>
-</div>
-<div class="row" style="margin-top: 20px;">
-    <div class="col-xs-4 col-md-4 col-lg-4">
-        <button mat-raised-button (click)="previous()" [disabled]="currentGameweekNumber <= 1"
-            class="navigation-button">
-            <mat-icon>arrow_back</mat-icon>
-            Previous
-        </button>
-    </div>
-    <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: center;">
-        <h4 style="float: center"><b>Gameweek {{currentGameweekNumber}}</b></h4>
-    </div>
-    <div class="col-xs-4 col-md-4 col-lg-4">
-        <button mat-raised-button (click)="next()" [disabled]="currentGameweekNumber >= gameweeks.length"
-            class="navigation-button" style="float: right;">
-            Next
-            <mat-icon>arrow_forward</mat-icon>
-        </button>
-    </div>
-</div>
-<div class="row">
-
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let match of currentGameweekMatches">
-            <div class="row" style="text-align: center;">
-                <div class="col-md-2" style="margin-top: 15px;">{{match.dateTime | date: "dd-MM-yyyy"}}</div>
-                <div class="col-md-3" style="margin-top: 15px;">{{match.venue}}</div>
-                <div class="col-md-2" style="margin-top: 15px;"><b>{{match.host.name}}</b></div>
-                <div class="col-md-1"><img [src]="match.host.image" class="img-responsive" style="max-height: 50px;">
-                </div>
-                <div class="col-md-1 border" style="background-color: indigo; color: white; margin-top: 15px;">
-                    <b>{{match.result.length == 0 ? (match.dateTime | date:"HH:mm") : match.result}}</b></div>
-                <div class="col-md-1"><img [src]="match.guest.image" class="img-responsive" style="max-height: 50px;">
-                </div>
-                <div class="col-md-2" style="margin-top: 15px;"><b>{{match.guest.name}}</b></div>
+    <div class="col-md-10">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-4 col-md-4 col-lg-4">
+                <button mat-raised-button (click)="previous()" [disabled]="currentGameweekNumber <= 1"
+                    class="navigation-button">
+                    <mat-icon>arrow_back</mat-icon>
+                    Previous
+                </button>
             </div>
-        </li>
-    </ul>
+            <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: center;">
+                <h4 style="float: center"><b>Gameweek {{currentGameweekNumber}}</b></h4>
+            </div>
+            <div class="col-xs-4 col-md-4 col-lg-4">
+                <button mat-raised-button (click)="next()" [disabled]="currentGameweekNumber >= gameweeks.length"
+                    class="navigation-button" style="float: right;">
+                    Next
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <mat-accordion class="example-headers-align" multi style="text-align: center;">
+                <mat-expansion-panel *ngFor="let match of currentGameweekMatches">
+                    <mat-expansion-panel-header [collapsedHeight]="'80px'">
+                        <mat-panel-description>
+                            <div class="col-md-2">{{match.dateTime | date: "dd-MM-yyyy"}}</div>
+                            <div class="col-md-3">{{match.venue}}</div>
+                            <div class="col-md-2"><b>{{match.host.name}}</b></div>
+                            <div class="col-md-1"><img [src]="match.host.image" class="img-responsive"
+                                    style="max-height: 50px;">
+                            </div>
+                            <div class="col-md-1 border" style="background-color: indigo; color: white;">
+                                <b>{{match.result.length == 0 ? (match.dateTime | date:"HH:mm") : match.result}}</b>
+                            </div>
+                            <div class="col-md-1"><img [src]="match.guest.image" class="img-responsive"
+                                    style="max-height: 50px;">
+                            </div>
+                            <div class="col-md-2"><b>{{match.guest.name}}</b></div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <app-match-events [match]="match"></app-match-events>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            <div class="example-action-buttons" style="float: right;">
+                <button mat-button (click)="accordion.openAll()">Expand All</button>
+                <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h2>Settings</h2>
+        <div class="row" style="padding-left: 20px;">
+            <h5>Fixtures</h5>
+            <button mat-raised-button color="primary" (click)="syncFixtures()" style="min-width: 248px;">
+                Sync season fixtures
+                <mat-icon>sync</mat-icon>
+            </button>
+        </div>
+        <div class="row" style="padding-left: 20px;">
+            <h5>Match events</h5>
+            <button mat-raised-button color="primary" (click)="syncGameweekMatchEvents()">
+                Sync gameweek match events
+                <mat-icon>sync</mat-icon>
+            </button>
+        </div>
+    </div>
 </div>
