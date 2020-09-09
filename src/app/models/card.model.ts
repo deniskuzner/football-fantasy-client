@@ -10,11 +10,12 @@ export class Card extends MatchEvent {
         public modifiedOn: Date,
         public matchId: number,
         public minute: String,
+        public result: String,
         public club: Club,
         public card: String,
         public player: Player
     ) {
-        super(id, createdOn, modifiedOn, matchId, minute, club);
+        super(id, createdOn, modifiedOn, matchId, minute, result, club);
     }
 
 }

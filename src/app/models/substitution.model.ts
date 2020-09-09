@@ -10,11 +10,12 @@ export class Substitution extends MatchEvent {
         public modifiedOn: Date,
         public matchId: number,
         public minute: String,
+        public result: String,
         public club: Club,
         public inPlayer: Player,
         public outPlayer: Player
     ) {
-        super(id, createdOn, modifiedOn, matchId, minute, club);
+        super(id, createdOn, modifiedOn, matchId, minute, result, club);
     }
 
 }

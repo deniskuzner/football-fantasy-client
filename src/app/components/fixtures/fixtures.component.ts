@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FixturesService } from '../services/fixtures.service';
-import { MatchEventService } from '../services/match-event.service';
-import { Gameweek } from '../models/gameweek.model';
-import { Match } from '../models/match.model';
 import { MatAccordion } from '@angular/material/expansion';
-import { MatchEvent } from '../models/match-event.model';
+import { FixturesService } from '../../services/fixtures.service';
+import { MatchEventService } from '../../services/match-event.service';
+import { Gameweek } from '../../models/gameweek.model';
+import { Match } from '../../models/match.model';
+import { MatchEvent } from '../../models/match-event.model';
 
 @Component({
   selector: 'app-fixtures',

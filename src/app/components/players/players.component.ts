@@ -20,7 +20,7 @@ export class PlayersComponent implements OnInit {
   players: Player[] = [];
   playersData: Player[] = [];
   clubs: Club[] = [];
-  displayedColumns: string[] = ['id', 'image', 'name', 'nationality', 'birthDate', 'age', 'height', 'weight', 'club'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'nationality', 'birthDate', 'age', 'playerPosition', 'height', 'weight', 'club'];
   dataSource: MatTableDataSource<Player>;
 
   allComplete: boolean = true;
@@ -114,8 +114,9 @@ export class PlayersComponent implements OnInit {
 
   showPlayerDetails(player: Player) {
     const dialogRef =this.dialog.open(EditPlayerDialogComponent, { data: {player: player, clubs: this.clubs} });
+    // VIDETI ZASTO SE OVO RADI? TREBALO BI SAMO KADA SE URADI UPDATE ALI DA VRATI NA STRANU NA KOJOJ SAM BIO
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllPlayers();
+      // this.getAllPlayers();
     });
   }
 

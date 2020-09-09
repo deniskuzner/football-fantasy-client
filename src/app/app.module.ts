@@ -23,8 +23,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
@@ -35,8 +38,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { PlayersComponent } from './components/players/players.component';
 import { ClubsComponent } from './components/clubs/clubs.component';
 import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dialog/edit-player-dialog.component';
-import { FixturesComponent } from './fixtures/fixtures.component';
+import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatchEventsComponent } from './components/match-events/match-events.component';
+import { PointsComponent } from './components/points/points.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,8 @@ import { MatchEventsComponent } from './components/match-events/match-events.com
     ClubsComponent,
     EditPlayerDialogComponent,
     FixturesComponent,
-    MatchEventsComponent
+    MatchEventsComponent,
+    PointsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,8 +77,11 @@ import { MatchEventsComponent } from './components/match-events/match-events.com
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
+    ReactiveFormsModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     PlayerService,
