@@ -1,0 +1,49 @@
+<div class="row" style="margin-top: 20px;">
+    <div class="col-xs-4 col-md-4 col-lg-4">
+        <button mat-raised-button (click)="onPrevious()" [disabled]="currentGameweekNumber <= 1"
+            class="navigation-button">
+            <mat-icon>arrow_back</mat-icon>
+            Previous
+        </button>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: center;">
+        <h4 style="float: center"><b>Gameweek {{currentGameweekNumber}}</b></h4>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-4">
+        <button mat-raised-button (click)="onNext()" [disabled]="currentGameweekNumber >= gameweeks.length"
+            class="navigation-button" style="float: right;">
+            Next
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <mat-accordion class="example-headers-align" multi style="text-align: center;">
+        <mat-expansion-panel *ngFor="let match of currentGameweekMatches">
+            <mat-expansion-panel-header [collapsedHeight]="'80px'">
+                <mat-panel-description>
+                    <div class="col-xs-2 col-md-2 col-lg-2">{{match.dateTime | date: "dd-MM-yyyy"}}</div>
+                    <div class="col-xs-3 col-md-3 col-lg-3">{{match.venue}}</div>
+                    <div class="col-xs-2 col-md-2 col-lg-2"><b>{{match.host.name}}</b></div>
+                    <div class="col-xs-1 col-md-1 col-lg-1"><img [src]="match.host.image" class="img-responsive"
+                            style="max-height: 50px;">
+                    </div>
+                    <div class="col-xs-1 col-md-1 col-lg-1" style="background-color: indigo; color: white;">
+                        <b>{{match.result.length == 0 ? (match.dateTime | date:"HH:mm") : match.result}}</b>
+                    </div>
+                    <div class="col-xs-1 col-md-1 col-lg-1"><img [src]="match.guest.image" class="img-responsive"
+                            style="max-height: 50px;">
+                    </div>
+                    <div class="col-xs-2 col-md-2 col-lg-2"><b>{{match.guest.name}}</b></div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <app-match-events [match]="match"></app-match-events>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="example-action-buttons" style="float: right;">
+        <button mat-button (click)="accordion.openAll()">Expand All</button>
+        <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
+</div>

@@ -13,11 +13,11 @@ export class MatchEventsComponent implements OnInit {
 
   @Input() match: Match;
   events: MatchEvent[] = [];
-  goalImg: String = "https://pngimg.com/uploads/football/football_PNG52733.png";
-  ownGoalImg: String = "https://e1.365dm.com/score-centre/icons/own_goal.svg";
-  yellowCardImg: String = "https://img.favpng.com/1/24/19/penalty-card-yellow-card-association-football-referee-png-favpng-qjyxZKn7W9qkggcEbht5tDMT4.jpg";
-  redCardImg: String = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Red_card.svg/2000px-Red_card.svg.png";
-  substitutionImg: String = "https://images.vexels.com/media/users/3/146860/isolated/preview/bbe607c0831621bfe4606d241ef04f8a-football-substitute-icon-by-vexels.png";
+  goalImg: String = "../../../assets/goal.png";
+  ownGoalImg: String = "../../../assets/own_goal.png";
+  yellowCardImg: String = "../../../assets/yellow_card.jpg";
+  redCardImg: String = "../../../assets/red_card.png";
+  substitutionImg: String = "../../../assets/substitution.png";
 
   constructor() { }
 

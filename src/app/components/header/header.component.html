@@ -1,17 +1,13 @@
 <mat-toolbar color="primary">
-    <button routerLink="/" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>home</mat-icon>
-    </button>
-    <span>Football Fantasy</span>
+    <a routerLink="/">
+        <img src="../../../assets/SerbianSuperLiga_logo.png" 
+            class="img-responsive"
+            style="max-height: 50px;">
+    </a>
+    <span style="margin-left: 10px;">Football Fantasy</span>
     <span class="example-spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu">
-        ADMIN
+    <button mat-button routerLink="/admin">
+        ADMIN PANEL
         <mat-icon>admin_panel_settings</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-        <button routerLink="/players" mat-menu-item>Players</button>
-        <button routerLink="/clubs" mat-menu-item>Clubs</button>
-        <button routerLink="/fixtures" mat-menu-item>Fixtures</button>
-        <button routerLink="/points" mat-menu-item>Points</button>
-    </mat-menu>
 </mat-toolbar>

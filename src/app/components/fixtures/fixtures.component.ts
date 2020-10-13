@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion } from '@angular/material/expansion';
 import { FixturesService } from '../../services/fixtures.service';
 import { MatchEventService } from '../../services/match-event.service';
 import { Gameweek } from '../../models/gameweek.model';
-import { Match } from '../../models/match.model';
-import { MatchEvent } from '../../models/match-event.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-fixtures',
@@ -13,25 +11,26 @@ import { MatchEvent } from '../../models/match-event.model';
 })
 export class FixturesComponent implements OnInit {
 
-  @ViewChild(MatAccordion) accordion: MatAccordion;
   gameweeks: Gameweek[] = [];
   currentGameweekNumber: number = 1;
-  currentGameweekMatches: Match[] = [];
-  matchEvents: MatchEvent[] = [];
+  signal: boolean = true;
 
-  constructor(private fixturesService: FixturesService, private matchEventService: MatchEventService) { }
+  constructor(
+    private fixturesService: FixturesService,
+    private matchEventService: MatchEventService,
+    private _snackBar: MatSnackBar
+    ) { }
 
   ngOnInit(): void {
     this.getFixtures();
   }
 
   getFixtures() {
+    this.signal = false;
     this.fixturesService.getAll().subscribe(
       res => {
         this.gameweeks = res;
-        if (this.gameweeks.length > 0) {
-          this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == 1)[0].matches;
-        }
+        this.signal = true;
       },
       err => {
         console.log(err);
@@ -40,10 +39,11 @@ export class FixturesComponent implements OnInit {
   }
 
   syncFixtures() {
+    this.signal = false;
     this.fixturesService.parseSeasonFixtures().subscribe(
-      res => {
-        this.gameweeks = res;
-        this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == 1)[0].matches;
+      () => {
+        this.getFixtures();
+        this.openSnackBar("Season fixtures synchronized successfully!");
       },
       err => {
         console.log(err);
@@ -52,10 +52,12 @@ export class FixturesComponent implements OnInit {
   }
 
   syncGameweekMatchEvents() {
+    this.signal = false;
     let currentGameweekId = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].id;
     this.matchEventService.parseGameweekMatchEvents(currentGameweekId).subscribe(
-      res => {
+      () => {
         this.getFixtures();
+        this.openSnackBar("Gameweek match events synchronized successfully!");
       },
       err => {
         console.log(err);
@@ -63,14 +65,16 @@ export class FixturesComponent implements OnInit {
     );
   }
 
-  previous() {
-    this.currentGameweekNumber--;
-    this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].matches;
+  onCurrentGameweekNumberChange(currentGameweekNumber: number) {
+    this.currentGameweekNumber = currentGameweekNumber;
   }
 
-  next() {
-    this.currentGameweekNumber++;
-    this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].matches;
+  openSnackBar(message: string) {
+    this._snackBar.open(message, "x", {
+      duration: 2000,
+      horizontalPosition: 'start',
+      verticalPosition: 'bottom'
+    });
   }
 
 }

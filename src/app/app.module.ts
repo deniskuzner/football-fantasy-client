@@ -28,10 +28,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
 import { FixturesService } from './services/fixtures.service';
+import { PointsService } from './services/points.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -41,6 +45,8 @@ import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dial
 import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatchEventsComponent } from './components/match-events/match-events.component';
 import { PointsComponent } from './components/points/points.component';
+import { GameweeksComponent } from './components/gameweeks/gameweeks.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +57,9 @@ import { PointsComponent } from './components/points/points.component';
     EditPlayerDialogComponent,
     FixturesComponent,
     MatchEventsComponent,
-    PointsComponent
+    PointsComponent,
+    GameweeksComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -81,12 +89,16 @@ import { PointsComponent } from './components/points/points.component';
     MatSelectModule,
     MatExpansionModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [
     PlayerService,
     ClubService,
-    FixturesService
+    FixturesService,
+    PointsService
   ],
   bootstrap: [AppComponent]
 })

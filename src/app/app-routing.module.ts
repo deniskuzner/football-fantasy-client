@@ -4,6 +4,7 @@ import { PlayersComponent } from './components/players/players.component';
 import { ClubsComponent } from './components/clubs/clubs.component';
 import { PointsComponent } from './components/points/points.component';
 import { FixturesComponent } from './components/fixtures/fixtures.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'points',
     component: PointsComponent
+  },
+  {
+    path: 'admin',
+    component: AdminPanelComponent
   }
 ];
 

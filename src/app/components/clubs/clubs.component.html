@@ -1,55 +1,54 @@
-<div class="row" style="margin-bottom: 10px;">
-    <button mat-raised-button color="primary" (click)="updateAll()">
-        Update all
-        <mat-icon>update</mat-icon>
-    </button>
-    <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="deleteAll()">
-        Delete all
-        <mat-icon>delete</mat-icon>
-    </button>
-</div>
-<div class="row">
-    <mat-table [dataSource]="clubs" class="mat-elevation-z8">
-        <!-- Id Column -->
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let club"> {{club.id}} </mat-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-            <mat-cell *matCellDef="let club"> {{club.name}} </mat-cell>
-        </ng-container>
-
-        <!-- Manager Column -->
-        <ng-container matColumnDef="manager">
-            <mat-header-cell *matHeaderCellDef> Manager </mat-header-cell>
-            <mat-cell *matCellDef="let club"> {{club.manager}} </mat-cell>
-        </ng-container>
-
-        <!-- Image Column -->
-        <ng-container matColumnDef="image">
-            <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-            <mat-cell *matCellDef="let club">
-                <img [src]="club.image" class="img-responsive">
-            </mat-cell>
-        </ng-container>
-
-        <!-- Action Column -->
-        <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-            <mat-cell *matCellDef="let club">
-                <button mat-raised-button color="primary" (click)="updateClub(club.url)">
-                    UPDATE
-                </button>
-                <button mat-raised-button color="warn" style="margin-left: 5px;" (click)="deleteClub(club.id)">
-                    DELETE
-                </button>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+<div class="container">
+    <mat-spinner *ngIf="!signal"></mat-spinner>
+    <div [hidden]="!signal">
+        <div class="row" style="margin-bottom: 10px;">
+            <button mat-raised-button color="primary" (click)="updateAll()">
+                Update All
+                <mat-icon>update</mat-icon>
+            </button>
+            <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="deleteAll()">
+                Delete All
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <div class="row">
+            <mat-table [dataSource]="clubs" class="mat-elevation-z8">
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                    <mat-cell *matCellDef="let club"> {{club.id}} </mat-cell>
+                </ng-container>
+    
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let club"> {{club.name}} </mat-cell>
+                </ng-container>
+    
+                <!-- Image Column -->
+                <ng-container matColumnDef="image">
+                    <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+                    <mat-cell *matCellDef="let club">
+                        <img [src]="club.image" class="img-responsive">
+                    </mat-cell>
+                </ng-container>
+    
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let club">
+                        <button mat-raised-button color="primary" (click)="updateClub(club.url)">
+                            UPDATE
+                        </button>
+                        <button mat-raised-button color="warn" style="margin-left: 5px;" (click)="deleteClub(club.id)">
+                            DELETE
+                        </button>
+                    </mat-cell>
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
 </div>

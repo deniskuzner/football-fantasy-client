@@ -1,4 +1,5 @@
 import { Match } from "./match.model";
+import { PlayerGameweekPerformance } from "./player-gameweek-performance.model";
 
 export class Gameweek {
 
@@ -7,6 +8,7 @@ export class Gameweek {
         public createdOn: Date,
         public modifiedOn: Date,
         public orderNumber: number,
-        public matches: Match[]
+        public matches: Match[],
+        public playerGameweekPerformances: PlayerGameweekPerformance[]
     ) {}
 }

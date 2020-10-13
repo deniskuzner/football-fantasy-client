@@ -8,6 +8,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { ClubService } from 'src/app/services/club.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { EditPlayerDialogComponent } from '../dialogs/edit-player-dialog/edit-player-dialog.component';
 
 @Component({
@@ -23,15 +24,26 @@ export class PlayersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'image', 'name', 'nationality', 'birthDate', 'age', 'playerPosition', 'height', 'weight', 'club'];
   dataSource: MatTableDataSource<Player>;
 
-  allComplete: boolean = true;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+  
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setTableData(this.playersData);
+  }
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setTableData(this.playersData);
+  }
+
+  signal: boolean = true;;
 
   constructor(
     private playerService: PlayerService,
     private clubService: ClubService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +72,6 @@ export class PlayersComponent implements OnInit {
     this.clubService.getAll().subscribe(
       res => {
         this.clubs = res;
-        // UBACITI SPINER DOK SE NE IZVRSI
       },
       err => {
         console.log(err);
@@ -69,12 +80,13 @@ export class PlayersComponent implements OnInit {
   }
 
   parseSeasonPlayers() {
+    this.signal = false;
     this.clubService.parseSeasonClubs().subscribe(
-      res => {
+      () => {
+        this.signal = true;
         this.getAllPlayers();
         this.getAllClubs();
-        // POSLATI PORUKU USPESNOG IZVRSENJA
-        // I UBACITI SPINER DOK SE NE IZVRSI
+        this.openSnackBar("Season players parsed successfully!");
       },
       err => {
         console.log(err);
@@ -84,7 +96,7 @@ export class PlayersComponent implements OnInit {
 
   deleteAllPlayers() {
     this.clubService.deleteAll().subscribe(
-      res => {
+      () => {
         this.getAllPlayers();
         this.getAllClubs();
       },
@@ -114,9 +126,16 @@ export class PlayersComponent implements OnInit {
 
   showPlayerDetails(player: Player) {
     const dialogRef =this.dialog.open(EditPlayerDialogComponent, { data: {player: player, clubs: this.clubs} });
-    // VIDETI ZASTO SE OVO RADI? TREBALO BI SAMO KADA SE URADI UPDATE ALI DA VRATI NA STRANU NA KOJOJ SAM BIO
     dialogRef.afterClosed().subscribe(result => {
-      // this.getAllPlayers();
+
+    });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, "x", {
+      duration: 2000,
+      horizontalPosition: 'start',
+      verticalPosition: 'bottom'
     });
   }
 

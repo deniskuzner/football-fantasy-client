@@ -35,27 +35,11 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Position</mat-label>
-                <mat-chip-list #chipList aria-label="Position selection">
-                    <mat-chip *ngFor="let p of positions" [selectable]="true" [removable]="true" (removed)="remove(p)">
-                        {{p}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input 
-                        placeholder="New position..." 
-                        [formControl]="positionCtrl"
-                        [matAutocomplete]="auto"
-                        [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
-                        [matChipInputAddOnBlur]="true"
-                        (matChipInputTokenEnd)="add($event)" 
-                        #positionInput 
-                        required>
-                </mat-chip-list>
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                    <mat-option *ngFor="let p of filteredPositions | async" [value]="p">
-                        {{p}}
+                <mat-select [(value)]="selectedPosition" required>
+                    <mat-option *ngFor="let position of positions" [value]="position">
+                        {{ position }}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Height</mat-label>
