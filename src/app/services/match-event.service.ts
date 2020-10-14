@@ -15,5 +15,8 @@ export class MatchEventService {
     return this.http.get<MatchEvent[]>(AppConstants.serverUrl + '/match-events/parse-match-events/gameweek/' + gameweekId);
   }
 
+  parseMatchEvents(url: string) {
+    return this.http.post<MatchEvent[]>(AppConstants.serverUrl + '/match-events/parse-match-events/match', url);
+  }
 
 }

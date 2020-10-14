@@ -52,7 +52,7 @@
                     <img [src]="getGoalImg(event)" alt="" class="img-responsive" style="max-height: 25px;">
                 </div>
                 <div class="col-md-8 col-xs-8 col-lg-8">
-                    {{event.goalPlayer.name}}  <span *ngIf="event.ownGoal" style="font-size: 10px;">own goal</span>
+                    {{event.goalPlayer.name}} <span *ngIf="event.ownGoal" style="font-size: 10px;">own goal</span>
                 </div>
             </div>
             <div *ngIf="getType(event) == 'Card'">
@@ -80,3 +80,9 @@
         </div>
     </div>
 </div>
+<mat-spinner *ngIf="!signal" style="margin: auto;" [diameter]="50"></mat-spinner>
+<mat-action-row *ngIf="events.length == 0">
+    <button mat-button color="primary" (click)="getMatchEvents(match.url)" [disabled]="!match.url || !signal">
+        Get Match Events
+    </button>
+</mat-action-row>

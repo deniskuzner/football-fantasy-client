@@ -47,6 +47,7 @@ import { MatchEventsComponent } from './components/match-events/match-events.com
 import { PointsComponent } from './components/points/points.component';
 import { GameweeksComponent } from './components/gameweeks/gameweeks.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
     MatchEventsComponent,
     PointsComponent,
     GameweeksComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
