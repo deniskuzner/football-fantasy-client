@@ -80,9 +80,11 @@
         </div>
     </div>
 </div>
-<mat-spinner *ngIf="!signal" style="margin: auto;" [diameter]="50"></mat-spinner>
-<mat-action-row *ngIf="events.length == 0">
-    <button mat-button color="primary" (click)="getMatchEvents(match.url)" [disabled]="!match.url || !signal">
-        Get Match Events
-    </button>
-</mat-action-row>
+<div *ngIf="mode == 'ADMIN'">
+    <mat-spinner *ngIf="!signal" style="margin: auto;" [diameter]="50"></mat-spinner>
+    <mat-action-row *ngIf="events.length == 0">
+        <button mat-button color="primary" (click)="getMatchEvents(match.url)" [disabled]="!match.url || !signal">
+            Get Match Events
+        </button>
+    </mat-action-row>
+</div>

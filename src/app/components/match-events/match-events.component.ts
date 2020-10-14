@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MatchEventsComponent implements OnInit {
 
   @Input() match: Match;
+  @Input() mode: String;
   events: MatchEvent[] = [];
   goalImg: String = "../../../assets/goal.png";
   ownGoalImg: String = "../../../assets/own_goal.png";
