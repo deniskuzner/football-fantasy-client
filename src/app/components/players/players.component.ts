@@ -24,18 +24,8 @@ export class PlayersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'image', 'name', 'nationality', 'birthDate', 'age', 'playerPosition', 'height', 'weight', 'club'];
   dataSource: MatTableDataSource<Player>;
 
-  private paginator: MatPaginator;
-  private sort: MatSort;
-  
-  @ViewChild(MatSort) set matSort(ms: MatSort) {
-    this.sort = ms;
-    this.setTableData(this.playersData);
-  }
-
-  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-    this.paginator = mp;
-    this.setTableData(this.playersData);
-  }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   signal: boolean = true;;
 

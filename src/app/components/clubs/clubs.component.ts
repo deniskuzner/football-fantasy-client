@@ -13,11 +13,12 @@ export class ClubsComponent implements OnInit {
   clubs: Club[] = [];
   displayedColumns: string[] = ['id', 'name', 'image', 'action'];
   signal: boolean = true;
+  updatingClubsIndexes: number[] = [];
 
   constructor(
     private clubService: ClubService,
     private _snackBar: MatSnackBar
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getClubs();
@@ -47,19 +48,22 @@ export class ClubsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error! Clubs can't be updated!");
       }
     );
   }
 
-  updateClub(url: String) {
-    this.signal = false;
+  updateClub(url: String, updatedClubIndex: number) {
+    this.updatingClubsIndexes.push(updatedClubIndex);
     this.clubService.parseClub(url).subscribe(
-      () => {
-        this.getClubs();
-        this.signal = true;
+      res => {
+        this.clubs.filter(c => c.url == url)[0] = res;
+        this.removeIndex(updatedClubIndex);
+        this.openSnackBar("Club updated successfully!");
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error! Club can't be updated!");
       }
     );
   }
@@ -68,9 +72,11 @@ export class ClubsComponent implements OnInit {
     this.clubService.deleteAll().subscribe(
       () => {
         this.getClubs();
+        this.openSnackBar("Clubs deleted successfully!");
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error! Clubs can't be deleted!");
       }
     );
   }
@@ -79,11 +85,20 @@ export class ClubsComponent implements OnInit {
     this.clubService.deleteClub(id).subscribe(
       () => {
         this.getClubs();
+        this.openSnackBar("Club deleted successfully!");
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error! Club can't be deleted!");
       }
     );
+  }
+
+  removeIndex(i: number) {
+    let index = this.updatingClubsIndexes.indexOf(i);
+    if (index > -1) {
+      this.updatingClubsIndexes.splice(index, 1);
+    }
   }
 
   openSnackBar(message: string) {

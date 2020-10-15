@@ -23,7 +23,7 @@ export class ClubService {
     }
 
     parseClub(url: String) {
-        return this.http.post(AppConstants.serverUrl + '/clubs/parse', url);
+        return this.http.post<Club>(AppConstants.serverUrl + '/clubs/parse', url);
     }
 
     deleteClub(id: number) {

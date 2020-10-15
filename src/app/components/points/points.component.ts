@@ -96,10 +96,12 @@ export class PointsComponent implements OnInit {
 
   calculateByGameweek() {
     if(this.selectedGameweekOrderNumber) {
-      let gameweekId = this.gameweeks.filter(g => g.orderNumber == this.selectedGameweekOrderNumber)[0].id;
-      this.pointsService.calculateByGameweek(gameweekId).subscribe(
-        () => {
-          this.getFixtures();
+      let gameweek = this.gameweeks.filter(g => g.orderNumber == this.selectedGameweekOrderNumber)[0];
+      this.pointsService.calculateByGameweek(gameweek.id).subscribe(
+        res => {
+          gameweek.playerGameweekPerformances = res;
+          this.currentGameweekPerformances = res;
+          this.setTableData();
           this.openSnackBar("Gameweek points calculated successfully!");
         },
         err => {

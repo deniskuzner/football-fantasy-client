@@ -23,7 +23,9 @@ export class GameweeksComponent implements OnInit, OnChanges {
   }
   
   ngOnChanges(): void {
-    this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].matches;
+    if(this.gameweeks.length > 0) {
+      this.currentGameweekMatches = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].matches;
+    }
   }
 
   onPrevious() {

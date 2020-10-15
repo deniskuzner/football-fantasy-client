@@ -1,54 +1,38 @@
 <div class="container">
-    <mat-spinner *ngIf="!signal"></mat-spinner>
+    <mat-spinner class="main-spinner" *ngIf="!signal"></mat-spinner>
     <div [hidden]="!signal">
-        <div class="row" style="margin-bottom: 10px;">
-            <button mat-raised-button color="primary" (click)="updateAll()">
-                Update All
-                <mat-icon>update</mat-icon>
-            </button>
-            <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="deleteAll()">
-                Delete All
-                <mat-icon>delete</mat-icon>
-            </button>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <button mat-raised-button color="primary" (click)="updateAll()">
+                    Update All
+                    <mat-icon>update</mat-icon>
+                </button>
+                <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="deleteAll()">
+                    Delete All
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </div>
         <div class="row">
-            <mat-table [dataSource]="clubs" class="mat-elevation-z8">
-                <!-- Id Column -->
-                <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-                    <mat-cell *matCellDef="let club"> {{club.id}} </mat-cell>
-                </ng-container>
-    
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                    <mat-cell *matCellDef="let club"> {{club.name}} </mat-cell>
-                </ng-container>
-    
-                <!-- Image Column -->
-                <ng-container matColumnDef="image">
-                    <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-                    <mat-cell *matCellDef="let club">
-                        <img [src]="club.image" class="img-responsive">
-                    </mat-cell>
-                </ng-container>
-    
-                <!-- Action Column -->
-                <ng-container matColumnDef="action">
-                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-                    <mat-cell *matCellDef="let club">
-                        <button mat-raised-button color="primary" (click)="updateClub(club.url)">
-                            UPDATE
-                        </button>
-                        <button mat-raised-button color="warn" style="margin-left: 5px;" (click)="deleteClub(club.id)">
-                            DELETE
-                        </button>
-                    </mat-cell>
-                </ng-container>
-    
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            </mat-table>
+            <div class="col-sm-3 col-md-3 col-lg-3" *ngFor="let club of clubs; let i = index;"
+                style="padding-bottom: 10px;">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>{{club.name}}</mat-card-title>
+                        <mat-card-subtitle>ID: {{club.id}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="club.image" alt="Photo of a club" class="img-responsive"
+                        style="max-height: 110;max-width: 110px; margin: auto;"
+                        *ngIf="!updatingClubsIndexes.includes(i)">
+                    <mat-spinner *ngIf="updatingClubsIndexes.includes(i)" style="margin: auto;"></mat-spinner>
+                    <mat-card-actions>
+                        <button mat-button (click)="updateClub(club.url, i)"
+                            [disabled]="updatingClubsIndexes.includes(i)">UPDATE</button>
+                        <button mat-button style="float: right" (click)="deleteClub(club.id)"
+                            [disabled]="updatingClubsIndexes.includes(i)">DELETE</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
         </div>
     </div>
 </div>
