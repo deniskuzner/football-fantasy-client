@@ -6,6 +6,7 @@ import { PointsComponent } from './components/points/points.component';
 import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
+import { FootballFieldComponent } from './components/football-field/football-field.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPanelComponent
+  },
+  {
+    path: 'field',
+    component: FootballFieldComponent
   }
 ];
 

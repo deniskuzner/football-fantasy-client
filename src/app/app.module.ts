@@ -49,6 +49,7 @@ import { PointsComponent } from './components/points/points.component';
 import { GameweeksComponent } from './components/gameweeks/gameweeks.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
+import { FootballFieldComponent } from './components/football-field/football-field.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { HomeComponent } from './components/home/home.component';
     PointsComponent,
     GameweeksComponent,
     AdminPanelComponent,
-    HomeComponent
+    HomeComponent,
+    FootballFieldComponent
   ],
   imports: [
     BrowserModule,
