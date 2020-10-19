@@ -1,11 +1,11 @@
 <div class="container">
   <mat-spinner *ngIf="!signal" style="margin: auto;"></mat-spinner>
   <div class="row" [hidden]="!signal">
-    <button mat-raised-button color="primary" (click)="parseSeasonPlayers()">
+    <button mat-stroked-button color="primary" (click)="parseSeasonPlayers()">
       Update All
       <mat-icon>update</mat-icon>
     </button>
-    <button mat-raised-button color="warn" (click)="deleteAllPlayers()" style="margin-left: 5px;">
+    <button mat-stroked-button color="warn" (click)="deleteAllPlayers()" style="margin-left: 5px;">
       Delete All
       <mat-icon>delete</mat-icon>
     </button>

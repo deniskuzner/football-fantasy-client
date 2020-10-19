@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,13 +8,14 @@ import { PlayerGameweekPerformance } from 'src/app/models/player-gameweek-perfor
 import { FixturesService } from 'src/app/services/fixtures.service';
 import { PointsService } from 'src/app/services/points.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-points',
   templateUrl: './points.component.html',
   styleUrls: ['./points.component.css']
 })
-export class PointsComponent implements OnInit {
+export class PointsComponent implements OnInit, OnDestroy {
 
   gameweeks: Gameweek[] = [];
   currentGameweekPerformances: PlayerGameweekPerformance[] = [];
@@ -26,6 +27,7 @@ export class PointsComponent implements OnInit {
 
   displayedColumns: string[] = ['image', 'clubImage', 'name', 'position', 'points'];
   dataSource = new MatTableDataSource<PlayerGameweekPerformance>(this.currentGameweekPerformances);
+  private fixturesChangedSub: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,6 +39,15 @@ export class PointsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFixtures();
+    this.fixturesChangedSub = this.fixturesService.fixturesUpdated.subscribe(
+      () => {
+        this.getFixtures();
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.fixturesChangedSub.unsubscribe();
   }
 
   setTableData() {
@@ -51,12 +62,15 @@ export class PointsComponent implements OnInit {
     this.fixturesService.getAll().subscribe(
       res => {
         this.gameweeks = res;
-        this.currentGameweekPerformances = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].playerGameweekPerformances;
+        if (this.gameweeks.length > 0) {
+          this.currentGameweekPerformances = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].playerGameweekPerformances;
+        }
         this.setTableData();
         this.signal = true;
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error!");
       }
     );
   }
@@ -68,17 +82,17 @@ export class PointsComponent implements OnInit {
   }
 
   getPlayerImage(playerImage: String): String {
-    if(playerImage.length) {
+    if (playerImage.length) {
       return playerImage;
     }
     return '../../../assets/person.png';
   }
 
   calculateByDate(form: NgForm) {
-    if(form.valid) {
+    if (form.valid) {
       let fromDate = new Date(this.fromDate.getFullYear(), this.fromDate.getMonth(), this.fromDate.getDate(), 0, 0, 0);
       let toDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
-      let searchRequest = {fromDate: fromDate, toDate: toDate};
+      let searchRequest = { fromDate: fromDate, toDate: toDate };
       this.pointsService.calculateByDate(searchRequest).subscribe(
         () => {
           this.getFixtures();
@@ -95,12 +109,12 @@ export class PointsComponent implements OnInit {
   }
 
   calculateByGameweek() {
-    if(this.selectedGameweekOrderNumber) {
+    if (this.selectedGameweekOrderNumber) {
       let gameweek = this.gameweeks.filter(g => g.orderNumber == this.selectedGameweekOrderNumber)[0];
       this.pointsService.calculateByGameweek(gameweek.id).subscribe(
         res => {
-          gameweek.playerGameweekPerformances = res;
-          this.currentGameweekPerformances = res;
+          gameweek.playerGameweekPerformances.push(...res);
+          this.currentGameweekPerformances = gameweek.playerGameweekPerformances;
           this.setTableData();
           this.openSnackBar("Gameweek points calculated successfully!");
         },

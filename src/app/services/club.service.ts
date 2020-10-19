@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AppConstants } from '../constants/app-constants';
 import { Club } from '../models/club.model';
 
@@ -7,6 +8,8 @@ import { Club } from '../models/club.model';
     providedIn: 'root'
 })
 export class ClubService {
+
+    clubsUpdated = new Subject<Club[]>();
 
     constructor(private http: HttpClient) {}
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
@@ -10,13 +10,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { EditPlayerDialogComponent } from '../dialogs/edit-player-dialog/edit-player-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
-export class PlayersComponent implements OnInit {
+export class PlayersComponent implements OnInit, OnDestroy {
 
   players: Player[] = [];
   playersData: Player[] = [];
@@ -27,7 +28,8 @@ export class PlayersComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  signal: boolean = true;;
+  signal: boolean = true;
+  private clubsUpdatedSub: Subscription;
 
   constructor(
     private playerService: PlayerService,
@@ -39,6 +41,16 @@ export class PlayersComponent implements OnInit {
   ngOnInit(): void {
     this.getAllPlayers();
     this.getAllClubs();
+    this.clubsUpdatedSub = this.clubService.clubsUpdated.subscribe(
+      () => {
+        this.getAllPlayers();
+        this.getAllClubs();
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.clubsUpdatedSub.unsubscribe();
   }
 
   getAllPlayers() {
@@ -76,10 +88,13 @@ export class PlayersComponent implements OnInit {
         this.signal = true;
         this.getAllPlayers();
         this.getAllClubs();
+        this.clubService.clubsUpdated.next(this.clubs);
         this.openSnackBar("Season players parsed successfully!");
       },
       err => {
         console.log(err);
+        this.signal = true;
+        this.openSnackBar("Error!");
       }
     );
   }
@@ -89,9 +104,11 @@ export class PlayersComponent implements OnInit {
       () => {
         this.getAllPlayers();
         this.getAllClubs();
+        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error!");
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FixturesService } from '../../services/fixtures.service';
 import { MatchEventService } from '../../services/match-event.service';
 import { Gameweek } from '../../models/gameweek.model';
@@ -34,6 +34,7 @@ export class FixturesComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.openSnackBar("Error!");
       }
     );
   }
@@ -44,9 +45,12 @@ export class FixturesComponent implements OnInit {
       () => {
         this.getFixtures();
         this.openSnackBar("Season fixtures synchronized successfully!");
+        this.fixturesService.fixturesUpdated.next(this.gameweeks);
       },
       err => {
         console.log(err);
+        this.signal = true;
+        this.openSnackBar("Error!");
       }
     );
   }
@@ -58,9 +62,12 @@ export class FixturesComponent implements OnInit {
       () => {
         this.getFixtures();
         this.openSnackBar("Gameweek match events synchronized successfully!");
+        this.fixturesService.fixturesUpdated.next(this.gameweeks);
       },
       err => {
         console.log(err);
+        this.signal = true;
+        this.openSnackBar("Error!");
       }
     );
   }

@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ClubService } from 'src/app/services/club.service';
 import { Club } from 'src/app/models/club.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-clubs',
   templateUrl: './clubs.component.html',
   styleUrls: ['./clubs.component.css']
 })
-export class ClubsComponent implements OnInit {
+export class ClubsComponent implements OnInit, OnDestroy {
 
   clubs: Club[] = [];
   displayedColumns: string[] = ['id', 'name', 'image', 'action'];
   signal: boolean = true;
   updatingClubsIndexes: number[] = [];
+  private clubsUpdatedSub: Subscription;
 
   constructor(
     private clubService: ClubService,
@@ -22,6 +24,15 @@ export class ClubsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClubs();
+    this.clubsUpdatedSub = this.clubService.clubsUpdated.subscribe(
+      () => {
+        this.getClubs();
+      }
+    );
+  }
+  
+  ngOnDestroy() {
+    this.clubsUpdatedSub.unsubscribe();
   }
 
   getClubs() {
@@ -34,6 +45,7 @@ export class ClubsComponent implements OnInit {
       err => {
         console.log(err);
         this.signal = true;
+        this.openSnackBar("Error!");
       }
     );
   }
@@ -45,6 +57,7 @@ export class ClubsComponent implements OnInit {
         this.clubs = res;
         this.signal = true;
         this.openSnackBar("Clubs updated successfully!");
+        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);
@@ -60,6 +73,7 @@ export class ClubsComponent implements OnInit {
         this.clubs.filter(c => c.url == url)[0] = res;
         this.removeIndex(updatedClubIndex);
         this.openSnackBar("Club updated successfully!");
+        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);
@@ -73,6 +87,7 @@ export class ClubsComponent implements OnInit {
       () => {
         this.getClubs();
         this.openSnackBar("Clubs deleted successfully!");
+        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);
@@ -86,6 +101,7 @@ export class ClubsComponent implements OnInit {
       () => {
         this.getClubs();
         this.openSnackBar("Club deleted successfully!");
+        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);
