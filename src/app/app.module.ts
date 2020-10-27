@@ -50,6 +50,8 @@ import { GameweeksComponent } from './components/gameweeks/gameweeks.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
+import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
+import { PlayerSelectionComponent } from './components/player-selection/player-selection.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { FootballFieldComponent } from './components/football-field/football-fie
     GameweeksComponent,
     AdminPanelComponent,
     HomeComponent,
-    FootballFieldComponent
+    FootballFieldComponent,
+    TeamSelectionComponent,
+    PlayerSelectionComponent
   ],
   imports: [
     BrowserModule,

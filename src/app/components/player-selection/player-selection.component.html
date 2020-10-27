@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-md-5 col-xl-5">
+        <div class="row">
+            <div style="background-color: indigo; text-align: center; color: honeydew; ">
+                <h4>Goalkeepers</h4>
+            </div>
+        </div>
+        <div class="row" *ngFor="let gk of goalkeepers">
+            <p>{{ gk.name }}</p>
+        </div>
+        <!-- STAVITI TABELU OVDE -->
+    </div>
+    <div class="col-xs-5 col-sm-5 col-md-5 col-xl-5" style="float: right;">
+        <div class="row">
+            <div style="background-color: indigo; text-align: center; color: honeydew;">
+                <h4>Defenders</h4>
+            </div>
+        </div>
+        <div class="row" *ngFor="let df of defenders">
+            <p>{{ df.name }}</p>
+        </div>
+        <!-- STAVITI TABELU OVDE -->
+    </div>
+
+
+</div>

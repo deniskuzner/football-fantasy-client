@@ -7,6 +7,7 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
+import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'field',
     component: FootballFieldComponent
+  },
+  {
+    path: 'team-selection',
+    component: TeamSelectionComponent
   }
 ];
 
