@@ -15,6 +15,7 @@ export class PlayerSelectionComponent implements OnInit {
   defenders: Player[] = [];
   midfielders: Player[] = [];
   forwards: Player[] = [];
+  signal: boolean = true;
 
   constructor(private playerService: PlayerService, private clubService: ClubService) { }
 
@@ -23,13 +24,16 @@ export class PlayerSelectionComponent implements OnInit {
   }
 
   getAllPlayers() {
+    this.signal = false;
     this.playerService.getPlayers().subscribe(
       res => {
         this.players = res;
         this.splitPlayersByPosition();
+        this.signal = true;
       }
     );
   }
+
   splitPlayersByPosition() {
     this.goalkeepers = this.players.filter(p => p.position == "GK" );
     this.defenders = this.players.filter(p => p.position == "DF" );

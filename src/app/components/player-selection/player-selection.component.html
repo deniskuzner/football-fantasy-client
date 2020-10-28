@@ -1,26 +1,27 @@
+<div class="row" style="margin-top: 20px;">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6" style="width: 49%;">
+    <div class="row">
+      <app-player-selection-table *ngIf="signal" [players]="goalkeepers" position="Goalkeepers">
+      </app-player-selection-table>
+    </div>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6" style="float: right; width: 49%;">
+    <div class="row">
+      <app-player-selection-table *ngIf="signal" [players]="defenders" position="Defenders">
+      </app-player-selection-table>
+    </div>
+  </div>
+</div>
 <div class="row">
-    <div class="col-xs-5 col-sm-5 col-md-5 col-xl-5">
-        <div class="row">
-            <div style="background-color: indigo; text-align: center; color: honeydew; ">
-                <h4>Goalkeepers</h4>
-            </div>
-        </div>
-        <div class="row" *ngFor="let gk of goalkeepers">
-            <p>{{ gk.name }}</p>
-        </div>
-        <!-- STAVITI TABELU OVDE -->
+  <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6" style="width: 49%;">
+    <div class="row">
+      <app-player-selection-table *ngIf="signal" [players]="midfielders" position="Midfielders">
+      </app-player-selection-table>
     </div>
-    <div class="col-xs-5 col-sm-5 col-md-5 col-xl-5" style="float: right;">
-        <div class="row">
-            <div style="background-color: indigo; text-align: center; color: honeydew;">
-                <h4>Defenders</h4>
-            </div>
-        </div>
-        <div class="row" *ngFor="let df of defenders">
-            <p>{{ df.name }}</p>
-        </div>
-        <!-- STAVITI TABELU OVDE -->
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6" style="float: right; width: 49%;">
+    <div class="row">
+      <app-player-selection-table *ngIf="signal" [players]="forwards" position="Forwards"></app-player-selection-table>
     </div>
-
-
+  </div>
 </div>

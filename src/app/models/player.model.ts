@@ -14,6 +14,8 @@ export class Player {
         public height: string,
         public weight: string,
         public image: string,
+        public price: number,
+        public totalPoints: number,
         public club: Club) {
     }
 

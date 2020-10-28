@@ -41,6 +41,8 @@ export class EditPlayerDialogComponent implements OnInit {
       height: this.player.height,
       weight: this.player.weight,
       image: this.player.image,
+      price: 0,
+      totalPoints: 0,
       club: this.player.club
     }
     this.selectedClub = this.formPlayer.club.id;

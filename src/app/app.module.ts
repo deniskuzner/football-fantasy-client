@@ -52,6 +52,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
 import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
 import { PlayerSelectionComponent } from './components/player-selection/player-selection.component';
+import { PlayerSelectionTableComponent } from './components/player-selection-table/player-selection-table.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { PlayerSelectionComponent } from './components/player-selection/player-s
     HomeComponent,
     FootballFieldComponent,
     TeamSelectionComponent,
-    PlayerSelectionComponent
+    PlayerSelectionComponent,
+    PlayerSelectionTableComponent
   ],
   imports: [
     BrowserModule,
