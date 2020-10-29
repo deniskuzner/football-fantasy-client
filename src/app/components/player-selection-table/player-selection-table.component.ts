@@ -3,6 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Player } from '../../models/player.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { SelectPlayerDialogComponent } from '../dialogs/select-player-dialog/select-player-dialog.component';
 
 @Component({
   selector: 'app-player-selection-table',
@@ -19,7 +21,9 @@ export class PlayerSelectionTableComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'price', 'points'];
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.setTableData();
@@ -39,8 +43,8 @@ export class PlayerSelectionTableComponent implements OnInit {
     return '../../../assets/person.png';
   }
 
-  onPlayerClick(player: Player) {
-    console.log(player);
+  showPlayerDetails(player: Player) {
+    this.dialog.open(SelectPlayerDialogComponent, { data: { player: player } });
   }
 
 }

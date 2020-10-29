@@ -114,7 +114,7 @@ export class PointsComponent implements OnInit, OnDestroy {
       this.pointsService.calculateByGameweek(gameweek.id).subscribe(
         res => {
           gameweek.playerGameweekPerformances.push(...res);
-          this.currentGameweekPerformances = gameweek.playerGameweekPerformances;
+          this.currentGameweekPerformances = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].playerGameweekPerformances;
           this.setTableData();
           this.openSnackBar("Gameweek points calculated successfully!");
         },

@@ -1,0 +1,10 @@
+table {
+    width: 100%;
+}
+tr {
+    height: 30px;
+}
+  
+tr td {
+    height: auto !important;
+}

@@ -18,4 +18,8 @@ export class PointsService {
     return this.http.get<PlayerGameweekPerformance[]>(AppConstants.serverUrl + '/performances/calculate/gameweek/' + gameweekId);
   }
 
+  findByPlayerId(playerId: number) {
+    return this.http.get<PlayerGameweekPerformance[]>(AppConstants.serverUrl + '/performances/player/' + playerId);
+  }
+
 }
