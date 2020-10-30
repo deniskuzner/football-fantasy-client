@@ -95,4 +95,11 @@ export class EditPlayerDialogComponent implements OnInit {
     });
   }
 
+  getPlayerImage(playerImage: String): String {
+    if (playerImage.length) {
+      return playerImage;
+    }
+    return '../../../assets/person.png';
+  }
+
 }

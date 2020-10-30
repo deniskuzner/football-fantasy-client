@@ -8,7 +8,7 @@
             <app-football-field></app-football-field>
         </div>
         <div class="col-md-5 col-lg-5">
-            <app-player-selection></app-player-selection>
+            <app-player-selection (playerAdded)="onPlayerAdded($event)"></app-player-selection>
         </div>
     </div>
 </div>

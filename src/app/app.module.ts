@@ -32,6 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
@@ -106,7 +107,8 @@ import { SelectPlayerDialogComponent } from './components/dialogs/select-player-
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule
   ],
   providers: [
     PlayerService,

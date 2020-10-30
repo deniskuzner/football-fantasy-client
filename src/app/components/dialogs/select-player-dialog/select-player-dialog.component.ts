@@ -51,4 +51,11 @@ export class SelectPlayerDialogComponent implements OnInit {
     this.dataSource.paginator.firstPage();
   }
 
+  getPlayerImage(playerImage: String): String {
+    if (playerImage.length) {
+      return playerImage;
+    }
+    return '../../../assets/person.png';
+  }
+
 }

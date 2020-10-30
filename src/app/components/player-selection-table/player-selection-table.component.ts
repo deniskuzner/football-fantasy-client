@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Player } from '../../models/player.model';
@@ -15,6 +15,7 @@ export class PlayerSelectionTableComponent implements OnInit {
 
   @Input() players: Player[] = [];
   @Input() position: String;
+  @Output() playerAdded = new EventEmitter<Player>();
   dataSource: MatTableDataSource<Player>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -44,7 +45,14 @@ export class PlayerSelectionTableComponent implements OnInit {
   }
 
   showPlayerDetails(player: Player) {
-    this.dialog.open(SelectPlayerDialogComponent, { data: { player: player } });
+    const dialogRef = this.dialog.open(SelectPlayerDialogComponent, { data: { player: player } });
+    dialogRef.afterClosed().subscribe(
+      res => {
+        if(res) {
+          this.playerAdded.emit(player);
+        }
+      }
+    );
   }
 
 }

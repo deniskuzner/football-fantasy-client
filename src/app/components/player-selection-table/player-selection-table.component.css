@@ -5,3 +5,6 @@ table {
     background-color: indigo;
     color: honeydew;
 }
+::ng-deep .mat-sort-header-arrow {
+    color: #fff;
+}

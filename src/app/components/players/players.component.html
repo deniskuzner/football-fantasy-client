@@ -25,7 +25,7 @@
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <img [src]="element.image" class="img-responsive">
+            <img [src]="getPlayerImage(element.image)" class="img-responsive">
           </mat-cell>
         </ng-container>
   
