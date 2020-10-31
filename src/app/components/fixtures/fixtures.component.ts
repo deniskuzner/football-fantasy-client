@@ -11,8 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class FixturesComponent implements OnInit {
 
-  gameweeks: Gameweek[] = [];
-  currentGameweekNumber: number = 1;
+  currentGameweek: Gameweek;
   signal: boolean = true;
 
   constructor(
@@ -22,30 +21,15 @@ export class FixturesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getFixtures();
-  }
-
-  getFixtures() {
-    this.signal = false;
-    this.fixturesService.getAll().subscribe(
-      res => {
-        this.gameweeks = res;
-        this.signal = true;
-      },
-      err => {
-        console.log(err);
-        this.openSnackBar("Error!");
-      }
-    );
   }
 
   syncFixtures() {
     this.signal = false;
     this.fixturesService.parseSeasonFixtures().subscribe(
       () => {
-        this.getFixtures();
         this.openSnackBar("Season fixtures synchronized successfully!");
-        this.fixturesService.fixturesUpdated.next(this.gameweeks);
+        this.fixturesService.fixturesUpdated.next();
+        this.signal = true;
       },
       err => {
         console.log(err);
@@ -56,13 +40,16 @@ export class FixturesComponent implements OnInit {
   }
 
   syncGameweekMatchEvents() {
+    if(!this.currentGameweek) {
+      this.openSnackBar("Please first sync season fixtures!");
+      return;
+    }
     this.signal = false;
-    let currentGameweekId = this.gameweeks.filter(g => g.orderNumber == this.currentGameweekNumber)[0].id;
+    let currentGameweekId = this.currentGameweek.id;
     this.matchEventService.parseGameweekMatchEvents(currentGameweekId).subscribe(
       () => {
-        this.getFixtures();
         this.openSnackBar("Gameweek match events synchronized successfully!");
-        this.fixturesService.fixturesUpdated.next(this.gameweeks);
+        this.fixturesService.fixturesUpdated.next();
       },
       err => {
         console.log(err);
@@ -72,8 +59,9 @@ export class FixturesComponent implements OnInit {
     );
   }
 
-  onCurrentGameweekNumberChange(currentGameweekNumber: number) {
-    this.currentGameweekNumber = currentGameweekNumber;
+  onCurrentGameweekChange(currentGameweek: Gameweek) {
+    this.currentGameweek = currentGameweek;
+    this.signal = true;
   }
 
   openSnackBar(message: string) {

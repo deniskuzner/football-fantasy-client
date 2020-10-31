@@ -73,7 +73,6 @@ export class ClubsComponent implements OnInit, OnDestroy {
         this.clubs.filter(c => c.url == url)[0] = res;
         this.removeIndex(updatedClubIndex);
         this.openSnackBar("Club updated successfully!");
-        this.clubService.clubsUpdated.next(this.clubs);
       },
       err => {
         console.log(err);

@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class FixturesService {
 
-  fixturesUpdated = new Subject<Gameweek[]>();
+  fixturesUpdated = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,14 @@ export class FixturesService {
 
   getAll() {
     return this.http.get<Gameweek[]>(AppConstants.serverUrl + '/gameweeks/all');
+  }
+
+  getByOrderNumber(orderNumber: number) {
+    return this.http.get<Gameweek>(AppConstants.serverUrl + "/gameweeks/gameweek/order-number/" + orderNumber);
+  }
+
+  count() {
+    return this.http.get<number>(AppConstants.serverUrl + "/gameweeks/count");
   }
 
 }

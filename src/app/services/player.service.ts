@@ -23,4 +23,8 @@ export class PlayerService {
         return this.http.delete(AppConstants.serverUrl + '/players/player/' + id);
     }
 
+    getPlayersOrderByPointsDesc() {
+        return this.http.get<Player[]>(AppConstants.serverUrl + '/players/all/points-desc');
+    }
+
 }

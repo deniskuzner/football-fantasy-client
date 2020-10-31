@@ -47,7 +47,7 @@ import { EditPlayerDialogComponent } from './components/dialogs/edit-player-dial
 import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatchEventsComponent } from './components/match-events/match-events.component';
 import { PointsComponent } from './components/points/points.component';
-import { GameweeksComponent } from './components/gameweeks/gameweeks.component';
+import { GameweekComponent } from './components/gameweek/gameweek.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
@@ -66,7 +66,7 @@ import { SelectPlayerDialogComponent } from './components/dialogs/select-player-
     FixturesComponent,
     MatchEventsComponent,
     PointsComponent,
-    GameweeksComponent,
+    GameweekComponent,
     AdminPanelComponent,
     HomeComponent,
     FootballFieldComponent,

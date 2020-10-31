@@ -10,16 +10,17 @@
         <h4 style="float: center"><b>Gameweek {{currentGameweekNumber}}</b></h4>
     </div>
     <div class="col-xs-4 col-md-4 col-lg-4">
-        <button mat-raised-button (click)="onNext()" [disabled]="currentGameweekNumber >= gameweeks.length"
+        <button mat-raised-button (click)="onNext()" [disabled]="currentGameweekNumber >= gameweeksCount"
             class="navigation-button" style="float: right;">
             Next
             <mat-icon>arrow_forward</mat-icon>
         </button>
     </div>
 </div>
-<div class="row">
+<mat-spinner *ngIf="!signal" style="margin: auto;"></mat-spinner>
+<div class="row" *ngIf="signal">
     <mat-accordion class="example-headers-align" multi style="text-align: center;">
-        <mat-expansion-panel *ngFor="let match of currentGameweekMatches">
+        <mat-expansion-panel *ngFor="let match of gameweek.matches">
             <mat-expansion-panel-header [collapsedHeight]="'80px'">
                 <mat-panel-description>
                     <div class="col-xs-2 col-md-2 col-lg-2">{{match.dateTime | date: "dd-MM-yyyy"}}</div>

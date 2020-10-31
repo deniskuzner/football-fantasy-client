@@ -14,8 +14,8 @@ export class PointsService {
     return this.http.post<PlayerGameweekPerformance[]>(AppConstants.serverUrl + '/performances/calculate/date', searchRequest);
   }
 
-  calculateByGameweek(gameweekId: number) {
-    return this.http.get<PlayerGameweekPerformance[]>(AppConstants.serverUrl + '/performances/calculate/gameweek/' + gameweekId);
+  calculateByGameweek(gameweekOrderNumber: number) {
+    return this.http.get<PlayerGameweekPerformance[]>(AppConstants.serverUrl + '/performances/calculate/gameweek/' + gameweekOrderNumber);
   }
 
   findByPlayerId(playerId: number) {

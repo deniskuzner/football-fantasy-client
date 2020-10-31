@@ -26,7 +26,7 @@ export class PlayerSelectionComponent implements OnInit {
 
   getAllPlayers() {
     this.signal = false;
-    this.playerService.getPlayers().subscribe(
+    this.playerService.getPlayersOrderByPointsDesc().subscribe(
       res => {
         this.players = res;
         this.splitPlayersByPosition();
