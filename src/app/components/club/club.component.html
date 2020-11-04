@@ -1,0 +1,80 @@
+<div class="container">
+    <mat-spinner *ngIf="!signal" style="margin: auto;"></mat-spinner>
+    <div class="row" [hidden]="!signal">
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <div class="row">
+                <button mat-stroked-button color="primary" routerLink="/admin" style="width: 70%;">
+                    <mat-icon>arrow_back</mat-icon>
+                    Back
+                </button>
+            </div>
+            <div class="row">
+                <img [src]="club.image" class="img-responsive">
+            </div>
+            <div class="row">
+                <h1>{{club.name}}</h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+            </mat-form-field>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                <ng-container matColumnDef="image">
+                    <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <img [src]="getPlayerImage(element.image)" class="img-responsive">
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="nationality">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nationality </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nationality}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="birthDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.birthDate}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="age">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="playerPosition">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Position </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="height">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.height}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="weight">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="club">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Club </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.club.name}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showPlayerDetails(row)"
+                    style="cursor: pointer"></mat-row>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

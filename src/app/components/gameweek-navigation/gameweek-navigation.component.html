@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-xs-4 col-md-4 col-lg-4">
+        <button mat-raised-button (click)="onPrevious()" [disabled]="currentGameweekNumber <= 1"
+            class="navigation-button">
+            <mat-icon>arrow_back</mat-icon>
+            Previous
+        </button>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: center;">
+        <h4 style="float: center"><b>Gameweek {{currentGameweekNumber}}</b></h4>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-4">
+        <button mat-raised-button (click)="onNext()" [disabled]="currentGameweekNumber >= gameweeksCount"
+            class="navigation-button" style="float: right;">
+            Next
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,8 +1,9 @@
 <div class="container">
-    <mat-spinner *ngIf="!signal"></mat-spinner>
     <div class="row">
         <div class="col-xs-8 col-md-8 col-lg-8">
             <h2>Points</h2>
+            <app-gameweek-navigation (currentGameweekChange)="onCurrentGameweekChange($event)"></app-gameweek-navigation>
+            <mat-spinner *ngIf="!signal" style="margin: auto"></mat-spinner>
             <div [hidden]="!signal">
                 <table mat-table [dataSource]="dataSource" matSort matSortActive="points" matSortDirection="desc">
                     <ng-container matColumnDef="image">
@@ -77,12 +78,6 @@
                     Calculate
                 </button>
             </div>
-        </div>
-    </div>
-    <div class="row" [hidden]="!signal">
-        <div class="col-xs-8 col-md-8 col-lg-8">
-            <h2>Gameweeks</h2>
-            <app-gameweek (currentGameweekChange)="onCurrentGameweekChange($event)"></app-gameweek>
         </div>
     </div>
 </div>

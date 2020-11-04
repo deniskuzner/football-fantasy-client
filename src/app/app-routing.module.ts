@@ -8,6 +8,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
 import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
+import { ClubComponent } from './components/club/club.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'team-selection',
     component: TeamSelectionComponent
+  },
+  {
+    path: 'club/:id',
+    component: ClubComponent
   }
 ];
 

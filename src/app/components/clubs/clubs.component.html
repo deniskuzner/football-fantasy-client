@@ -21,9 +21,9 @@
                         <mat-card-title>{{club.name}}</mat-card-title>
                         <mat-card-subtitle style="font-size: small;">Manager: {{club.manager}}</mat-card-subtitle>
                     </mat-card-header>
-                    <img mat-card-image [src]="club.image" alt="Photo of a club" class="img-responsive"
-                        style="max-height: 110;max-width: 110px; margin: auto;"
-                        *ngIf="!updatingClubsIndexes.includes(i)">
+                    <img mat-card-image [src]="club.image" class="img-responsive club-img"
+                        *ngIf="!updatingClubsIndexes.includes(i)"
+                        [routerLink]="['/club', club.id]">
                     <mat-spinner *ngIf="updatingClubsIndexes.includes(i)" style="margin: auto;"></mat-spinner>
                     <mat-card-actions>
                         <button mat-button (click)="updateClub(club.url, i)"

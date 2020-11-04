@@ -27,4 +27,8 @@ export class PlayerService {
         return this.http.get<Player[]>(AppConstants.serverUrl + '/players/all/points-desc');
     }
 
+    getClubPlayers(clubId: number) {
+        return this.http.get<Player[]>(AppConstants.serverUrl + '/players/club/' + clubId);
+    }
+
 }

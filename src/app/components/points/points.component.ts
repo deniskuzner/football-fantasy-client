@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,14 +8,13 @@ import { PlayerGameweekPerformance } from 'src/app/models/player-gameweek-perfor
 import { FixturesService } from 'src/app/services/fixtures.service';
 import { PointsService } from 'src/app/services/points.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { range, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-points',
   templateUrl: './points.component.html',
   styleUrls: ['./points.component.css']
 })
-export class PointsComponent implements OnInit, OnDestroy {
+export class PointsComponent implements OnInit {
 
   gameweek: Gameweek;
   currentGameweekPerformances: PlayerGameweekPerformance[] = [];
@@ -28,7 +27,6 @@ export class PointsComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['image', 'clubImage', 'name', 'position', 'points'];
   dataSource = new MatTableDataSource<PlayerGameweekPerformance>(this.currentGameweekPerformances);
-  private fixturesChangedSub: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -41,15 +39,6 @@ export class PointsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.count();
     this.getCurrentGameweek();
-    this.fixturesChangedSub = this.fixturesService.fixturesUpdated.subscribe(
-      () => {
-        this.getCurrentGameweek();
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.fixturesChangedSub.unsubscribe();
   }
 
   count() {
@@ -87,10 +76,9 @@ export class PointsComponent implements OnInit, OnDestroy {
     this.dataSource.paginator.firstPage();
   }
 
-  onCurrentGameweekChange(currentGameweek: Gameweek) {
-    this.gameweek = currentGameweek;
-    this.currentGameweekPerformances = this.gameweek.playerGameweekPerformances;
-    this.currentGameweekNumber = this.gameweek.orderNumber;
+  onCurrentGameweekChange(currentGameweekNumber: number) {
+    this.currentGameweekNumber = currentGameweekNumber;
+    this.getCurrentGameweek();
     this.setTableData();
   }
 

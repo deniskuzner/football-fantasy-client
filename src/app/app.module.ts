@@ -55,6 +55,8 @@ import { TeamSelectionComponent } from './components/team-selection/team-selecti
 import { PlayerSelectionComponent } from './components/player-selection/player-selection.component';
 import { PlayerSelectionTableComponent } from './components/player-selection-table/player-selection-table.component';
 import { SelectPlayerDialogComponent } from './components/dialogs/select-player-dialog/select-player-dialog.component';
+import { GameweekNavigationComponent } from './components/gameweek-navigation/gameweek-navigation.component';
+import { ClubComponent } from './components/club/club.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { SelectPlayerDialogComponent } from './components/dialogs/select-player-
     TeamSelectionComponent,
     PlayerSelectionComponent,
     PlayerSelectionTableComponent,
-    SelectPlayerDialogComponent
+    SelectPlayerDialogComponent,
+    GameweekNavigationComponent,
+    ClubComponent
   ],
   imports: [
     BrowserModule,
