@@ -23,7 +23,7 @@
                     </mat-card-header>
                     <img mat-card-image [src]="club.image" class="img-responsive club-img"
                         *ngIf="!updatingClubsIndexes.includes(i)"
-                        [routerLink]="['/club', club.id]">
+                        [routerLink]="['/admin/club', club.id]">
                     <mat-spinner *ngIf="updatingClubsIndexes.includes(i)" style="margin: auto;"></mat-spinner>
                     <mat-card-actions>
                         <button mat-button (click)="updateClub(club.url, i)"

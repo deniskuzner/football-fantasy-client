@@ -45,7 +45,7 @@ const routes: Routes = [
     component: TeamSelectionComponent
   },
   {
-    path: 'club/:id',
+    path: 'admin/club/:id',
     component: ClubComponent
   }
 ];

@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class FixturesComponent implements OnInit {
 
-  currentGameweek: Gameweek;
+  selectedGameweek: Gameweek;
   signal: boolean = true;
 
   constructor(
@@ -40,13 +40,13 @@ export class FixturesComponent implements OnInit {
   }
 
   syncGameweekMatchEvents() {
-    if(!this.currentGameweek) {
+    if(!this.selectedGameweek) {
       this.openSnackBar("Please first sync season fixtures!");
       return;
     }
     this.signal = false;
-    let currentGameweekId = this.currentGameweek.id;
-    this.matchEventService.parseGameweekMatchEvents(currentGameweekId).subscribe(
+    let selectedGameweekId = this.selectedGameweek.id;
+    this.matchEventService.parseGameweekMatchEvents(selectedGameweekId).subscribe(
       () => {
         this.openSnackBar("Gameweek match events synchronized successfully!");
         this.fixturesService.fixturesUpdated.next();
@@ -59,8 +59,8 @@ export class FixturesComponent implements OnInit {
     );
   }
 
-  onCurrentGameweekChange(currentGameweek: Gameweek) {
-    this.currentGameweek = currentGameweek;
+  onSelectedGameweekChange(selectedGameweek: Gameweek) {
+    this.selectedGameweek = selectedGameweek;
     this.signal = true;
   }
 

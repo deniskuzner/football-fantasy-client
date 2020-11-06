@@ -10,7 +10,7 @@
 }
 
 .club-img {
-  max-height: 110;
+  max-height: 110px;
   max-width: 110px;
   margin: auto;
   cursor: pointer;

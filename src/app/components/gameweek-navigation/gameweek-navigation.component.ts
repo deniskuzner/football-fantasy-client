@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FixturesService } from 'src/app/services/fixtures.service';
 
 @Component({
@@ -6,11 +7,12 @@ import { FixturesService } from 'src/app/services/fixtures.service';
   templateUrl: './gameweek-navigation.component.html',
   styleUrls: ['./gameweek-navigation.component.css']
 })
-export class GameweekNavigationComponent implements OnInit {
+export class GameweekNavigationComponent implements OnInit, OnDestroy {
 
-  @Output() currentGameweekChange = new EventEmitter<number>();
-  currentGameweekNumber: number = 1;
+  @Output() selectedGameweekChange = new EventEmitter<number>();
+  selectedGameweekNumber: number = 1;
   gameweeksCount: number;
+  fixturesUpdatedSub: Subscription;
 
   constructor(
     private fixturesService: FixturesService
@@ -18,6 +20,16 @@ export class GameweekNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.count();
+    this.getCurrentGameweekNumber();
+    this.fixturesUpdatedSub = this.fixturesService.fixturesUpdated.subscribe(
+      () => {
+        this.count();
+      }
+    );
+  }
+  
+  ngOnDestroy() {
+    this.fixturesUpdatedSub.unsubscribe();
   }
 
   count() {
@@ -31,14 +43,25 @@ export class GameweekNavigationComponent implements OnInit {
     );
   }
 
+  getCurrentGameweekNumber() {
+    this.fixturesService.getCurrentGameweekNumber().subscribe(
+      res => {
+        this.selectedGameweekNumber = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
   onPrevious() {
-    this.currentGameweekNumber--;
-    this.currentGameweekChange.emit(this.currentGameweekNumber);
+    this.selectedGameweekNumber--;
+    this.selectedGameweekChange.emit(this.selectedGameweekNumber);
   }
 
   onNext() {
-    this.currentGameweekNumber++;
-    this.currentGameweekChange.emit(this.currentGameweekNumber);
+    this.selectedGameweekNumber++;
+    this.selectedGameweekChange.emit(this.selectedGameweekNumber);
   }
 
 }

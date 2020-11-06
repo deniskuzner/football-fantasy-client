@@ -30,4 +30,12 @@ export class FixturesService {
     return this.http.get<number>(AppConstants.serverUrl + "/gameweeks/count");
   }
 
+  getCurrentGameweek() {
+    return this.http.get<Gameweek>(AppConstants.serverUrl + "/gameweeks/current");
+  }
+
+  getCurrentGameweekNumber() {
+    return this.http.get<number>(AppConstants.serverUrl + "/gameweeks/current/order-number");
+  }
+
 }

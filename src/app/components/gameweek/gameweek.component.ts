@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter, OnDestroy } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { Gameweek } from 'src/app/models/gameweek.model';
 import { FixturesService } from 'src/app/services/fixtures.service';
 
@@ -9,13 +10,14 @@ import { FixturesService } from 'src/app/services/fixtures.service';
   templateUrl: './gameweek.component.html',
   styleUrls: ['./gameweek.component.css']
 })
-export class GameweekComponent implements OnInit {
+export class GameweekComponent implements OnInit, OnDestroy {
 
-  @Output() currentGameweekChange = new EventEmitter<Gameweek>();
+  @Output() selectedGameweekChange = new EventEmitter<Gameweek>();
   @ViewChild(MatAccordion) accordion: MatAccordion;
   gameweek: Gameweek;
-  currentGameweekNumber: number = 1;
+  selectedGameweekNumber: number = 1;
   signal: boolean = true;
+  fixturesUpdatedSub: Subscription;
 
   constructor(
     private fixturesService: FixturesService,
@@ -23,14 +25,23 @@ export class GameweekComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentGameweek();
+    this.fixturesUpdatedSub = this.fixturesService.fixturesUpdated.subscribe(
+      () => {
+        this.getSelectedGameweek();
+      }
+    );
   }
 
+  ngOnDestroy() {
+    this.fixturesUpdatedSub.unsubscribe();
+  }
+  
   getCurrentGameweek() {
     this.signal = false;
-    this.fixturesService.getByOrderNumber(this.currentGameweekNumber).subscribe(
+    this.fixturesService.getCurrentGameweek().subscribe(
       res => {
         this.gameweek = res;
-        this.currentGameweekChange.emit(this.gameweek);
+        this.selectedGameweekChange.emit(this.gameweek);
         this.signal = true;
       },
       err => {
@@ -41,9 +52,25 @@ export class GameweekComponent implements OnInit {
     );
   }
 
-  onCurrentGameweekChange(currentGameweekNumber: number) {
-    this.currentGameweekNumber = currentGameweekNumber;
-    this.getCurrentGameweek();
+  getSelectedGameweek() {
+    this.signal = false;
+    this.fixturesService.getByOrderNumber(this.selectedGameweekNumber).subscribe(
+      res => {
+        this.gameweek = res;
+        this.selectedGameweekChange.emit(this.gameweek);
+        this.signal = true;
+      },
+      err => {
+        this.signal = true;
+        console.log(err);
+        this.openSnackBar("Error!");
+      }
+    );
+  }
+
+  onSelectedGameweekChange(selectedGameweekNumber: number) {
+    this.selectedGameweekNumber = selectedGameweekNumber;
+    this.getSelectedGameweek();
   }
 
   openSnackBar(message: string) {

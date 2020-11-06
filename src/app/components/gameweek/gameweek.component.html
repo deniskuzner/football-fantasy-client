@@ -1,25 +1,25 @@
 <div class="row" style="margin-top: 20px;">
-    <app-gameweek-navigation (currentGameweekChange)="onCurrentGameweekChange($event)"></app-gameweek-navigation>
+    <app-gameweek-navigation (selectedGameweekChange)="onSelectedGameweekChange($event)"></app-gameweek-navigation>
 </div>
 <mat-spinner *ngIf="!signal" style="margin: auto;"></mat-spinner>
-<div class="row" *ngIf="signal">
+<div class="row" *ngIf="signal && gameweek">
     <mat-accordion class="example-headers-align" multi style="text-align: center;">
         <mat-expansion-panel *ngFor="let match of gameweek.matches">
             <mat-expansion-panel-header [collapsedHeight]="'80px'">
                 <mat-panel-description>
-                    <div class="col-xs-2 col-md-2 col-lg-2">{{match.dateTime | date: "dd-MM-yyyy"}}</div>
-                    <div class="col-xs-3 col-md-3 col-lg-3">{{match.venue}}</div>
-                    <div class="col-xs-2 col-md-2 col-lg-2"><b>{{match.host.name}}</b></div>
-                    <div class="col-xs-1 col-md-1 col-lg-1"><img [src]="match.host.image" class="img-responsive"
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{match.dateTime | date: "dd-MM-yyyy"}}</div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{match.venue}}</div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><b>{{match.host.name}}</b></div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"><img [src]="match.host.image" class="img-responsive"
                             style="max-height: 50px;">
                     </div>
-                    <div class="col-xs-1 col-md-1 col-lg-1" style="background-color: indigo; color: white;">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="background-color: indigo; color: white;">
                         <b>{{match.result.length == 0 ? (match.dateTime | date:"HH:mm") : match.result}}</b>
                     </div>
-                    <div class="col-xs-1 col-md-1 col-lg-1"><img [src]="match.guest.image" class="img-responsive"
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"><img [src]="match.guest.image" class="img-responsive"
                             style="max-height: 50px;">
                     </div>
-                    <div class="col-xs-2 col-md-2 col-lg-2"><b>{{match.guest.name}}</b></div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><b>{{match.guest.name}}</b></div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
