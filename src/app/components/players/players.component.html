@@ -17,10 +17,6 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
       </mat-form-field>
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-        </ng-container>
   
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>

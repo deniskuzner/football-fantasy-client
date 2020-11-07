@@ -1,4 +1,5 @@
 import { Club } from './club.model';
+import { PlayerGameweekPerformance } from './player-gameweek-performance.model';
 
 export class Player {
 
@@ -16,7 +17,8 @@ export class Player {
         public image: string,
         public price: number,
         public totalPoints: number,
-        public club: Club) {
+        public club: Club,
+        public playerGameweekPerformances: PlayerGameweekPerformance[]) {
     }
 
 }

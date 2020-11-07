@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from 'src/app/models/player.model';
+import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 
 @Component({
   selector: 'app-team-selection',
@@ -9,6 +10,7 @@ import { Player } from 'src/app/models/player.model';
 export class TeamSelectionComponent implements OnInit {
 
   players: Player[] = [];
+  footballFieldMode: FootballFieldMode = FootballFieldMode.TEAM_SELECTION;
 
   constructor() { }
 

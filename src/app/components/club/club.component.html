@@ -7,12 +7,14 @@
                     <mat-icon>arrow_back</mat-icon> Back
                 </button>
             </div>
-            <div class="row" style="margin-top: 40px;">
-                <img [src]="club.image" class="img-responsive club-img">
-            </div>
-            <div class="row" style="text-align: center;">
-                <h1>{{club.name}}</h1>
-                <h5>Manager: {{club.manager}}</h5>
+            <div *ngIf="club">
+                <div class="row" style="margin-top: 40px;">
+                    <img [src]="club.image" class="img-responsive club-img">
+                </div>
+                <div class="row" style="text-align: center;">
+                    <h1>{{club.name}}</h1>
+                    <h5>Manager: {{club.manager}}</h5>
+                </div>
             </div>
         </div>
         <div class="col-sm-9 col-md-9 col-lg-9">

@@ -22,7 +22,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   players: Player[] = [];
   playersData: Player[] = [];
   clubs: Club[] = [];
-  displayedColumns: string[] = ['id', 'image', 'name', 'nationality', 'birthDate', 'age', 'playerPosition', 'height', 'weight', 'club'];
+  displayedColumns: string[] = ['image', 'name', 'nationality', 'birthDate', 'age', 'playerPosition', 'height', 'weight', 'club'];
   dataSource: MatTableDataSource<Player>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

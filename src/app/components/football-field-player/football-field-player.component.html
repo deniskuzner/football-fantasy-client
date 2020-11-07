@@ -1,0 +1,8 @@
+<button class="player-btn" (click)="onClick()" [matBadge]="getBadge()" matBadgePosition="after" matBadgeColor="accent">
+    <div class="row">
+        <img [src]="getImage()" class="player-img">
+    </div>
+    <div class="row player-name">
+        <b>{{getName()}}</b>
+    </div>
+</button>

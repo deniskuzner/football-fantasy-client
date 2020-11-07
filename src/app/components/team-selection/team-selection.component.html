@@ -5,7 +5,7 @@
     <!-- PO UZORU NA FPL SVE -->
     <div class="row">
         <div class="col-md-7 col-lg-7">
-            <app-football-field></app-football-field>
+            <app-football-field [mode]="footballFieldMode"></app-football-field>
         </div>
         <div class="col-md-5 col-lg-5">
             <app-player-selection (playerAdded)="onPlayerAdded($event)"></app-player-selection>

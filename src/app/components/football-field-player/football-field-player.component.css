@@ -1,0 +1,22 @@
+.player-btn {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+    outline: inherit;
+}
+
+.player-img {
+    max-height: 80px;
+}
+
+.player-name {
+    color: white;
+    background-color: indigo;
+    border-color: indigo;
+    border-style: solid;
+    border-width: 1px 7px;
+    border-radius: 5px;
+}
