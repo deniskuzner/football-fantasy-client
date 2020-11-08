@@ -20,9 +20,9 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial class="action-btn" (click)="removePlayer()">
+            Remove Player
+        </button>
+    </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial style="width: 100%;" (click)="removePlayer()">
-        Remove Player
-    </button>
-</mat-dialog-actions>

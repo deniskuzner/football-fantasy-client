@@ -96,7 +96,54 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   }
 
   removePlayer(player: Player) {
-    console.log(player);
+    let position = player.position;
+    if (position == "GK") {
+      this.removeGK(player);
+    }
+    if (position == "DF") {
+      this.removeDF(player);
+    }
+    if (position == "MF") {
+      this.removeMF(player);
+    }
+    if (position == "FW") {
+      this.removeFW(player);
+    }
+  }
+
+  removeGK(player: Player) {
+    if (this.goalkeeper.id == player.id) {
+      this.goalkeeper = null;
+    } else {
+      this.bench[0] = null;
+    }
+  }
+
+  removeDF(player: Player) {
+    let indexOf = this.defenders.indexOf(player);
+    if (indexOf > -1) {
+      this.defenders[indexOf] = null;
+    } else {
+      this.bench[1] = null;
+    }
+  }
+
+  removeMF(player: Player) {
+    let indexOf = this.midfielders.indexOf(player);
+    if (indexOf > -1) {
+      this.midfielders[indexOf] = null;
+    } else {
+      this.bench[2] = null;
+    }
+  }
+
+  removeFW(player: Player) {
+    let indexOf = this.forwards.indexOf(player);
+    if(indexOf > -1) {
+      this.forwards[indexOf] = null;
+    } else {
+      this.bench[3] = null;
+    }
   }
 
 }

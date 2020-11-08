@@ -41,9 +41,12 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   onPlayerAdded(player: Player) {
+    if (this.isDuplicate(player)) {
+      this.openSnackBar(player.name + " is already in your squad!");
+      return;
+    }
 
-    // PROVERTI U PLAYERS LISTI DA LI VEC POSTOJI TAJ IGRAC
-    // ISPOD UBACITI DODAVANJE U PLAYERS LISTU
+    //DODATI PROVERU ZA CENU I LIMIT IGRACA PO KLUBU
 
     let position = player.position;
     let added = false;
@@ -60,16 +63,25 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       added = this.addFW(player);
     }
 
-    if(added) {
+    if (added) {
+      this.players.push(player);
       this.teamService.playerAdded.next(player);
     }
   }
 
+  isDuplicate(player: Player): boolean {
+    let duplicateCount = this.players.filter(p => p.id == player.id).length;
+    if (duplicateCount > 0) {
+      return true;
+    }
+    return false;
+  }
+
   addGK(player: Player): boolean {
-    if(!this.goalkeeper) {
+    if (!this.goalkeeper) {
       this.goalkeeper = player;
       return true;
-    } else if(!this.bench[0]) {
+    } else if (!this.bench[0]) {
       this.bench[0] = player;
       return true;
     } else {
@@ -79,10 +91,10 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   addDF(player: Player): boolean {
-    if(this.defenders.length < 4) {
+    if (this.defenders.length < 4) {
       this.defenders.push(player);
       return true;
-    } else if(!this.bench[1]) {
+    } else if (!this.bench[1]) {
       this.bench[1] = player;
       return true;
     } else {
@@ -92,10 +104,10 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   addMF(player: Player): boolean {
-    if(this.midfielders.length < 4) {
+    if (this.midfielders.length < 4) {
       this.midfielders.push(player);
       return true;
-    } else if(!this.bench[2]) {
+    } else if (!this.bench[2]) {
       this.bench[2] = player;
       return true;
     } else {
@@ -103,12 +115,12 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     }
     return false;
   }
-  
+
   addFW(player: Player): boolean {
-    if(this.forwards.length < 2) {
+    if (this.forwards.length < 2) {
       this.forwards.push(player);
       return true;
-    } else if(!this.bench[3]) {
+    } else if (!this.bench[3]) {
       this.bench[3] = player;
       return true;
     } else {
@@ -118,9 +130,57 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   removePlayer(player: Player) {
-    // LOGIKA ZA BRISANJE IGRACA
-    // IZ PLAYERS LISTE I IZ LISTE ZA POZICIJU
-    console.log(player);
+    // remove from position list
+    let position = player.position;
+    if (position == "GK") {
+      this.removeGK(player);
+    }
+    if (position == "DF") {
+      this.removeDF(player);
+    }
+    if (position == "MF") {
+      this.removeMF(player);
+    }
+    if (position == "FW") {
+      this.removeFW(player);
+    }
+    // remove from players list
+    this.players.splice(this.players.indexOf(player), 1);
+  }
+
+  removeGK(player: Player) {
+    if(this.goalkeeper.id == player.id){
+      this.goalkeeper = null;
+    } else {
+      this.bench[0] = null;
+    }
+  }
+
+  removeDF(player: Player) {
+    let indexOf = this.defenders.indexOf(player);
+    if(indexOf > -1) {
+      this.defenders.splice(indexOf, 1);
+    } else {
+      this.bench[1] = null;
+    }
+  }
+
+  removeMF(player: Player) {
+    let indexOf = this.midfielders.indexOf(player);
+    if(indexOf > -1) {
+      this.midfielders.splice(indexOf, 1);
+    } else {
+      this.bench[2] = null;
+    }
+  }
+
+  removeFW(player: Player) {
+    let indexOf = this.forwards.indexOf(player);
+    if(indexOf > -1) {
+      this.forwards.splice(indexOf, 1);
+    } else {
+      this.bench[3] = null;
+    }
   }
 
   openSnackBar(message: string) {
