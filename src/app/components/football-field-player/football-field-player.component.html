@@ -1,4 +1,5 @@
-<button class="player-btn" (click)="onClick()" [matBadge]="getBadge()" matBadgePosition="after" matBadgeColor="accent">
+<button class="player-btn" (click)="onClick()"
+    [matBadge]="getBadge()" [matBadgePosition]="getBadgePosition()" [matBadgeColor]="getBadgeColor()">
     <div class="row">
         <img [src]="getImage()" class="player-img">
     </div>

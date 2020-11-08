@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Player Details</h2>
+<mat-dialog-content>
+    <div class="row" style="text-align: center;">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <img [src]="getPlayerImage(player.image)" class="img-responsive" style="max-height: 200px;">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="row" style="background-color: indigo;">
+                <h3 style="color: honeydew;">{{ player.name }}</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <h5 style="margin-bottom: 0px;">Price</h5>
+                    <p>{{player.price}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <h5 style="margin-bottom: 0px;">Total</h5>
+                    <p>{{player.totalPoints}}<span style="font-size: small;">pts</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial style="width: 100%;" (click)="removePlayer()">
+        Remove Player
+    </button>
+</mat-dialog-actions>

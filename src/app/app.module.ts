@@ -58,6 +58,7 @@ import { SelectPlayerDialogComponent } from './components/dialogs/select-player-
 import { GameweekNavigationComponent } from './components/gameweek-navigation/gameweek-navigation.component';
 import { ClubComponent } from './components/club/club.component';
 import { FootballFieldPlayerComponent } from './components/football-field-player/football-field-player.component';
+import { FootballFieldPlayerDialogComponent } from './components/dialogs/football-field-player-dialog/football-field-player-dialog.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { FootballFieldPlayerComponent } from './components/football-field-player
     SelectPlayerDialogComponent,
     GameweekNavigationComponent,
     ClubComponent,
-    FootballFieldPlayerComponent
+    FootballFieldPlayerComponent,
+    FootballFieldPlayerDialogComponent
   ],
   imports: [
     BrowserModule,

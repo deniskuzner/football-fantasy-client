@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
+import { FootballFieldPlayerDialogComponent } from '../dialogs/football-field-player-dialog/football-field-player-dialog.component';
 
 @Component({
   selector: 'app-football-field-player',
@@ -12,7 +14,9 @@ export class FootballFieldPlayerComponent implements OnInit {
   @Input() player: Player;
   @Input() mode: String;
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
 
@@ -21,8 +25,6 @@ export class FootballFieldPlayerComponent implements OnInit {
   getImage(): String {
     if (!this.player) {
       return "../../../assets/shirt.webp";
-    } else if (this.player.image.length) {
-      return this.player.image;
     } else {
       return '../../../assets/person.png';
     }
@@ -32,7 +34,7 @@ export class FootballFieldPlayerComponent implements OnInit {
     if (!this.player) {
       return "Select player";
     } else {
-      return this.player.name;
+      return this.player.name.split(' ')[1];
     }
   }
 
@@ -46,8 +48,30 @@ export class FootballFieldPlayerComponent implements OnInit {
     }
   }
 
-  onClick() {
+  getBadgePosition() {
+    if(this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
+      return "before";
+    } else if(this.mode == FootballFieldMode.POINTS) {
+      return "after";
+    }
+  }
 
+  getBadgeColor() {
+    if(this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
+      return "primary";
+    } else if(this.mode == FootballFieldMode.POINTS) {
+      return "accent";
+    }
+  }
+
+  onClick() {
+    if(!this.player) {
+      return;
+    }
+    const dialogRef =this.dialog.open(FootballFieldPlayerDialogComponent, { data: {player: this.player, mode: this.mode} });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
 }
