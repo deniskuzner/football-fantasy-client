@@ -21,6 +21,9 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   forwards: Player[] = [];
   bench: Player[] = [];
 
+  money: number = 100.0;
+  searchInput: String;
+
   playerRemovedSub: Subscription;
 
   constructor(

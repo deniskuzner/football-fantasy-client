@@ -1,8 +1,79 @@
 <div class="container">
-    <!-- DODATI IZNAD CEO ROW -->
-    <!-- IZNAD TERENA IDE KOLONA O BROJU IGRACA, PARAMA, DEADLINE-U ITD. -->
-    <!-- IZNAD IGRACA IDU FILTERI ZA PRETRAGU -->
-    <!-- PO UZORU NA FPL SVE -->
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-7 col-lg-7" style="text-align: center;">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%;">Reset</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%;">Save</button>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row">
+                        <b>Players Selected</b>
+                    </div>
+                    <div class="row">
+                        <h3 style="margin-top: 0px; color: crimson;">{{players.length}}/15</h3>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row">
+                        <b>Money Remaining</b>
+                    </div>
+                    <div class="row">
+                        <h3 style="margin-top: 0px; color: green;">{{money}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 3px;">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5" style="text-align: center;">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <mat-form-field>
+                        <mat-label>Sort by</mat-label>
+                        <mat-select>
+                            <mat-option>None</mat-option>
+                            <mat-option value="price">Price</mat-option>
+                            <mat-option value="points">Points</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <mat-form-field>
+                        <mat-label>Max price</mat-label>
+                        <mat-select>
+                            <mat-option>None</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <mat-form-field>
+                        <mat-label>Team</mat-label>
+                        <mat-select>
+                            <mat-option>None</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <mat-form-field>
+                        <mat-label>Search <mat-icon>search</mat-icon></mat-label>
+                        <input matInput type="text" [(ngModel)]="searchInput">
+                        <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="searchInput=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-7 col-lg-7">
             <app-football-field [mode]="footballFieldMode"></app-football-field>
@@ -12,4 +83,3 @@
         </div>
     </div>
 </div>
-
