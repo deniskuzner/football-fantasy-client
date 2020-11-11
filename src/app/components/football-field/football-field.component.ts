@@ -19,6 +19,7 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
 
   playerAddedSub: Subscription;
   playerRemovedSub: Subscription;
+  teamResetSub: Subscription;
 
   constructor(
     private teamService: TeamService
@@ -35,10 +36,17 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
         this.removePlayer(res);
       }
     );
+    this.teamResetSub = this.teamService.teamReset.subscribe(
+      () => {
+        this.reset();
+      }
+    );
   }
 
   ngOnDestroy() {
     this.playerAddedSub.unsubscribe();
+    this.playerRemovedSub.unsubscribe();
+    this.teamResetSub.unsubscribe();
   }
 
   addPlayer(player: Player) {
@@ -112,7 +120,9 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   }
 
   removeGK(player: Player) {
-    if (this.goalkeeper.id == player.id) {
+    if(!this.goalkeeper) {
+      this.bench[0] = null;
+    } else if(this.goalkeeper.id == player.id){
       this.goalkeeper = null;
     } else {
       this.bench[0] = null;
@@ -143,6 +153,22 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
       this.forwards[indexOf] = null;
     } else {
       this.bench[3] = null;
+    }
+  }
+
+  reset() {
+    this.goalkeeper = null;
+    for (let i = 0; i < this.defenders.length; i++) {
+      this.defenders[i] = null;
+    }
+    for (let i = 0; i < this.midfielders.length; i++) {
+      this.midfielders[i] = null;
+    }
+    for (let i = 0; i < this.forwards.length; i++) {
+      this.forwards[i] = null;
+    }
+    for (let i = 0; i < this.bench.length; i++) {
+      this.bench[i] = null;
     }
   }
 

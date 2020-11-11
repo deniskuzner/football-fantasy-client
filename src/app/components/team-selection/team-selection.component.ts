@@ -22,7 +22,6 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   bench: Player[] = [];
 
   money: number = 100.0;
-  searchInput: String;
 
   playerRemovedSub: Subscription;
 
@@ -49,6 +48,11 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if(this.money - player.price < 0) {
+      this.openSnackBar("You don't have enough money for " + player.name + "!");
+      return;
+    }
+
     //DODATI PROVERU ZA CENU I LIMIT IGRACA PO KLUBU
 
     let position = player.position;
@@ -69,6 +73,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     if (added) {
       this.players.push(player);
       this.teamService.playerAdded.next(player);
+      this.money = Math.round((this.money - player.price) * 10) / 10;
     }
   }
 
@@ -149,10 +154,14 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     }
     // remove from players list
     this.players.splice(this.players.indexOf(player), 1);
+    // update money
+    this.money = Math.round((this.money + player.price) * 10) / 10;
   }
 
   removeGK(player: Player) {
-    if(this.goalkeeper.id == player.id){
+    if(!this.goalkeeper) {
+      this.bench[0] = null;
+    } else if(this.goalkeeper.id == player.id){
       this.goalkeeper = null;
     } else {
       this.bench[0] = null;
@@ -183,6 +192,33 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       this.forwards.splice(indexOf, 1);
     } else {
       this.bench[3] = null;
+    }
+  }
+
+  reset() {
+    this.players = [];
+    this.goalkeeper = null;
+    this.defenders = [];
+    this.midfielders = [];
+    this.forwards = [];
+    this.bench = [];
+    this.money = 100.0;
+    this.teamService.teamReset.next();
+  }
+
+  getPlayersSelectedColor() {
+    if(this.players.length == 15) {
+      return "green";
+    } else {
+      return "crimson";
+    }
+  }
+
+  getMoneyColor() {
+    if(this.money > 0) {
+      return "green";
+    } else {
+      return "crimson";
     }
   }
 

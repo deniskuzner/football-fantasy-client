@@ -1,4 +1,42 @@
-<div class="row" style="margin-top: 20px;">
+<div class="row" style="text-align: center;">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field>
+          <mat-label>Sort by</mat-label>
+          <mat-select [(value)]="selectedSort" (selectionChange)="onSortChange()">
+              <mat-option>None</mat-option>
+              <mat-option value="price">Price</mat-option>
+              <mat-option value="points">Points</mat-option>
+          </mat-select>
+      </mat-form-field>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field>
+          <mat-label>Max price</mat-label>
+          <mat-select [(value)]="selectedMaxPrice" (selectionChange)="onMaxPriceChange()">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let price of maxPriceValues" [value]="price">{{price}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+  </div>
+</div>
+<div class="row" style="margin-top: 10px; text-align: center;">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field>
+          <mat-label>Club</mat-label>
+          <mat-select [(value)]="selectedClub" (selectionChange)="onClubChange()">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let club of clubNames" [value]="club">{{club}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field>
+          <mat-label>Search <mat-icon>search</mat-icon></mat-label>
+          <input matInput type="text" (keyup)="applyFilter($event)">
+      </mat-form-field>
+  </div>
+</div>
+<div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-xl-6" style="width: 49%;">
     <div class="row">
       <app-player-selection-table *ngIf="signal" [players]="goalkeepers" position="Goalkeepers" (playerAdded)="onPlayerAdded($event)">

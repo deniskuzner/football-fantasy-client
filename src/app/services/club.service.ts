@@ -33,4 +33,8 @@ export class ClubService {
         return this.http.delete(AppConstants.serverUrl + '/clubs/club/' + id);
     }
 
+    getClubNames() {
+        return this.http.get<String[]>(AppConstants.serverUrl + '/clubs/all/names');
+    }
+
 }

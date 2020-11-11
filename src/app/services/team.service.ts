@@ -9,6 +9,7 @@ export class TeamService {
 
   playerAdded = new Subject<Player>();
   playerRemoved = new Subject<Player>();
+  teamReset = new Subject<any>();
 
   constructor() { }
 }
