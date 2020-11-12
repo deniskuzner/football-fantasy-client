@@ -78,6 +78,15 @@ export class PlayerSelectionTableComponent implements OnInit, OnDestroy {
     return '../../../assets/person.png';
   }
 
+  getPlayerName(name: String): String {
+    let lastName = name.split(' ')[1];
+    if(!lastName) {
+      return name;
+    } else {
+      return lastName;
+    }
+  }
+
   showPlayerDetails(player: Player) {
     const dialogRef = this.dialog.open(SelectPlayerDialogComponent, { data: { player: player } });
     dialogRef.afterClosed().subscribe(

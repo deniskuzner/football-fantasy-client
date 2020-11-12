@@ -34,41 +34,46 @@ export class FootballFieldPlayerComponent implements OnInit {
     if (!this.player) {
       return "Select player";
     } else {
-      return this.player.name.split(' ')[1];
+      let lastName = this.player.name.split(' ')[1];
+      if (!lastName) {
+        return this.player.name;
+      } else {
+        return lastName;
+      }
     }
   }
 
   getBadge() {
-    if (!this.player || this.mode == FootballFieldMode.PICK_TEAM ) {
+    if (!this.player || this.mode == FootballFieldMode.PICK_TEAM) {
       return null;
     } else if (this.mode == FootballFieldMode.POINTS) {
-      return this.player.playerGameweekPerformances[this.player.playerGameweekPerformances.length -1];
+      return this.player.playerGameweekPerformances[this.player.playerGameweekPerformances.length - 1];
     } else if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
       return this.player.price;
     }
   }
 
   getBadgePosition() {
-    if(this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
+    if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
       return "before";
-    } else if(this.mode == FootballFieldMode.POINTS) {
+    } else if (this.mode == FootballFieldMode.POINTS) {
       return "after";
     }
   }
 
   getBadgeColor() {
-    if(this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
+    if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
       return "primary";
-    } else if(this.mode == FootballFieldMode.POINTS) {
+    } else if (this.mode == FootballFieldMode.POINTS) {
       return "accent";
     }
   }
 
   onClick() {
-    if(!this.player) {
+    if (!this.player) {
       return;
     }
-    const dialogRef =this.dialog.open(FootballFieldPlayerDialogComponent, { data: {player: this.player, mode: this.mode} });
+    const dialogRef = this.dialog.open(FootballFieldPlayerDialogComponent, { data: { player: this.player, mode: this.mode } });
     dialogRef.afterClosed().subscribe(result => {
 
     });

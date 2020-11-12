@@ -53,7 +53,10 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    //DODATI PROVERU ZA CENU I LIMIT IGRACA PO KLUBU
+    if(!this.checkClubLimit(player)) {
+      this.openSnackBar("You already have 3 players from " + player.club.name + "!");
+      return;
+    }
 
     let position = player.position;
     let added = false;
@@ -83,6 +86,14 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
+  }
+
+  checkClubLimit(player: Player): boolean {
+    let sameClubCount = this.players.filter(p => p.club.id == player.club.id).length;
+    if (sameClubCount > 2) {
+      return false;
+    }
+    return true;
   }
 
   addGK(player: Player): boolean {
