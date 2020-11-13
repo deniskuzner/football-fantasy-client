@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { AppConstants } from '../constants/app-constants';
 import { Player } from '../models/player.model';
+import { Team } from '../models/team.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +14,10 @@ export class TeamService {
   playerRemoved = new Subject<Player>();
   teamReset = new Subject<any>();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  save(team: Team) {
+    return this.http.post<Team>(AppConstants.serverUrl + '/teams/team', team);
+  }
+
 }

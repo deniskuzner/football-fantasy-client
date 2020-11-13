@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { SaveTeamDialogComponent } from '../dialogs/save-team-dialog/save-team-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-team-selection',
@@ -35,7 +36,8 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   constructor(
     private teamService: TeamService,
     private _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -226,16 +228,45 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    // ZA SVAKOG IGRACA NAPRAVITI TeamPlayer OBJEKAT
-    // I POSLATI LISTU NA BEK
     const dialogRef =this.dialog.open(SaveTeamDialogComponent, { data: {players: this.players} });
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.name = result.data.name;
-        this.captain = result.data.captain;
-        this.viceCaptain = result.data.viceCaptain;
+        this.setDialogData(result);
+        // UZETI USER ID IZ LOCAL STORAGE
+        let team = new Team(null, this.name, 2, 0, 1, this.captain, this.viceCaptain, []);
+        let teamPlayers: TeamPlayer[] = [];
+        teamPlayers.push(new TeamPlayer(null, 0, false, this.goalkeeper));
+        for (let i = 0; i < this.defenders.length; i++) {
+          teamPlayers.push(new TeamPlayer(null, 0, false, this.defenders[i]));
+        }
+        for (let i = 0; i < this.midfielders.length; i++) {
+          teamPlayers.push(new TeamPlayer(null, 0, false, this.midfielders[i]));
+        }
+        for (let i = 0; i < this.forwards.length; i++) {
+          teamPlayers.push(new TeamPlayer(null, 0, false, this.forwards[i]));
+        }
+        for (let i = 0; i < this.bench.length; i++) {
+          teamPlayers.push(new TeamPlayer(null, 0, true, this.bench[i]));
+        }
+        team.teamPlayers = teamPlayers;
+        this.teamService.save(team).subscribe(
+          res => {
+            // DODATI TEAM ID U LOCAL STORAGE I NAVIGATE NA PICK TEAM
+            this.router.navigate(['/']);
+          },
+          err => {
+            console.log(err);
+            this.openSnackBar("Error!");
+          }
+        );
       }
     });
+  }
+
+  setDialogData(result: any) {
+    this.name = result.data.name;
+    this.captain = result.data.captain;
+    this.viceCaptain = result.data.viceCaptain;
   }
 
   getPlayersSelectedColor() {

@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
-    <a routerLink="/">
-        <img src="../../../assets/SerbianSuperLiga_logo.png" class="img-responsive" style="max-height: 50px;">
-    </a>
-    <span style="margin-left: 10px;">Football Fantasy</span>
+    <button mat-button routerLink="/">Home</button>
+    <button mat-button routerLink="/team-selection">Team Selection</button>
+    <button mat-button routerLink="/">Points</button>
+    <button mat-button routerLink="/">Pick Team</button>
+    <button mat-button routerLink="/">Transfers</button>
     <span class="example-spacer"></span>
-    <button mat-button routerLink="/admin">
-        ADMIN PANEL
-        <mat-icon>admin_panel_settings</mat-icon>
+    <button mat-button routerLink="/">Profile</button>
+    <button mat-button routerLink="/">Logout</button>
+    <button mat-raised-button color="accent" routerLink="/admin">
+        ADMIN PANEL <mat-icon>admin_panel_settings</mat-icon>
     </button>
 </mat-toolbar>

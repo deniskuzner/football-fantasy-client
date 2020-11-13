@@ -33,6 +33,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { PlayerService } from './services/player.service';
 import { ClubService } from './services/club.service';
@@ -60,6 +61,7 @@ import { ClubComponent } from './components/club/club.component';
 import { FootballFieldPlayerComponent } from './components/football-field-player/football-field-player.component';
 import { FootballFieldPlayerDialogComponent } from './components/dialogs/football-field-player-dialog/football-field-player-dialog.component';
 import { SaveTeamDialogComponent } from './components/dialogs/save-team-dialog/save-team-dialog.component';
+import { TitleHeaderComponent } from './components/title-header/title-header.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,8 @@ import { SaveTeamDialogComponent } from './components/dialogs/save-team-dialog/s
     ClubComponent,
     FootballFieldPlayerComponent,
     FootballFieldPlayerDialogComponent,
-    SaveTeamDialogComponent
+    SaveTeamDialogComponent,
+    TitleHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,8 @@ import { SaveTeamDialogComponent } from './components/dialogs/save-team-dialog/s
     MatSnackBarModule,
     MatTabsModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatStepperModule
   ],
   providers: [
     PlayerService,

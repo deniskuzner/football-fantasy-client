@@ -3,7 +3,7 @@
     <form class="example-form" #f="ngForm">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Team Name</mat-label>
-            <input matInput [(ngModel)]="name" name="name" required>
+            <input matInput [(ngModel)]="name" name="name" maxlength="25" required>
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="outline">

@@ -59,6 +59,7 @@ export class FootballFieldPlayerComponent implements OnInit {
     } else if (this.mode == FootballFieldMode.POINTS) {
       return "after";
     }
+    return "after";
   }
 
   getBadgeColor() {

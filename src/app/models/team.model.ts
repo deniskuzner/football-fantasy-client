@@ -4,8 +4,6 @@ export class Team {
 
     constructor(
         public id: number,
-        public createdOn: Date,
-        public modifiedOn: Date,
         public name: String,
         public freeTransfers: number,
         public totalPoints: number,
