@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Player } from 'src/app/models/player.model';
+import { Team } from 'src/app/models/team.model';
+import { TeamPlayer } from 'src/app/models/team-player.model';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { TeamService } from 'src/app/services/team.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { SaveTeamDialogComponent } from '../dialogs/save-team-dialog/save-team-dialog.component';
 
 @Component({
   selector: 'app-team-selection',
@@ -20,6 +24,9 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   midfielders: Player[] = [];
   forwards: Player[] = [];
   bench: Player[] = [];
+  name: string;
+  captain: number;
+  viceCaptain: number;
 
   money: number = 100.0;
 
@@ -27,7 +34,8 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private teamService: TeamService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -215,6 +223,19 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     this.bench = [];
     this.money = 100.0;
     this.teamService.teamReset.next();
+  }
+
+  save() {
+    // ZA SVAKOG IGRACA NAPRAVITI TeamPlayer OBJEKAT
+    // I POSLATI LISTU NA BEK
+    const dialogRef =this.dialog.open(SaveTeamDialogComponent, { data: {players: this.players} });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.name = result.data.name;
+        this.captain = result.data.captain;
+        this.viceCaptain = result.data.viceCaptain;
+      }
+    });
   }
 
   getPlayersSelectedColor() {

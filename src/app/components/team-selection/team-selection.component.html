@@ -6,7 +6,8 @@
                     <button mat-raised-button color="primary" style="width: 50%;" (click)="reset()">Reset</button>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <button mat-raised-button color="primary" style="width: 50%;">Save</button>
+                    <button mat-raised-button color="primary" style="width: 50%;" (click)="save()"
+                        [disabled]="players.length != 15">Save</button>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px; text-align: center;">
