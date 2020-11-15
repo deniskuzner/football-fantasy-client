@@ -1,0 +1,40 @@
+.example-form {
+    min-width: 250px;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.club-img {
+    max-height: 70px;
+    max-width: 70px;
+    margin: auto;
+}
+
+mat-card {
+    cursor: pointer;
+    text-align: center;
+    max-height: 115px;
+}
+
+@media (max-width: 767px) {
+    .club-field {
+        width: 50%;
+        padding-bottom: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .club-field {
+        width: 20%;
+        padding-bottom: 10px;
+    }
+}
+
+.selected {
+    border: 4px solid greenyellow;
+}

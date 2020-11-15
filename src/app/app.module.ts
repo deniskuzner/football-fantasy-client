@@ -62,6 +62,9 @@ import { FootballFieldPlayerComponent } from './components/football-field-player
 import { FootballFieldPlayerDialogComponent } from './components/dialogs/football-field-player-dialog/football-field-player-dialog.component';
 import { SaveTeamDialogComponent } from './components/dialogs/save-team-dialog/save-team-dialog.component';
 import { TitleHeaderComponent } from './components/title-header/title-header.component';
+import { AccountComponent } from './components/account/account.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,10 @@ import { TitleHeaderComponent } from './components/title-header/title-header.com
     FootballFieldPlayerComponent,
     FootballFieldPlayerDialogComponent,
     SaveTeamDialogComponent,
-    TitleHeaderComponent
+    TitleHeaderComponent,
+    AccountComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

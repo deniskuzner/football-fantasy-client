@@ -1,0 +1,106 @@
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="f" editable="true">
+        <form class="example-form" #f="ngForm">
+            <h2>Personal Details</h2>
+            <ng-template matStepLabel>Personal Details</ng-template>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Username</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput [(ngModel)]="user.username" name="username" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Password</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput [(ngModel)]="user.password" name="password" type="password" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>First Name</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput [(ngModel)]="user.firstName" name="firstName" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Last Name</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput [(ngModel)]="user.lastName" name="lastName" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Email</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput [(ngModel)]="user.email" name="email" type="email" required email>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Phone Number</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput [(ngModel)]="user.phoneNumber" name="phoneNumber">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Date of Birth</b>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [(ngModel)]="user.birthDate" name="birthDate" [matDatepicker]="picker" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <b>Gender</b>
+                    <div class="row" style="margin-top: 20px;">
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="user.gender" name="gender" required>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <mat-radio-button value="male">Male</mat-radio-button>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <mat-radio-button value="female">Female</mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="!f.valid"
+                style="float: right;">Next</button>
+        </form>
+    </mat-step>
+    <mat-step [completed]="selectedClub" editable="true">
+        <ng-template matStepLabel>Favourite Club</ng-template>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 club-field" *ngFor="let club of clubs; let i = index;"
+                (click)="selectClub(i)">
+                <mat-card [ngClass]="{'selected': selectedClub == i }">
+                    <b style="font-size: small;">{{club.name}}</b>
+                    <img mat-card-image [src]="club.image" class="img-responsive club-img">
+                </mat-card>
+            </div>
+        </div>
+        <div style="float: right;">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="!selectedClub">Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>Please, confirm registration.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-raised-button color="primary" (click)="register(stepper)">Register</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

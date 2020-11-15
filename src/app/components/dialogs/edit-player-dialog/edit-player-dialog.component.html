@@ -23,7 +23,7 @@
                 <input matInput placeholder="{{formPlayer.nationality}}" [(ngModel)]="formPlayer.nationality"
                     name="nationality">
             </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width">
                 <mat-label>Birth Date</mat-label>
                 <input matInput [matDatepicker]="picker" [(ngModel)]="formPlayer.birthDate" name="birthDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -43,14 +43,14 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Height</mat-label>
-                <input matInput placeholder="{{formPlayer.height}" [(ngModel)]="formPlayer.height" name="height">
+                <input matInput placeholder="{{formPlayer.height}}" [(ngModel)]="formPlayer.height" name="height">
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Weight</mat-label>
                 <input matInput placeholder="{{formPlayer.weight}}" [(ngModel)]="formPlayer.weight" name="weight">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width">
                 <mat-label>Club</mat-label>
                 <mat-select [(value)]="selectedClub" required>
                     <mat-option *ngFor="let club of clubs" [value]="club.id">

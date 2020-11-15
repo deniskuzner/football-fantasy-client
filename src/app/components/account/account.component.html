@@ -1,0 +1,12 @@
+<mat-tab-group mat-align-tabs="center" #tab>
+    <mat-tab label="Login">
+        <div class="tab">
+            <app-login></app-login>
+        </div>
+    </mat-tab>
+    <mat-tab label="Register">
+        <div class="tab">
+            <app-register (completedRegistration)="onCompletedRegistration(tab)"></app-register>
+        </div>
+    </mat-tab>
+</mat-tab-group>
