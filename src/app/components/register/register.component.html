@@ -40,14 +40,14 @@
                     <b>Email</b>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Email</mat-label>
-                        <input matInput [(ngModel)]="user.email" name="email" type="email" required email>
+                        <input matInput [(ngModel)]="user.email" name="email" type="email" required email pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9]+$">
                     </mat-form-field>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <b>Phone Number</b>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Phone Number</mat-label>
-                        <input matInput [(ngModel)]="user.phoneNumber" name="phoneNumber">
+                        <input matInput [(ngModel)]="user.phoneNumber" name="phoneNumber" pattern="^[0-9]{9,11}">
                     </mat-form-field>
                 </div>
             </div>

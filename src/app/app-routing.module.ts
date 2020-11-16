@@ -9,44 +9,56 @@ import { HomeComponent } from './components/home/home.component';
 import { FootballFieldComponent } from './components/football-field/football-field.component';
 import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
 import { ClubComponent } from './components/club/club.component';
+import { AuthGuard } from './auth-guard.service';
+import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
 
 
 const routes: Routes = [
   {
     path : '',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [LoggedInAuthGuard]
+
   },
   {
     path: 'players',
-    component: PlayersComponent
+    component: PlayersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'clubs',
-    component: ClubsComponent
+    component: ClubsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'fixtures',
-    component: FixturesComponent
+    component: FixturesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'points',
-    component: PointsComponent
+    component: PointsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    component: AdminPanelComponent
+    component: AdminPanelComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'field',
-    component: FootballFieldComponent
+    component: FootballFieldComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'team-selection',
-    component: TeamSelectionComponent
+    component: TeamSelectionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin/club/:id',
-    component: ClubComponent
+    component: ClubComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

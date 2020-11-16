@@ -1,4 +1,4 @@
-<form class="example-form" #f="ngForm">
+<form class="example-form" #f="ngForm" (ngSubmit)="login()">
     <h2>Login</h2>
     <b>Username</b>
     <mat-form-field class="example-full-width" appearance="outline">
@@ -9,7 +9,7 @@
     <b>Password</b>
     <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput name="password" [(ngModel)]="password" required>
+        <input matInput name="password" [(ngModel)]="password" type="password" required>
     </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!f.valid">Login</button>
+    <button mat-raised-button color="primary" [disabled]="!f.valid" type="submit">Login</button>
 </form>

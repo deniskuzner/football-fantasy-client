@@ -65,6 +65,8 @@ import { TitleHeaderComponent } from './components/title-header/title-header.com
 import { AccountComponent } from './components/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './auth-guard.service';
+import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,9 @@ import { RegisterComponent } from './components/register/register.component';
     PlayerService,
     ClubService,
     FixturesService,
-    PointsService
+    PointsService,
+    AuthGuard,
+    LoggedInAuthGuard
   ],
   bootstrap: [AppComponent]
 })

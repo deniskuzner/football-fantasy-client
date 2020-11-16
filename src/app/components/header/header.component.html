@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
-    <button mat-button routerLink="/">Home</button>
-    <button mat-button routerLink="/team-selection">Team Selection</button>
-    <button mat-button routerLink="/">Points</button>
-    <button mat-button routerLink="/">Pick Team</button>
-    <button mat-button routerLink="/">Transfers</button>
-    <button mat-button routerLink="/">Leagues</button>
+    <button mat-button routerLink="/" *ngIf="!authData.id">Home</button>
+    <button mat-button routerLink="/team-selection" *ngIf="authData.id" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">Team Selection</button>
+    <button mat-button routerLink="/" *ngIf="authData.id" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">Points</button>
+    <button mat-button routerLink="/" *ngIf="authData.id" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">Pick Team</button>
+    <button mat-button routerLink="/" *ngIf="authData.id" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">Transfers</button>
+    <button mat-button routerLink="/" *ngIf="authData.id" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">Leagues</button>
     <span class="example-spacer"></span>
-    <button mat-button routerLink="/">Profile</button>
-    <button mat-button routerLink="/">Logout</button>
-    <button mat-raised-button color="accent" routerLink="/admin">
+    <button mat-button routerLink="/" *ngIf="authData.id" (click)="logout()">Logout</button>
+    <button mat-raised-button color="accent" routerLink="/admin" *ngIf="authData.id">
         ADMIN PANEL <mat-icon>admin_panel_settings</mat-icon>
     </button>
 </mat-toolbar>
