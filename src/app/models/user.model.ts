@@ -1,4 +1,5 @@
 import { Club } from './club.model';
+import { Team } from './team.model';
 
 export class User {
 
@@ -12,7 +13,8 @@ export class User {
         public gender: string,
         public birthDate: string,
         public phoneNumber: string,
-        public favouriteClubId: number
+        public favouriteClubId: number,
+        public team: Team
     ) {}
 
 }

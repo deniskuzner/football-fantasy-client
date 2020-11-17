@@ -4,9 +4,11 @@ import { User } from '../models/user.model';
 import { AppConstants } from '../constants/app-constants';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Team } from '../models/team.model';
 
 export interface AuthData {
   id: number;
+  teamId: number;
   // role: string;
 }
 
@@ -41,6 +43,7 @@ export class AuthService {
   getAuthData() {
     return {
       id: +localStorage.getItem('id'),
+      teamId: +localStorage.getItem('teamId')
       // role: localStorage.getItem('role'),
     }
   }
@@ -48,11 +51,23 @@ export class AuthService {
   //DODATI KASNIJE I ROLE
   handleAuthData(user: User) {
     localStorage.setItem('id', String(user.id));
+    if(user.team){
+      localStorage.setItem('teamId', String(user.team.id));
+    }
     //localStorage.setItem('role', user.role);
   }
 
+  setTeam(team: Team) {
+    localStorage.setItem('teamId', String(team.id));
+    this.user.next(this.getAuthData());
+  }
+
   isAuthenticated() {
-    return localStorage.getItem('id');
+    return !!localStorage.getItem('id');
+  }
+
+  isTeamCreated() {
+    return !!localStorage.getItem('teamId');
   }
 
 }

@@ -67,6 +67,11 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './auth-guard.service';
 import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
+import { TeamPointsComponent } from './components/team-points/team-points.component';
+import { PickTeamComponent } from './components/pick-team/pick-team.component';
+import { TeamTransfersComponent } from './components/team-transfers/team-transfers.component';
+import { LeaguesComponent } from './components/leagues/leagues.component';
+import { TeamGuard } from './team-guard.service';
 
 @NgModule({
   declarations: [
@@ -94,7 +99,11 @@ import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
     TitleHeaderComponent,
     AccountComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TeamPointsComponent,
+    PickTeamComponent,
+    TeamTransfersComponent,
+    LeaguesComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +147,8 @@ import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
     FixturesService,
     PointsService,
     AuthGuard,
-    LoggedInAuthGuard
+    LoggedInAuthGuard,
+    TeamGuard
   ],
   bootstrap: [AppComponent]
 })

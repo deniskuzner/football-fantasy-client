@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = new User(null, null, null, null, null, null, "male", null, null, null);
+    this.user = new User(null, null, null, null, null, null, "male", null, null, null, null);
     this.getClubs();
   }
 

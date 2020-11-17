@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { SaveTeamDialogComponent } from '../dialogs/save-team-dialog/save-team-dialog.component';
 import { Router } from '@angular/router';
+import { AuthData, AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-team-selection',
@@ -32,15 +34,21 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   money: number = 100.0;
 
   playerRemovedSub: Subscription;
+  authData: AuthData;
 
   constructor(
     private teamService: TeamService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.authData = this.authService.getAuthData();
+    if(this.authData.teamId) {
+      this.router.navigate(['/pick-team']);
+    }
     this.playerRemovedSub = this.teamService.playerRemoved.subscribe(
       res => {
         this.removePlayer(res);
@@ -58,12 +66,12 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if(this.money - player.price < 0) {
+    if (this.money - player.price < 0) {
       this.openSnackBar("You don't have enough money for " + player.name + "!");
       return;
     }
 
-    if(!this.checkClubLimit(player)) {
+    if (!this.checkClubLimit(player)) {
       this.openSnackBar("You already have 3 players from " + player.club.name + "!");
       return;
     }
@@ -180,9 +188,9 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   removeGK(player: Player) {
-    if(!this.goalkeeper) {
+    if (!this.goalkeeper) {
       this.bench[0] = null;
-    } else if(this.goalkeeper.id == player.id){
+    } else if (this.goalkeeper.id == player.id) {
       this.goalkeeper = null;
     } else {
       this.bench[0] = null;
@@ -191,7 +199,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
 
   removeDF(player: Player) {
     let indexOf = this.defenders.indexOf(player);
-    if(indexOf > -1) {
+    if (indexOf > -1) {
       this.defenders.splice(indexOf, 1);
     } else {
       this.bench[1] = null;
@@ -200,7 +208,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
 
   removeMF(player: Player) {
     let indexOf = this.midfielders.indexOf(player);
-    if(indexOf > -1) {
+    if (indexOf > -1) {
       this.midfielders.splice(indexOf, 1);
     } else {
       this.bench[2] = null;
@@ -209,7 +217,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
 
   removeFW(player: Player) {
     let indexOf = this.forwards.indexOf(player);
-    if(indexOf > -1) {
+    if (indexOf > -1) {
       this.forwards.splice(indexOf, 1);
     } else {
       this.bench[3] = null;
@@ -228,12 +236,12 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const dialogRef =this.dialog.open(SaveTeamDialogComponent, { data: {players: this.players} });
+    const dialogRef = this.dialog.open(SaveTeamDialogComponent, { data: { players: this.players } });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.setDialogData(result);
-        // UZETI USER ID IZ LOCAL STORAGE
-        let team = new Team(null, this.name, 2, 0, 1, this.captain, this.viceCaptain, []);
+        let user = new User(this.authData.id, null, null, null, null, null, null, null, null, null, null);
+        let team = new Team(null, this.name, 2, 0, this.captain, this.viceCaptain, user, []);
         let teamPlayers: TeamPlayer[] = [];
         teamPlayers.push(new TeamPlayer(null, 0, false, this.goalkeeper));
         for (let i = 0; i < this.defenders.length; i++) {
@@ -251,8 +259,8 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
         team.teamPlayers = teamPlayers;
         this.teamService.save(team).subscribe(
           res => {
-            // DODATI TEAM ID U LOCAL STORAGE I NAVIGATE NA PICK TEAM
-            this.router.navigate(['/']);
+            this.authService.setTeam(res);
+            this.router.navigate(['/pick-team']);
           },
           err => {
             console.log(err);
@@ -270,7 +278,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   getPlayersSelectedColor() {
-    if(this.players.length == 15) {
+    if (this.players.length == 15) {
       return "green";
     } else {
       return "crimson";
@@ -278,7 +286,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   getMoneyColor() {
-    if(this.money > 0) {
+    if (this.money > 0) {
       return "green";
     } else {
       return "crimson";
