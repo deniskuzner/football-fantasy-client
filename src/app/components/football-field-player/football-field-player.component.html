@@ -3,7 +3,7 @@
     <div class="row">
         <img [src]="getImage()" class="player-img">
     </div>
-    <div class="row player-name">
+    <div class="row player-name" [ngClass]="{'switched': isSwitched}">
         <b>{{getName()}}</b>
     </div>
 </button>

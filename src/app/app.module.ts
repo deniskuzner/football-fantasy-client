@@ -73,6 +73,7 @@ import { TeamTransfersComponent } from './components/team-transfers/team-transfe
 import { LeaguesComponent } from './components/leagues/leagues.component';
 import { TeamGuard } from './team-guard.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { TeamPanelComponent } from './components/team-panel/team-panel.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     PickTeamComponent,
     TeamTransfersComponent,
     LeaguesComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TeamPanelComponent
   ],
   imports: [
     BrowserModule,

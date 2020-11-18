@@ -20,9 +20,14 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial class="action-btn" (click)="removePlayer()">
+    <div class="row" *ngIf="mode == 'TEAM_SELECTION'">
+        <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="remove()">
             Remove Player
+        </button>
+    </div>
+    <div class="row" *ngIf="mode == 'PICK_TEAM'">
+        <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="switch()">
+            Switch
         </button>
     </div>
 </mat-dialog-content>

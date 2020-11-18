@@ -241,7 +241,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
       if (result) {
         this.setDialogData(result);
         let user = new User(this.authData.id, null, null, null, null, null, null, null, null, null, null);
-        let team = new Team(null, this.name, 2, 0, this.captain, this.viceCaptain, user, []);
+        let team = new Team(null, this.name, 2, 0, this.captain, this.viceCaptain, this.money, user, []);
         let teamPlayers: TeamPlayer[] = [];
         teamPlayers.push(new TeamPlayer(null, 0, false, this.goalkeeper));
         for (let i = 0; i < this.defenders.length; i++) {

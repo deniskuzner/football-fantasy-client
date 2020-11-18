@@ -1,3 +1,54 @@
 <div class="container">
-    <p>pick-team works!</p>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-7 col-lg-7">
+            <div class="row" style="text-align: center;">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%;" (click)="reset()">Reset</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%;" (click)="save()"
+                        [disabled]="!teamChanged">Save</button>
+                </div>
+            </div>
+            <div class="row">
+                <app-football-field *ngIf="signal" [mode]="footballFieldMode" [team]="team"></app-football-field>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="row">
+                        <img [src]="getPlayerInImage()" class="img-responsive player-img">
+                    </div>
+                    <div class="row">
+                        <h4>{{getPlayerInName()}}</h4>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="../../../assets/substitution.png" class="img-responsive" style="max-height: 100px;">
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="row">
+                        <img [src]="getPlayerOutImage()" class="img-responsive player-img">
+                    </div>
+                    <div class="row">
+                        <h4>{{getPlayerOutName()}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%; float: right;"
+                        (click)="cancel()" [disabled]="!playerIn && !playerOut">Cancel</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button mat-raised-button color="primary" style="width: 50%; float: left;" (click)="confirmSwitch()"
+                        [disabled]="!playerIn || !playerOut">Switch</button>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <app-team-panel></app-team-panel>
+            </div>
+        </div>
+    </div>
 </div>

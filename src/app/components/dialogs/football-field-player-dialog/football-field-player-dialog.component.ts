@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Player } from 'src/app/models/player.model';
 import { TeamService } from 'src/app/services/team.service';
 
@@ -23,17 +22,14 @@ export class FootballFieldPlayerDialogComponent implements OnInit {
   ngOnInit(): void {
     this.player = this.data.player;
     this.mode = this.data.mode;
-    this.initializeDialog();
   }
 
-  initializeDialog() {
-    if(this.mode == FootballFieldMode.TEAM_SELECTION) {
-      this.title = this.player.name;
-    }
-  }
-
-  removePlayer() {
+  remove() {
     this.teamService.playerRemoved.next(this.player);
+  }
+
+  switch() {
+    this.teamService.playerSwitched.next(this.player);
   }
 
   getPlayerImage(playerImage: String): String {

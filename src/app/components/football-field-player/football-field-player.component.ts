@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
+import { TeamService } from 'src/app/services/team.service';
 import { FootballFieldPlayerDialogComponent } from '../dialogs/football-field-player-dialog/football-field-player-dialog.component';
 
 @Component({
@@ -9,17 +11,28 @@ import { FootballFieldPlayerDialogComponent } from '../dialogs/football-field-pl
   templateUrl: './football-field-player.component.html',
   styleUrls: ['./football-field-player.component.css']
 })
-export class FootballFieldPlayerComponent implements OnInit {
+export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
 
   @Input() player: Player;
   @Input() mode: String;
+  isSwitched: boolean = false;
+  playerChangedSub: Subscription;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private teamService: TeamService
   ) { }
 
   ngOnInit(): void {
+    this.playerChangedSub = this.teamService.playerChanged.subscribe(
+      res => {
+        this.switchPlayer(res);
+      }
+    );
+  }
 
+  ngOnDestroy() {
+    this.playerChangedSub.unsubscribe();
   }
 
   getImage(): String {
@@ -76,8 +89,16 @@ export class FootballFieldPlayerComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(FootballFieldPlayerDialogComponent, { data: { player: this.player, mode: this.mode } });
     dialogRef.afterClosed().subscribe(result => {
-
+      
     });
+  }
+
+  switchPlayer(player: Player) {
+    if(!player) {
+      this.isSwitched = false;
+    } else if(this.player.id == player.id) {
+      this.isSwitched = true;
+    }
   }
 
 }

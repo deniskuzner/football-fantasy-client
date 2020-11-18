@@ -10,6 +10,7 @@ export class Team {
         public totalPoints: number,
         public captainId: number,
         public viceCaptainId: number,
+        public moneyRemaining: number,
         public user: User,
         public teamPlayers: TeamPlayer[]
     ) { }

@@ -20,3 +20,8 @@
     border-width: 1px 7px;
     border-radius: 5px;
 }
+
+.switched {
+    background-color: lawngreen;
+    border-color: lawngreen;
+}

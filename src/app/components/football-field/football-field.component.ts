@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Player } from 'src/app/models/player.model';
+import { Team } from 'src/app/models/team.model';
 import { TeamService } from 'src/app/services/team.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { TeamService } from 'src/app/services/team.service';
 export class FootballFieldComponent implements OnInit, OnDestroy {
 
   @Input() mode: String;
+  @Input() team: Team;
   goalkeeper: Player;
   defenders: Player[] = new Array(4);
   midfielders: Player[] = new Array(4);
@@ -26,6 +28,7 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.populateField();
     this.playerAddedSub = this.teamService.playerAdded.subscribe(
       res => {
         this.addPlayer(res);
@@ -47,6 +50,15 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     this.playerAddedSub.unsubscribe();
     this.playerRemovedSub.unsubscribe();
     this.teamResetSub.unsubscribe();
+  }
+
+  populateField() {
+    if(!this.team) {
+      return;
+    }
+    this.team.teamPlayers.forEach(tp => {
+      this.addPlayer(tp.player);
+    });
   }
 
   addPlayer(player: Player) {
