@@ -11,6 +11,7 @@ import { TeamPointsComponent } from './components/team-points/team-points.compon
 import { PickTeamComponent } from './components/pick-team/pick-team.component';
 import { TeamTransfersComponent } from './components/team-transfers/team-transfers.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,14 @@ const routes: Routes = [
     path: 'leagues',
     component: LeaguesComponent,
     canActivate: [AuthGuard, TeamGuard]
+  },
+  {
+    path: 'page-not-found',
+    component: PageNotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/page-not-found'
   }
 ];
 

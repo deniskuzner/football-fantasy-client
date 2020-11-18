@@ -36,6 +36,7 @@ export class AuthService {
   
   logout() {
     localStorage.removeItem('id');
+    localStorage.removeItem('teamId');
     this.user.next(this.getAuthData());
   }
 
