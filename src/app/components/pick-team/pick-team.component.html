@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="col-md-7 col-lg-7">
             <div class="row" style="text-align: center;">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -15,6 +15,11 @@
             </div>
         </div>
         <div class="col-md-5 col-lg-5">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h1 style="margin-top: 0px;">Substitution</h1>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <div class="row">
@@ -38,16 +43,41 @@
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <button mat-raised-button color="primary" style="width: 50%; float: right;"
-                        (click)="cancel()" [disabled]="!playerIn && !playerOut">Cancel</button>
+                    <button mat-raised-button color="primary" style="width: 50%; float: right;" (click)="cancel()"
+                        [disabled]="!playerIn && !playerOut">Cancel</button>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <button mat-raised-button color="primary" style="width: 50%; float: left;" (click)="confirmSwitch()"
                         [disabled]="!playerIn || !playerOut">Switch</button>
                 </div>
             </div>
-            <div class="row" style="margin-top: 40px;">
-                <app-team-panel></app-team-panel>
+            <hr>
+            <div *ngIf="team">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 style="margin-top: 0px;">Team: {{team.name}}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>Captain</mat-card-title>
+                                <mat-card-subtitle>{{captain.player.name}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img [src]="captain.player.image" class="img-responsive cap-img">
+                        </mat-card>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>Vice Captain</mat-card-title>
+                                <mat-card-subtitle>{{viceCaptain.player.name}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img [src]="viceCaptain.player.image" class="img-responsive cap-img">
+                        </mat-card>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

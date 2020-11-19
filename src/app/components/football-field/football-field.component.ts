@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
+import { TeamPlayer } from 'src/app/models/team-player.model';
 import { Team } from 'src/app/models/team.model';
 import { TeamService } from 'src/app/services/team.service';
 
@@ -22,6 +24,7 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   playerAddedSub: Subscription;
   playerRemovedSub: Subscription;
   teamResetSub: Subscription;
+  teamPlayersChangedSub: Subscription;
 
   constructor(
     private teamService: TeamService
@@ -44,6 +47,11 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
         this.reset();
       }
     );
+    this.teamPlayersChangedSub = this.teamService.teamPlayersChanged.subscribe(
+      res => {
+        this.onTeamPlayersChanged(res);
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -57,6 +65,13 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
       return;
     }
     this.team.teamPlayers.forEach(tp => {
+      this.addPlayer(tp.player);
+    });
+  }
+
+  onTeamPlayersChanged(teamPlayers: TeamPlayer[]) {
+    this.removeAll();
+    teamPlayers.forEach(tp => {
       this.addPlayer(tp.player);
     });
   }
@@ -169,6 +184,16 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   }
 
   reset() {
+    if(this.mode == FootballFieldMode.TEAM_SELECTION) {
+      this.removeAll();
+    } else if (this.mode == FootballFieldMode.PICK_TEAM || this.mode == FootballFieldMode.TRANSFERS) {
+      // DODATI LOGIKU ZA RESET KAD SE URADI SWITCH DA BI MOGLO DA SE PROVERI
+      this.removeAll();
+      this.populateField();
+    }
+  }
+
+  removeAll() {
     this.goalkeeper = null;
     for (let i = 0; i < this.defenders.length; i++) {
       this.defenders[i] = null;

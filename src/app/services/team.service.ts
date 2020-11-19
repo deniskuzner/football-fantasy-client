@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppConstants } from '../constants/app-constants';
 import { Player } from '../models/player.model';
+import { TeamPlayer } from '../models/team-player.model';
 import { Team } from '../models/team.model';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class TeamService {
   playerSwitched = new Subject<Player>();
   playerChanged = new Subject<Player>();
   teamReset = new Subject<any>();
+  teamPlayersChanged = new Subject<TeamPlayer[]>();
 
   constructor(private http: HttpClient) { }
 

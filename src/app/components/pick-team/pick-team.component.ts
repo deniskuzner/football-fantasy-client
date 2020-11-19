@@ -25,6 +25,9 @@ export class PickTeamComponent implements OnInit, OnDestroy {
   playerOut: TeamPlayer;
   playerIn: TeamPlayer;
 
+  captain: TeamPlayer;
+  viceCaptain: TeamPlayer;
+
   teamChanged: boolean = false;
 
   constructor(
@@ -54,6 +57,8 @@ export class PickTeamComponent implements OnInit, OnDestroy {
       res => {
         this.team = res;
         this.teamPlayers = [...this.team.teamPlayers];
+        this.captain = this.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
+        this.viceCaptain = this.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
         this.signal = true;
       }
     );
@@ -96,45 +101,46 @@ export class PickTeamComponent implements OnInit, OnDestroy {
   }
 
   switchPlayer(player: Player) {
-    let tp = this.team.teamPlayers.filter(tp => tp.player.id == player.id)[0];
+    let tp = this.teamPlayers.filter(tp => tp.player.id == player.id)[0];
     if (tp.onBench) {
-      this.playerOut = tp;
-      this.updatePlayerIn();
-    } else {
       this.playerIn = tp;
       this.updatePlayerOut();
+    } else {
+      this.playerOut = tp;
+      this.updatePlayerIn();
     }
   }
 
-  updatePlayerIn() {
-    if (!this.playerIn) {
+  updatePlayerOut() {
+    if (!this.playerOut) {
+      this.updatePlayerStyle();
       return;
     }
-    if (this.playerIn.player.position != this.playerOut.player.position) {
-      this.playerIn = null;
+    if (this.playerOut.player.position != this.playerIn.player.position) {
+      this.playerOut = null;
     }
     this.updatePlayerStyle();
   }
 
-  updatePlayerOut() {
-    let position = this.playerIn.player.position;
+  updatePlayerIn() {
+    let position = this.playerOut.player.position;
     let bench = this.teamPlayers.filter(tp => tp.onBench);
     if (position == "GK") {
-      this.playerOut = bench.filter(tp => tp.player.position == "GK")[0];
+      this.playerIn = bench.filter(tp => tp.player.position == "GK")[0];
     } else if (position == "DF") {
-      this.playerOut = bench.filter(tp => tp.player.position == "DF")[0];
+      this.playerIn = bench.filter(tp => tp.player.position == "DF")[0];
     } else if (position == "MF") {
-      this.playerOut = bench.filter(tp => tp.player.position == "MF")[0];
+      this.playerIn = bench.filter(tp => tp.player.position == "MF")[0];
     } else if (position == "FW") {
-      this.playerOut = bench.filter(tp => tp.player.position == "FW")[0];
+      this.playerIn = bench.filter(tp => tp.player.position == "FW")[0];
     }
     this.updatePlayerStyle();
   }
 
   updatePlayerStyle() {
     this.teamService.playerChanged.next(null);
-    this.teamService.playerChanged.next(this.playerIn ? this.playerIn.player : null);
     this.teamService.playerChanged.next(this.playerOut ? this.playerOut.player : null);
+    this.teamService.playerChanged.next(this.playerIn ? this.playerIn.player : null);
   }
 
   cancel() {
@@ -144,12 +150,25 @@ export class PickTeamComponent implements OnInit, OnDestroy {
   }
 
   confirmSwitch() {
-
+    if (!this.playerIn || !this.playerOut) {
+      return;
+    }
+    let inIndex = this.teamPlayers.indexOf(this.playerIn);
+    let outIndex = this.teamPlayers.indexOf(this.playerOut);
+    this.playerIn.onBench = false;
+    this.playerOut.onBench = true;
+    this.teamPlayers[outIndex] = this.playerIn;
+    this.teamPlayers[inIndex] = this.playerOut;
+    this.teamChanged = true;
+    this.teamService.teamPlayersChanged.next(this.teamPlayers);
+    this.cancel();
   }
 
   reset() {
     this.cancel();
-    // RESTARTOVATI CELU POSTAVU NA POCETNU
+    this.teamService.teamReset.next();
+    this.captain = this.team.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
+    this.viceCaptain = this.team.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
   }
 
   save() {

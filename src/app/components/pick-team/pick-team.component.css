@@ -6,3 +6,13 @@
     max-height: 100px;
     max-width: 100px;
 }
+
+.cap-img {
+    margin: auto;
+    max-height: 130px;
+    max-width: 130px;
+}
+
+mat-card {
+    min-width: 180px;
+}
