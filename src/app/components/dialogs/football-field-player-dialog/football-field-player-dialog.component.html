@@ -30,4 +30,14 @@
             Switch
         </button>
     </div>
+    <div class="row" *ngIf="mode == 'PICK_TEAM'">
+        <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="makeCaptain()">
+            Make Captain
+        </button>
+    </div>
+    <div class="row" *ngIf="mode == 'PICK_TEAM'">
+        <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="makeViceCaptain()">
+            Make Vice Captain
+        </button>
+    </div>
 </mat-dialog-content>

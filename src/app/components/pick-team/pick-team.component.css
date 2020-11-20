@@ -9,10 +9,11 @@
 
 .cap-img {
     margin: auto;
-    max-height: 130px;
-    max-width: 130px;
+    max-height: 70px;
+    max-width: 70px;
 }
 
 mat-card {
-    min-width: 180px;
+    min-width: 190px;
+    max-height: 100px;
 }

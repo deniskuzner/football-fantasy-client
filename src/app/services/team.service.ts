@@ -17,6 +17,7 @@ export class TeamService {
   playerChanged = new Subject<Player>();
   teamReset = new Subject<any>();
   teamPlayersChanged = new Subject<TeamPlayer[]>();
+  captainChanged = new Subject<{player: Player, type: String}>();
 
   constructor(private http: HttpClient) { }
 

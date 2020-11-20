@@ -61,20 +61,28 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <mat-card>
-                            <mat-card-header>
-                                <mat-card-title>Captain</mat-card-title>
-                                <mat-card-subtitle>{{captain.player.name}}</mat-card-subtitle>
-                            </mat-card-header>
-                            <img [src]="captain.player.image" class="img-responsive cap-img">
+                            <div class="row">
+                                <div class="col-xs-4 com-sm-4 col-md-4 col-lg-4">
+                                    <img [src]="getPlayerImage(captain.player)" class="img-responsive cap-img">
+                                </div>
+                                <div class="col-xs-8 com-sm-8 col-md-8 col-lg-8">
+                                    <h5>Captain</h5>
+                                    <mat-card-subtitle>{{captain.player.name}}</mat-card-subtitle>
+                                </div>
+                            </div>
                         </mat-card>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <mat-card>
-                            <mat-card-header>
-                                <mat-card-title>Vice Captain</mat-card-title>
-                                <mat-card-subtitle>{{viceCaptain.player.name}}</mat-card-subtitle>
-                            </mat-card-header>
-                            <img [src]="viceCaptain.player.image" class="img-responsive cap-img">
+                            <div class="row">
+                                <div class="col-xs-4 com-sm-4 col-md-4 col-lg-4">
+                                    <img [src]="getPlayerImage(viceCaptain.player)" class="img-responsive cap-img">
+                                </div>
+                                <div class="col-xs-8 com-sm-8 col-md-8 col-lg-8">
+                                    <h5>Vice Captain</h5>
+                                    <mat-card-subtitle>{{viceCaptain.player.name}}</mat-card-subtitle>
+                                </div>
+                            </div>
                         </mat-card>
                     </div>
                 </div>

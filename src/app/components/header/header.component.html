@@ -6,7 +6,7 @@
     </button>
     <button mat-button routerLink="/pick-team" *ngIf="authData.id && authData.teamId"
         routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        Pick Team
+        Team
     </button>
     <button mat-button routerLink="/team-points" *ngIf="authData.id && authData.teamId"
         routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

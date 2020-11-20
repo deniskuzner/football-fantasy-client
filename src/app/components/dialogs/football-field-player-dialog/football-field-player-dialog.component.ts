@@ -32,6 +32,14 @@ export class FootballFieldPlayerDialogComponent implements OnInit {
     this.teamService.playerSwitched.next(this.player);
   }
 
+  makeCaptain() {
+    this.teamService.captainChanged.next({player: this.player, type: 'CAPTAIN'});
+  }
+
+  makeViceCaptain() {
+    this.teamService.captainChanged.next({player: this.player, type: 'VICE_CAPTAIN'});
+  }
+
   getPlayerImage(playerImage: String): String {
     if (playerImage.length) {
       return playerImage;

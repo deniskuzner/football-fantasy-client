@@ -58,6 +58,7 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     this.playerAddedSub.unsubscribe();
     this.playerRemovedSub.unsubscribe();
     this.teamResetSub.unsubscribe();
+    this.teamPlayersChangedSub.unsubscribe();
   }
 
   populateField() {

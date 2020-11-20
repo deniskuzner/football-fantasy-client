@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
@@ -21,6 +22,7 @@ export class PickTeamComponent implements OnInit, OnDestroy {
   teamPlayers: TeamPlayer[] = [];
   signal: boolean;
   playerSwitchedSub: Subscription;
+  captainChangedSub: Subscription;
 
   playerOut: TeamPlayer;
   playerIn: TeamPlayer;
@@ -32,7 +34,8 @@ export class PickTeamComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -45,45 +48,58 @@ export class PickTeamComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.captainChangedSub = this.teamService.captainChanged.subscribe(
+      res => {
+        this.changeCaptain(res);
+      }
+    );
   }
 
   ngOnDestroy() {
     this.playerSwitchedSub.unsubscribe();
+    this.captainChangedSub.unsubscribe();
   }
 
   getTeam() {
     this.signal = false;
     this.teamService.getTeamById(this.authData.teamId).subscribe(
       res => {
-        this.team = res;
-        this.teamPlayers = [...this.team.teamPlayers];
-        this.captain = this.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
-        this.viceCaptain = this.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
+        this.initTeam(res);
         this.signal = true;
+      },
+      err => {
+        console.log(err);
       }
     );
   }
 
+  initTeam(team: Team) {
+    this.team = team;
+    this.teamPlayers = [...this.team.teamPlayers];
+    this.captain = this.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
+    this.viceCaptain = this.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
+  }
+
   getPlayerInImage() {
     if (this.playerIn) {
-      if (this.playerIn.player.image.length) {
-        return this.playerIn.player.image;
-      } else {
-        return '../../../assets/person.png';
-      }
+      return this.getPlayerImage(this.playerIn.player);
     }
     return '../../../assets/person.png';
   }
 
   getPlayerOutImage() {
     if (this.playerOut) {
-      if (this.playerOut.player.image.length) {
-        return this.playerOut.player.image;
-      } else {
-        return '../../../assets/person.png';
-      }
+      return this.getPlayerImage(this.playerOut.player);
     }
     return '../../../assets/person.png';
+  }
+
+  getPlayerImage(player: Player) {
+    if (player.image.length) {
+      return player.image;
+    } else {
+      return '../../../assets/person.png';
+    }
   }
 
   getPlayerInName() {
@@ -143,6 +159,30 @@ export class PickTeamComponent implements OnInit, OnDestroy {
     this.teamService.playerChanged.next(this.playerIn ? this.playerIn.player : null);
   }
 
+  changeCaptain(data: { player: Player; type: String }) {
+    if (data.type == 'CAPTAIN') {
+      if (this.captain.player.id == data.player.id) {
+        return;
+      }
+      if(this.viceCaptain.player.id == data.player.id) {
+        this.openSnackBar(data.player.name + ' is already Vice Captain!');
+        return;
+      }
+      this.captain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
+      this.teamChanged = true;
+    } else {
+      if (this.viceCaptain.player.id == data.player.id) {
+        return;
+      }
+      if(this.captain.player.id == data.player.id) {
+        this.openSnackBar(data.player.name + ' is already Captain!');
+        return;
+      }
+      this.viceCaptain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
+      this.teamChanged = true;
+    }
+  }
+
   cancel() {
     this.playerIn = null;
     this.playerOut = null;
@@ -169,10 +209,32 @@ export class PickTeamComponent implements OnInit, OnDestroy {
     this.teamService.teamReset.next();
     this.captain = this.team.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
     this.viceCaptain = this.team.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
+    this.teamChanged = false;
   }
 
   save() {
+    this.team.teamPlayers = this.teamPlayers;
+    this.team.captainId = this.captain.player.id;
+    this.team.viceCaptainId = this.viceCaptain.player.id;
+    this.teamService.save(this.team).subscribe(
+      res => {
+        this.initTeam(res);
+        this.teamChanged = false;
+        this.openSnackBar('Team saved!');
+      },
+      err => {
+        console.log(err);
+        this.openSnackBar('Error!');
+      }
+    );
+  }
 
+  openSnackBar(message: string) {
+    this._snackBar.open(message, "x", {
+      duration: 2000,
+      horizontalPosition: 'start',
+      verticalPosition: 'bottom'
+    });
   }
 
 }
