@@ -39,7 +39,7 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
     if (!this.player) {
       return "../../../assets/shirt.webp";
     } else {
-      return '../../../assets/person.png';
+      return '../../../assets/dres.png';
     }
   }
 
