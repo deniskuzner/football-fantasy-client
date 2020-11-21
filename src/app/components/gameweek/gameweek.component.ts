@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,7 @@ import { FixturesService } from 'src/app/services/fixtures.service';
 })
 export class GameweekComponent implements OnInit, OnDestroy {
 
+  @Input() mode: String;
   @Output() selectedGameweekChange = new EventEmitter<Gameweek>();
   @ViewChild(MatAccordion) accordion: MatAccordion;
   gameweek: Gameweek;

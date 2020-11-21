@@ -52,7 +52,6 @@ export class PickTeamComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.playerSwitchedSub.unsubscribe();
-    this.captainChangedSub.unsubscribe();
   }
 
   getTeam() {

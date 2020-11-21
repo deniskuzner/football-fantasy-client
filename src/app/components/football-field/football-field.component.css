@@ -17,3 +17,9 @@ div.image {
     border-radius: 3px; 
     padding: 5px;
 }
+
+.bench-players {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}

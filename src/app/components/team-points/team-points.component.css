@@ -1,0 +1,15 @@
+.points-card {
+    text-align: center;
+    min-width: 190px;
+    max-height: 100px;
+}
+
+.points-card-header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.points-card-value {
+    font-size: 40px;
+    color: forestgreen;
+}

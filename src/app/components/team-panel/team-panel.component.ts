@@ -51,6 +51,7 @@ export class TeamPanelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.captainChangedSub.unsubscribe();
+    this.teamResetSub.unsubscribe();
   }
 
   getFavouriteClub() {

@@ -60,7 +60,7 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
     if (!this.player || this.mode == FootballFieldMode.PICK_TEAM) {
       return null;
     } else if (this.mode == FootballFieldMode.POINTS) {
-      return this.player.playerGameweekPerformances[this.player.playerGameweekPerformances.length - 1];
+      return this.player.playerGameweekPerformances[this.player.playerGameweekPerformances.length - 1].points;
     } else if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
       return this.player.price;
     }

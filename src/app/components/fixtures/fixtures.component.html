@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <app-gameweek (selectedGameweekChange)="onSelectedGameweekChange($event)" [hidden]="!signal"></app-gameweek>
+            <app-gameweek (selectedGameweekChange)="onSelectedGameweekChange($event)" mode="ADMIN" [hidden]="!signal"></app-gameweek>
             <mat-spinner *ngIf="!signal"></mat-spinner>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
