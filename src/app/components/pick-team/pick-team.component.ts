@@ -48,11 +48,6 @@ export class PickTeamComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.captainChangedSub = this.teamService.captainChanged.subscribe(
-      res => {
-        this.changeCaptain(res);
-      }
-    );
   }
 
   ngOnDestroy() {
@@ -159,28 +154,13 @@ export class PickTeamComponent implements OnInit, OnDestroy {
     this.teamService.playerChanged.next(this.playerIn ? this.playerIn.player : null);
   }
 
-  changeCaptain(data: { player: Player; type: String }) {
-    if (data.type == 'CAPTAIN') {
-      if (this.captain.player.id == data.player.id) {
-        return;
-      }
-      if(this.viceCaptain.player.id == data.player.id) {
-        this.openSnackBar(data.player.name + ' is already Vice Captain!');
-        return;
-      }
-      this.captain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
-      this.teamChanged = true;
+  onCaptainChange(data: { teamPlayer: TeamPlayer; type: String }) {
+    if(data.type == 'CAPTAIN') {
+      this.captain = data.teamPlayer;
     } else {
-      if (this.viceCaptain.player.id == data.player.id) {
-        return;
-      }
-      if(this.captain.player.id == data.player.id) {
-        this.openSnackBar(data.player.name + ' is already Captain!');
-        return;
-      }
-      this.viceCaptain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
-      this.teamChanged = true;
+      this.viceCaptain = data.teamPlayer;
     }
+    this.teamChanged = true;
   }
 
   cancel() {

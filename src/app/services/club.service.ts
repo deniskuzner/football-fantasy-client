@@ -37,4 +37,8 @@ export class ClubService {
         return this.http.get<String[]>(AppConstants.serverUrl + '/clubs/all/names');
     }
 
+    getFavouriteClub(userId: number) {
+        return this.http.get<Club>(AppConstants.serverUrl + '/clubs/favourite/' + userId);
+    }
+
 }

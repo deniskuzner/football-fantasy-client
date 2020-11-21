@@ -1,0 +1,15 @@
+.cap-img {
+    max-height: 70px;
+    max-width: 70px;
+}
+
+.captain-card {
+    min-width: 190px;
+    max-height: 100px;
+}
+
+.club-img {
+    max-height: 90px;
+    max-width: 90px;
+    margin: auto;
+}

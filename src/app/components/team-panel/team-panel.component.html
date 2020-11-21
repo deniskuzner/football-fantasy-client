@@ -1,3 +1,102 @@
 <div class="row">
-    <p>team-panel works!</p>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1 style="margin-top: 0px;">Team Details</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <mat-card class="captain-card">
+            <div class="row">
+                <div class="col-xs-4 com-sm-4 col-md-4 col-lg-4">
+                    <img [src]="getPlayerImage(captain.player)" class="img-responsive cap-img">
+                </div>
+                <div class="col-xs-8 com-sm-8 col-md-8 col-lg-8">
+                    <h5>Captain</h5>
+                    <mat-card-subtitle>{{captain.player.name}}</mat-card-subtitle>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <mat-card class="captain-card">
+            <div class="row">
+                <div class="col-xs-4 com-sm-4 col-md-4 col-lg-4">
+                    <img [src]="getPlayerImage(viceCaptain.player)" class="img-responsive cap-img">
+                </div>
+                <div class="col-xs-8 com-sm-8 col-md-8 col-lg-8">
+                    <h5>Vice Captain</h5>
+                    <mat-card-subtitle>{{viceCaptain.player.name}}</mat-card-subtitle>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <mat-card>
+            <div class="row">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>Team:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{team.name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>User:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{team.user.firstName}} {{team.user.lastName}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>Total Points:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{team.totalPoints}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>Free Transfers:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{team.freeTransfers}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>Team Value:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{teamValue}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <b>Money Remaining:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            {{team.moneyRemaining}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="text-align: center; border-left: 1px solid lightgrey;">
+                    <div class="row">
+                        <b>Favourite Club</b>
+                    </div>
+                    <div class="row" *ngIf="favouriteClub">
+                        <img [src]="favouriteClub.image" class="img-responsive club-img">
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+    </div>
 </div>
