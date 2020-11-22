@@ -110,19 +110,21 @@ export class PickTeamComponent implements OnInit, OnDestroy {
     return 'Select player';
   }
 
-  switchPlayer(player: Player) {
-    let tp = this.teamPlayers.filter(tp => tp.player.id == player.id)[0];
-    if (tp.onBench) {
-      this.playerIn = tp;
+  switchPlayer(teamPlayer: TeamPlayer) {
+    if (teamPlayer.onBench) {
+      this.playerIn = teamPlayer;
       this.updatePlayerOut();
     } else {
-      this.playerOut = tp;
+      this.playerOut = teamPlayer;
       this.updatePlayerIn();
     }
   }
 
   updatePlayerOut() {
     if (!this.playerOut) {
+      if(this.playerIn.player.position == "GK") {
+        this.playerOut = this.teamPlayers.filter(tp => tp.player.position == "GK" && !tp.onBench)[0];
+      }
       this.updatePlayerStyle();
       return;
     }
@@ -149,8 +151,8 @@ export class PickTeamComponent implements OnInit, OnDestroy {
 
   updatePlayerStyle() {
     this.teamService.playerChanged.next(null);
-    this.teamService.playerChanged.next(this.playerOut ? this.playerOut.player : null);
-    this.teamService.playerChanged.next(this.playerIn ? this.playerIn.player : null);
+    this.teamService.playerChanged.next(this.playerOut ? this.playerOut : null);
+    this.teamService.playerChanged.next(this.playerIn ? this.playerIn : null);
   }
 
   onCaptainChange(data: { teamPlayer: TeamPlayer; type: String }) {
@@ -186,8 +188,10 @@ export class PickTeamComponent implements OnInit, OnDestroy {
   reset() {
     this.cancel();
     this.teamService.teamReset.next();
-    this.captain = this.team.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
-    this.viceCaptain = this.team.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
+    this.getTeam();
+    // this.teamPlayers = [...this.team.teamPlayers];
+    // this.captain = this.team.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
+    // this.viceCaptain = this.team.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
     this.teamChanged = false;
   }
 

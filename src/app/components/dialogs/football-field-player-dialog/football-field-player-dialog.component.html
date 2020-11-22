@@ -2,20 +2,20 @@
 <mat-dialog-content>
     <div class="row" style="text-align: center;">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <img [src]="getPlayerImage(player.image)" class="img-responsive" style="max-height: 200px;">
+            <img [src]="getPlayerImage(teamPlayer.player.image)" class="img-responsive" style="max-height: 200px;">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div class="row" style="background-color: indigo;">
-                <h3 style="color: honeydew;">{{ player.name }}</h3>
+                <h3 style="color: honeydew;">{{ teamPlayer.player.name }}</h3>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <h5 style="margin-bottom: 0px;">Price</h5>
-                    <p>{{player.price}}</p>
+                    <p>{{teamPlayer.player.price}}</p>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <h5 style="margin-bottom: 0px;">Total</h5>
-                    <p>{{player.totalPoints}}<span style="font-size: small;">pts</span></p>
+                    <p>{{teamPlayer.player.totalPoints}}<span style="font-size: small;">pts</span></p>
                 </div>
             </div>
         </div>

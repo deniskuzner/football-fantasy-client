@@ -80,26 +80,26 @@ export class TeamPanelComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeCaptain(data: { player: Player; type: String }) {
+  changeCaptain(data: { teamPlayer: TeamPlayer; type: String }) {
     if (data.type == 'CAPTAIN') {
-      if (this.captain.player.id == data.player.id) {
+      if (this.captain.id == data.teamPlayer.id) {
         return;
       }
-      if(this.viceCaptain.player.id == data.player.id) {
-        this.openSnackBar(data.player.name + ' is already Vice Captain!');
+      if(this.viceCaptain.id == data.teamPlayer.id) {
+        this.openSnackBar(data.teamPlayer.player.name + ' is already Vice Captain!');
         return;
       }
-      this.captain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
+      this.captain = data.teamPlayer;
       this.captainChanged.emit({teamPlayer: this.captain, type: 'CAPTAIN'});
     } else {
-      if (this.viceCaptain.player.id == data.player.id) {
+      if (this.viceCaptain.id == data.teamPlayer.id) {
         return;
       }
-      if(this.captain.player.id == data.player.id) {
-        this.openSnackBar(data.player.name + ' is already Captain!');
+      if(this.captain.id == data.teamPlayer.id) {
+        this.openSnackBar(data.teamPlayer.player.name + ' is already Captain!');
         return;
       }
-      this.viceCaptain = this.teamPlayers.filter(tp => tp.player.id == data.player.id)[0];
+      this.viceCaptain = data.teamPlayer;
       this.captainChanged.emit({teamPlayer: this.viceCaptain, type: 'VICE_CAPTAIN'});
     }
   }

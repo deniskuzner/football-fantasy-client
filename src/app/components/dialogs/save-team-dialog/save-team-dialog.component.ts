@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Player } from 'src/app/models/player.model';
+import { TeamPlayer } from 'src/app/models/team-player.model';
 
 @Component({
   selector: 'app-save-team-dialog',
@@ -10,9 +11,9 @@ import { Player } from 'src/app/models/player.model';
 })
 export class SaveTeamDialogComponent implements OnInit {
 
-  players: Player[] = [];
-  captainOptions: Player[] = [];
-  viceCaptainOptions: Player[] = [];
+  teamPlayers: TeamPlayer[] = [];
+  captainOptions: TeamPlayer[] = [];
+  viceCaptainOptions: TeamPlayer[] = [];
   captain: number;
   viceCaptain: number;
   name: string;
@@ -23,17 +24,17 @@ export class SaveTeamDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.players = this.data.players;
-    this.captainOptions = this.players;
-    this.viceCaptainOptions = this.players;
+    this.teamPlayers = this.data.teamPlayers;
+    this.captainOptions = this.teamPlayers;
+    this.viceCaptainOptions = this.teamPlayers;
   }
 
   onCaptainChange() {
-    this.viceCaptainOptions = this.players.filter(p => p.id != this.captain);
+    this.viceCaptainOptions = this.teamPlayers.filter(tp => tp.player.id != this.captain);
   }
 
   onViceCaptainChange() {
-    this.captainOptions = this.players.filter(p => p.id != this.viceCaptain);
+    this.captainOptions = this.teamPlayers.filter(tp => tp.player.id != this.viceCaptain);
   }
 
   save(form: NgForm) {

@@ -19,14 +19,14 @@ import { User } from 'src/app/models/user.model';
 })
 export class TeamSelectionComponent implements OnInit, OnDestroy {
 
-  players: Player[] = [];
+  teamPlayers: TeamPlayer[] = [];
   footballFieldMode: FootballFieldMode = FootballFieldMode.TEAM_SELECTION;
 
-  goalkeeper: Player;
-  defenders: Player[] = [];
-  midfielders: Player[] = [];
-  forwards: Player[] = [];
-  bench: Player[] = [];
+  goalkeeper: TeamPlayer;
+  defenders: TeamPlayer[] = [];
+  midfielders: TeamPlayer[] = [];
+  forwards: TeamPlayer[] = [];
+  bench: TeamPlayer[] = [];
   name: string;
   captain: number;
   viceCaptain: number;
@@ -77,29 +77,29 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     }
 
     let position = player.position;
-    let added = false;
+    let teamPlayer = null;
     if (position == "GK") {
-      added = this.addGK(player);
+      teamPlayer = this.addGK(player);
     }
     if (position == "DF") {
-      added = this.addDF(player);
+      teamPlayer = this.addDF(player);
     }
     if (position == "MF") {
-      added = this.addMF(player);
+      teamPlayer = this.addMF(player);
     }
     if (position == "FW") {
-      added = this.addFW(player);
+      teamPlayer = this.addFW(player);
     }
 
-    if (added) {
-      this.players.push(player);
-      this.teamService.playerAdded.next(player);
+    if (teamPlayer) {
+      this.teamPlayers.push(teamPlayer);
+      this.teamService.playerAdded.next(teamPlayer);
       this.money = Math.round((this.money - player.price) * 10) / 10;
     }
   }
 
   isDuplicate(player: Player): boolean {
-    let duplicateCount = this.players.filter(p => p.id == player.id).length;
+    let duplicateCount = this.teamPlayers.filter(tp => tp.player.id == player.id).length;
     if (duplicateCount > 0) {
       return true;
     }
@@ -107,98 +107,100 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   checkClubLimit(player: Player): boolean {
-    let sameClubCount = this.players.filter(p => p.club.id == player.club.id).length;
+    let sameClubCount = this.teamPlayers.filter(tp => tp.player.club.id == player.club.id).length;
     if (sameClubCount > 2) {
       return false;
     }
     return true;
   }
 
-  addGK(player: Player): boolean {
+  addGK(player: Player): TeamPlayer {
     if (!this.goalkeeper) {
-      this.goalkeeper = player;
-      return true;
+      this.goalkeeper = new TeamPlayer(null, 0, false, player);
+      return this.goalkeeper;
     } else if (!this.bench[0]) {
-      this.bench[0] = player;
-      return true;
+      this.bench[0] = new TeamPlayer(null, 0, true, player);
+      return this.bench[0];
     } else {
       this.openSnackBar("You already have the maximum number of Goalkeepers!");
     }
-    return false;
+    return null;
   }
 
-  addDF(player: Player): boolean {
+  addDF(player: Player): TeamPlayer {
     if (this.defenders.length < 4) {
-      this.defenders.push(player);
-      return true;
+      let teamPlayer = new TeamPlayer(null, 0, false, player);
+      this.defenders.push(teamPlayer);
+      return teamPlayer;
     } else if (!this.bench[1]) {
-      this.bench[1] = player;
-      return true;
+      this.bench[1] = new TeamPlayer(null, 0, true, player);
+      return this.bench[1];
     } else {
       this.openSnackBar("You already have the maximum number of Defenders!");
     }
-    return false;
+    return null;
   }
 
-  addMF(player: Player): boolean {
+  addMF(player: Player): TeamPlayer {
     if (this.midfielders.length < 4) {
-      this.midfielders.push(player);
-      return true;
+      let teamPlayer = new TeamPlayer(null, 0, false, player);
+      this.midfielders.push(teamPlayer);
+      return teamPlayer;
     } else if (!this.bench[2]) {
-      this.bench[2] = player;
-      return true;
+      this.bench[2] = new TeamPlayer(null, 0, true, player);
+      return this.bench[2];
     } else {
       this.openSnackBar("You already have the maximum number of Midfielders!");
     }
-    return false;
+    return null;
   }
 
-  addFW(player: Player): boolean {
+  addFW(player: Player): TeamPlayer {
     if (this.forwards.length < 2) {
-      this.forwards.push(player);
-      return true;
+      let teamPlayer = new TeamPlayer(null, 0, false, player);
+      this.forwards.push(teamPlayer);
+      return teamPlayer;
     } else if (!this.bench[3]) {
-      this.bench[3] = player;
-      return true;
+      this.bench[3] = new TeamPlayer(null, 0, true, player);
+      return this.bench[3];
     } else {
       this.openSnackBar("You already have the maximum number of Forwards!");
     }
-    return false;
+    return null;
   }
 
-  removePlayer(player: Player) {
+  removePlayer(teamPlayer: TeamPlayer) {
     // remove from position list
-    let position = player.position;
+    let position = teamPlayer.player.position;
     if (position == "GK") {
-      this.removeGK(player);
+      this.removeGK(teamPlayer);
     }
     if (position == "DF") {
-      this.removeDF(player);
+      this.removeDF(teamPlayer);
     }
     if (position == "MF") {
-      this.removeMF(player);
+      this.removeMF(teamPlayer);
     }
     if (position == "FW") {
-      this.removeFW(player);
+      this.removeFW(teamPlayer);
     }
     // remove from players list
-    this.players.splice(this.players.indexOf(player), 1);
+    this.teamPlayers.splice(this.teamPlayers.indexOf(teamPlayer), 1);
     // update money
-    this.money = Math.round((this.money + player.price) * 10) / 10;
+    this.money = Math.round((this.money + teamPlayer.player.price) * 10) / 10;
   }
 
-  removeGK(player: Player) {
-    if (!this.goalkeeper) {
+  removeGK(teamPlayer: TeamPlayer) {
+    let onBench = teamPlayer.onBench;
+    if(onBench) {
       this.bench[0] = null;
-    } else if (this.goalkeeper.id == player.id) {
-      this.goalkeeper = null;
     } else {
-      this.bench[0] = null;
+      this.goalkeeper = null;
     }
   }
 
-  removeDF(player: Player) {
-    let indexOf = this.defenders.indexOf(player);
+  removeDF(teamPlayer: TeamPlayer) {
+    let indexOf = this.defenders.indexOf(teamPlayer);
     if (indexOf > -1) {
       this.defenders.splice(indexOf, 1);
     } else {
@@ -206,8 +208,8 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeMF(player: Player) {
-    let indexOf = this.midfielders.indexOf(player);
+  removeMF(teamPlayer: TeamPlayer) {
+    let indexOf = this.midfielders.indexOf(teamPlayer);
     if (indexOf > -1) {
       this.midfielders.splice(indexOf, 1);
     } else {
@@ -215,8 +217,8 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeFW(player: Player) {
-    let indexOf = this.forwards.indexOf(player);
+  removeFW(teamPlayer: TeamPlayer) {
+    let indexOf = this.forwards.indexOf(teamPlayer);
     if (indexOf > -1) {
       this.forwards.splice(indexOf, 1);
     } else {
@@ -225,7 +227,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-    this.players = [];
+    this.teamPlayers = [];
     this.goalkeeper = null;
     this.defenders = [];
     this.midfielders = [];
@@ -236,27 +238,13 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const dialogRef = this.dialog.open(SaveTeamDialogComponent, { data: { players: this.players } });
+    const dialogRef = this.dialog.open(SaveTeamDialogComponent, { data: { teamPlayers: this.teamPlayers } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.setDialogData(result);
         let user = new User(this.authData.id, null, null, null, null, null, null, null, null, null, null);
         let team = new Team(null, this.name, 2, 0, this.captain, this.viceCaptain, this.money, user, []);
-        let teamPlayers: TeamPlayer[] = [];
-        teamPlayers.push(new TeamPlayer(null, 0, false, this.goalkeeper));
-        for (let i = 0; i < this.defenders.length; i++) {
-          teamPlayers.push(new TeamPlayer(null, 0, false, this.defenders[i]));
-        }
-        for (let i = 0; i < this.midfielders.length; i++) {
-          teamPlayers.push(new TeamPlayer(null, 0, false, this.midfielders[i]));
-        }
-        for (let i = 0; i < this.forwards.length; i++) {
-          teamPlayers.push(new TeamPlayer(null, 0, false, this.forwards[i]));
-        }
-        for (let i = 0; i < this.bench.length; i++) {
-          teamPlayers.push(new TeamPlayer(null, 0, true, this.bench[i]));
-        }
-        team.teamPlayers = teamPlayers;
+        team.teamPlayers = this.teamPlayers;
         this.teamService.save(team).subscribe(
           res => {
             this.authService.setTeam(res);
@@ -278,7 +266,7 @@ export class TeamSelectionComponent implements OnInit, OnDestroy {
   }
 
   getPlayersSelectedColor() {
-    if (this.players.length == 15) {
+    if (this.teamPlayers.length == 15) {
       return "green";
     } else {
       return "crimson";

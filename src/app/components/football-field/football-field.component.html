@@ -3,22 +3,22 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 image img-responsive field">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 15px;">
-                    <app-football-field-player [player]="goalkeeper" [mode]="mode"></app-football-field-player>
+                    <app-football-field-player [teamPlayer]="goalkeeper" [mode]="mode"></app-football-field-player>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3" *ngFor="let p of defenders" style="margin-bottom: 15px;">
-                    <app-football-field-player [player]="p" [mode]="mode"></app-football-field-player>
+                    <app-football-field-player [teamPlayer]="p" [mode]="mode"></app-football-field-player>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3" *ngFor="let p of midfielders" style="margin-bottom: 15px;">
-                    <app-football-field-player [player]="p" [mode]="mode"></app-football-field-player>
+                    <app-football-field-player [teamPlayer]="p" [mode]="mode"></app-football-field-player>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6" *ngFor="let p of forwards" style="margin-bottom: 20px;">
-                    <app-football-field-player [player]="p" [mode]="mode"></app-football-field-player>
+                    <app-football-field-player [teamPlayer]="p" [mode]="mode"></app-football-field-player>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 bench">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3 bench-players" *ngFor="let p of bench">
-                    <app-football-field-player [player]="p" [mode]="mode"></app-football-field-player>
+                    <app-football-field-player [teamPlayer]="p" [mode]="mode"></app-football-field-player>
                 </div>
             </div>
         </div>

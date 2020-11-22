@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
+import { TeamPlayer } from 'src/app/models/team-player.model';
 import { TeamService } from 'src/app/services/team.service';
 import { FootballFieldPlayerDialogComponent } from '../dialogs/football-field-player-dialog/football-field-player-dialog.component';
 
@@ -13,7 +14,7 @@ import { FootballFieldPlayerDialogComponent } from '../dialogs/football-field-pl
 })
 export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
 
-  @Input() player: Player;
+  @Input() teamPlayer: TeamPlayer;
   @Input() mode: String;
   isSwitched: boolean = false;
   playerChangedSub: Subscription;
@@ -36,7 +37,7 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
   }
 
   getImage(): String {
-    if (!this.player) {
+    if (!this.teamPlayer) {
       return "../../../assets/shirt.webp";
     } else {
       return '../../../assets/dres.png';
@@ -44,12 +45,12 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
   }
 
   getName(): String {
-    if (!this.player) {
+    if (!this.teamPlayer) {
       return "Select player";
     } else {
-      let lastName = this.player.name.split(' ')[1];
+      let lastName = this.teamPlayer.player.name.split(' ')[1];
       if (!lastName) {
-        return this.player.name;
+        return this.teamPlayer.player.name;
       } else {
         return lastName;
       }
@@ -57,12 +58,12 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
   }
 
   getBadge() {
-    if (!this.player || this.mode == FootballFieldMode.PICK_TEAM) {
+    if (!this.teamPlayer || this.mode == FootballFieldMode.PICK_TEAM) {
       return null;
     } else if (this.mode == FootballFieldMode.POINTS) {
-      return this.player.playerGameweekPerformances[this.player.playerGameweekPerformances.length - 1].points;
+      return this.teamPlayer.points;
     } else if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
-      return this.player.price;
+      return this.teamPlayer.player.price;
     }
   }
 
@@ -84,19 +85,19 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
   }
 
   onClick() {
-    if (!this.player) {
+    if (!this.teamPlayer) {
       return;
     }
-    const dialogRef = this.dialog.open(FootballFieldPlayerDialogComponent, { data: { player: this.player, mode: this.mode } });
+    const dialogRef = this.dialog.open(FootballFieldPlayerDialogComponent, { data: { teamPlayer: this.teamPlayer, mode: this.mode } });
     dialogRef.afterClosed().subscribe(result => {
       
     });
   }
 
-  switchPlayer(player: Player) {
-    if(!player) {
+  switchPlayer(teamPlayer: TeamPlayer) {
+    if(!teamPlayer) {
       this.isSwitched = false;
-    } else if(this.player.id == player.id) {
+    } else if(this.teamPlayer.id == teamPlayer.id) {
       this.isSwitched = true;
     }
   }

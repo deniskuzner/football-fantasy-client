@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppConstants } from '../constants/app-constants';
-import { Player } from '../models/player.model';
 import { TeamPlayer } from '../models/team-player.model';
 import { Team } from '../models/team.model';
 
@@ -11,13 +10,13 @@ import { Team } from '../models/team.model';
 })
 export class TeamService {
 
-  playerAdded = new Subject<Player>();
-  playerRemoved = new Subject<Player>();
-  playerSwitched = new Subject<Player>();
-  playerChanged = new Subject<Player>();
+  playerAdded = new Subject<TeamPlayer>();
+  playerRemoved = new Subject<TeamPlayer>();
+  playerSwitched = new Subject<TeamPlayer>();
+  playerChanged = new Subject<TeamPlayer>();
   teamReset = new Subject<any>();
   teamPlayersChanged = new Subject<TeamPlayer[]>();
-  captainChanged = new Subject<{player: Player, type: String}>();
+  captainChanged = new Subject<{teamPlayer: TeamPlayer, type: String}>();
 
   constructor(private http: HttpClient) { }
 

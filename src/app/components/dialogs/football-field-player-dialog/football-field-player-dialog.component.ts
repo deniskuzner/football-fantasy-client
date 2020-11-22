@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Player } from 'src/app/models/player.model';
+import { TeamPlayer } from 'src/app/models/team-player.model';
 import { TeamService } from 'src/app/services/team.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class FootballFieldPlayerDialogComponent implements OnInit {
 
-  player: Player;
+  teamPlayer: TeamPlayer;
   mode: String;
   title: String;
 
@@ -20,24 +21,24 @@ export class FootballFieldPlayerDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.player = this.data.player;
+    this.teamPlayer = this.data.teamPlayer;
     this.mode = this.data.mode;
   }
 
   remove() {
-    this.teamService.playerRemoved.next(this.player);
+    this.teamService.playerRemoved.next(this.teamPlayer);
   }
 
   switch() {
-    this.teamService.playerSwitched.next(this.player);
+    this.teamService.playerSwitched.next(this.teamPlayer);
   }
 
   makeCaptain() {
-    this.teamService.captainChanged.next({player: this.player, type: 'CAPTAIN'});
+    this.teamService.captainChanged.next({teamPlayer: this.teamPlayer, type: 'CAPTAIN'});
   }
 
   makeViceCaptain() {
-    this.teamService.captainChanged.next({player: this.player, type: 'VICE_CAPTAIN'});
+    this.teamService.captainChanged.next({teamPlayer: this.teamPlayer, type: 'VICE_CAPTAIN'});
   }
 
   getPlayerImage(playerImage: String): String {

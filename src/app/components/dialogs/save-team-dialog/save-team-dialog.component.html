@@ -9,8 +9,8 @@
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Captain</mat-label>
             <mat-select [(ngModel)]="captain" name="captain" (selectionChange)="onCaptainChange()" required>
-                <mat-option *ngFor="let player of captainOptions" [value]="player.id">
-                    {{ player.name }}
+                <mat-option *ngFor="let tp of captainOptions" [value]="tp.player.id">
+                    {{ tp.player.name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -18,8 +18,8 @@
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Vice Captain</mat-label>
             <mat-select [(ngModel)]="viceCaptain" name="viceCaptain" (selectionChange)="onViceCaptainChange()" required>
-                <mat-option *ngFor="let player of viceCaptainOptions" [value]="player.id">
-                    {{ player.name }}
+                <mat-option *ngFor="let tp of viceCaptainOptions" [value]="tp.player.id">
+                    {{ tp.player.name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>

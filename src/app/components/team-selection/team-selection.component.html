@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <button mat-raised-button color="primary" style="width: 50%;" (click)="save()"
-                        [disabled]="players.length != 15">Save</button>
+                        [disabled]="teamPlayers.length != 15">Save</button>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px; text-align: center;">
@@ -16,7 +16,7 @@
                         <b>Players Selected</b>
                     </div>
                     <div class="row">
-                        <h3 style="margin-top: 0px" [ngStyle]="{color: getPlayersSelectedColor()}">{{players.length}}/15</h3>
+                        <h3 style="margin-top: 0px" [ngStyle]="{color: getPlayersSelectedColor()}">{{teamPlayers.length}}/15</h3>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

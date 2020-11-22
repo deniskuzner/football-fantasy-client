@@ -15,11 +15,11 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
 
   @Input() mode: String;
   @Input() team: Team;
-  goalkeeper: Player;
-  defenders: Player[] = new Array(4);
-  midfielders: Player[] = new Array(4);
-  forwards: Player[] = new Array(2);
-  bench: Player[] = new Array(4);
+  goalkeeper: TeamPlayer;
+  defenders: TeamPlayer[] = new Array(4);
+  midfielders: TeamPlayer[] = new Array(4);
+  forwards: TeamPlayer[] = new Array(2);
+  bench: TeamPlayer[] = new Array(4);
 
   playerAddedSub: Subscription;
   playerRemovedSub: Subscription;
@@ -65,100 +65,101 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     if(!this.team) {
       return;
     }
-    this.team.teamPlayers.forEach(tp => {
-      this.addPlayer(tp.player);
+    let teamPlayers = [...this.team.teamPlayers];
+    teamPlayers.forEach(tp => {
+      this.addPlayer(tp);
     });
   }
 
   onTeamPlayersChanged(teamPlayers: TeamPlayer[]) {
     this.removeAll();
     teamPlayers.forEach(tp => {
-      this.addPlayer(tp.player);
+      this.addPlayer(tp);
     });
   }
 
-  addPlayer(player: Player) {
-    let position = player.position;
+  addPlayer(teamPlayer: TeamPlayer) {
+    let position = teamPlayer.player.position;
     if (position == "GK") {
-      this.addGK(player);
+      this.addGK(teamPlayer);
     }
     if (position == "DF") {
-      this.addDF(player);
+      this.addDF(teamPlayer);
     }
     if (position == "MF") {
-      this.addMF(player);
+      this.addMF(teamPlayer);
     }
     if (position == "FW") {
-      this.addFW(player);
+      this.addFW(teamPlayer);
     }
   }
 
-  addGK(player: Player) {
+  addGK(teamPlayer: TeamPlayer) {
     if (!this.goalkeeper) {
-      this.goalkeeper = player;
+      this.goalkeeper = teamPlayer;
     } else {
-      this.bench[0] = player;
+      this.bench[0] = teamPlayer;
     }
   }
 
-  addDF(player: Player) {
+  addDF(teamPlayer: TeamPlayer) {
     for (let i = 0; i < this.defenders.length; i++) {
       if (!this.defenders[i]) {
-        this.defenders[i] = player;
+        this.defenders[i] = teamPlayer;
         return;
       }
     }
-    this.bench[1] = player;
+    this.bench[1] = teamPlayer;
   }
 
-  addMF(player: Player) {
+  addMF(teamPlayer: TeamPlayer) {
     for (let i = 0; i < this.midfielders.length; i++) {
       if (!this.midfielders[i]) {
-        this.midfielders[i] = player;
+        this.midfielders[i] = teamPlayer;
         return;
       }
     }
-    this.bench[2] = player;
+    this.bench[2] = teamPlayer;
   }
 
-  addFW(player: Player) {
+  addFW(teamPlayer: TeamPlayer) {
     for (let i = 0; i < this.forwards.length; i++) {
       if (!this.forwards[i]) {
-        this.forwards[i] = player;
+        this.forwards[i] = teamPlayer;
         return;
       }
     }
-    this.bench[3] = player;
+    this.bench[3] = teamPlayer;
   }
 
-  removePlayer(player: Player) {
-    let position = player.position;
+  removePlayer(teamPlayer: TeamPlayer) {
+    let position = teamPlayer.player.position;
     if (position == "GK") {
-      this.removeGK(player);
+      this.removeGK(teamPlayer);
     }
     if (position == "DF") {
-      this.removeDF(player);
+      this.removeDF(teamPlayer);
     }
     if (position == "MF") {
-      this.removeMF(player);
+      this.removeMF(teamPlayer);
     }
     if (position == "FW") {
-      this.removeFW(player);
+      this.removeFW(teamPlayer);
     }
   }
 
-  removeGK(player: Player) {
+  removeGK(teamPlayer: TeamPlayer) {
     if(!this.goalkeeper) {
       this.bench[0] = null;
-    } else if(this.goalkeeper.id == player.id){
+    } else if(this.goalkeeper.player.id == teamPlayer.player.id){
       this.goalkeeper = null;
     } else {
       this.bench[0] = null;
     }
   }
 
-  removeDF(player: Player) {
-    let indexOf = this.defenders.indexOf(player);
+  removeDF(teamPlayer: TeamPlayer) {
+    let indexOf = this.defenders.indexOf(teamPlayer);
     if (indexOf > -1) {
       this.defenders[indexOf] = null;
     } else {
@@ -166,8 +167,8 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeMF(player: Player) {
-    let indexOf = this.midfielders.indexOf(player);
+  removeMF(teamPlayer: TeamPlayer) {
+    let indexOf = this.midfielders.indexOf(teamPlayer);
     if (indexOf > -1) {
       this.midfielders[indexOf] = null;
     } else {
@@ -175,8 +176,8 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeFW(player: Player) {
-    let indexOf = this.forwards.indexOf(player);
+  removeFW(teamPlayer: TeamPlayer) {
+    let indexOf = this.forwards.indexOf(teamPlayer);
     if(indexOf > -1) {
       this.forwards[indexOf] = null;
     } else {
@@ -188,7 +189,6 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
     if(this.mode == FootballFieldMode.TEAM_SELECTION) {
       this.removeAll();
     } else if (this.mode == FootballFieldMode.PICK_TEAM || this.mode == FootballFieldMode.TRANSFERS) {
-      // DODATI LOGIKU ZA RESET KAD SE URADI SWITCH DA BI MOGLO DA SE PROVERI
       this.removeAll();
       this.populateField();
     }
