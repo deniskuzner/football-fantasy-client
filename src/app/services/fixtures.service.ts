@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 export class FixturesService {
 
   fixturesUpdated = new Subject<any>();
+  selectedGameweekChanged = new Subject<Gameweek>();
 
   constructor(private http: HttpClient) { }
 

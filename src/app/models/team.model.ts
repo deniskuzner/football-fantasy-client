@@ -1,5 +1,6 @@
 import { TeamPlayer } from "./team-player.model";
 import { User } from './user.model';
+import { TeamGameweekPerformance } from './team-gameweek-performance.model';
 
 export class Team {
 
@@ -12,7 +13,8 @@ export class Team {
         public viceCaptainId: number,
         public moneyRemaining: number,
         public user: User,
-        public teamPlayers: TeamPlayer[]
+        public teamPlayers: TeamPlayer[],
+        public teamGameweekPerformances: TeamGameweekPerformance[]
     ) { }
 
 }

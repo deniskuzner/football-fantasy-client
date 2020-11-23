@@ -10,7 +10,7 @@ import { FixturesService } from 'src/app/services/fixtures.service';
 export class GameweekNavigationComponent implements OnInit, OnDestroy {
 
   @Output() selectedGameweekChange = new EventEmitter<number>();
-  selectedGameweekNumber: number = 1;
+  selectedGameweekNumber: number;
   gameweeksCount: number;
   fixturesUpdatedSub: Subscription;
 
@@ -47,6 +47,7 @@ export class GameweekNavigationComponent implements OnInit, OnDestroy {
     this.fixturesService.getCurrentGameweekNumber().subscribe(
       res => {
         this.selectedGameweekNumber = res;
+        this.selectedGameweekChange.emit(this.selectedGameweekNumber);
       },
       err => {
         console.log(err);

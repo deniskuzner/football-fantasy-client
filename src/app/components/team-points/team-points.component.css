@@ -13,3 +13,7 @@
     font-size: 40px;
     color: forestgreen;
 }
+
+.gw-details-card {
+    min-width: 390px;
+}

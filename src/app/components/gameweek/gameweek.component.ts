@@ -16,7 +16,7 @@ export class GameweekComponent implements OnInit, OnDestroy {
   @Output() selectedGameweekChange = new EventEmitter<Gameweek>();
   @ViewChild(MatAccordion) accordion: MatAccordion;
   gameweek: Gameweek;
-  selectedGameweekNumber: number = 1;
+  selectedGameweekNumber: number;
   signal: boolean = true;
   fixturesUpdatedSub: Subscription;
 
@@ -25,7 +25,6 @@ export class GameweekComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.getCurrentGameweek();
     this.fixturesUpdatedSub = this.fixturesService.fixturesUpdated.subscribe(
       () => {
         this.getSelectedGameweek();
@@ -35,22 +34,6 @@ export class GameweekComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.fixturesUpdatedSub.unsubscribe();
-  }
-  
-  getCurrentGameweek() {
-    this.signal = false;
-    this.fixturesService.getCurrentGameweek().subscribe(
-      res => {
-        this.gameweek = res;
-        this.selectedGameweekChange.emit(this.gameweek);
-        this.signal = true;
-      },
-      err => {
-        this.signal = true;
-        console.log(err);
-        this.openSnackBar("Error!");
-      }
-    );
   }
 
   getSelectedGameweek() {

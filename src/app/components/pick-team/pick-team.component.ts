@@ -189,9 +189,6 @@ export class PickTeamComponent implements OnInit, OnDestroy {
     this.cancel();
     this.teamService.teamReset.next();
     this.getTeam();
-    // this.teamPlayers = [...this.team.teamPlayers];
-    // this.captain = this.team.teamPlayers.filter(tp => this.team.captainId == tp.player.id)[0];
-    // this.viceCaptain = this.team.teamPlayers.filter(tp => this.team.viceCaptainId == tp.player.id)[0];
     this.teamChanged = false;
   }
 

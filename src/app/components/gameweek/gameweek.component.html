@@ -1,5 +1,7 @@
 <div class="row" style="margin-top: 20px;">
-    <app-gameweek-navigation (selectedGameweekChange)="onSelectedGameweekChange($event)"></app-gameweek-navigation>
+    <app-gameweek-navigation 
+        (selectedGameweekChange)="onSelectedGameweekChange($event)">
+    </app-gameweek-navigation>
 </div>
 <mat-spinner *ngIf="!signal" style="margin: auto;"></mat-spinner>
 <div class="row" *ngIf="signal && gameweek">

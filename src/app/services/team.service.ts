@@ -16,7 +16,8 @@ export class TeamService {
   playerChanged = new Subject<TeamPlayer>();
   teamReset = new Subject<any>();
   teamPlayersChanged = new Subject<TeamPlayer[]>();
-  captainChanged = new Subject<{teamPlayer: TeamPlayer, type: String}>();
+  captainChanged = new Subject<{ teamPlayer: TeamPlayer, type: String }>();
+  newGameweekPoints = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +27,11 @@ export class TeamService {
 
   getTeamById(id: number) {
     return this.http.get<Team>(AppConstants.serverUrl + '/teams/team/' + id);
+  }
+
+  getGameweekStats(teamId: number, gameweekId: number) {
+    return this.http.get<{ rank: number, averagePoints: number, highestPoints: number }>
+      (AppConstants.serverUrl + '/team-performances/stats/' + teamId + '/' + gameweekId);
   }
 
 }

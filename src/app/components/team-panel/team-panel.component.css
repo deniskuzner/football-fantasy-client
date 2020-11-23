@@ -13,3 +13,7 @@
     max-width: 90px;
     margin: auto;
 }
+
+.team-details-card {
+    min-width: 390px;
+}

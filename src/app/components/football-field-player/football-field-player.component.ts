@@ -18,6 +18,9 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
   @Input() mode: String;
   isSwitched: boolean = false;
   playerChangedSub: Subscription;
+  newGameweekPointsSub: Subscription;
+
+  newGameweekPoints: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -30,10 +33,16 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
         this.switchPlayer(res);
       }
     );
+    this.newGameweekPointsSub = this.teamService.newGameweekPoints.subscribe(
+      () => {
+        this.newGameweekPoints = true;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.playerChangedSub.unsubscribe();
+    this.newGameweekPointsSub.unsubscribe();
   }
 
   getImage(): String {
@@ -61,7 +70,11 @@ export class FootballFieldPlayerComponent implements OnInit, OnDestroy {
     if (!this.teamPlayer || this.mode == FootballFieldMode.PICK_TEAM) {
       return null;
     } else if (this.mode == FootballFieldMode.POINTS) {
-      return this.teamPlayer.points;
+      if(this.newGameweekPoints) {
+        return 0;
+      } else {
+        return this.teamPlayer.points;
+      }
     } else if (this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
       return this.teamPlayer.player.price;
     }

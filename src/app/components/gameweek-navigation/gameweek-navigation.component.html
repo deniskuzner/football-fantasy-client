@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align: center;">
-        <h4><b>Gameweek {{selectedGameweekNumber}}</b></h4>
+        <h4><b>Gameweek {{selectedGameweekNumber > 0 ? selectedGameweekNumber : '/'}}</b></h4>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <button mat-raised-button (click)="onNext()" [disabled]="selectedGameweekNumber >= gameweeksCount"
