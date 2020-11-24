@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-8 col-md-8 col-lg-8">
+        <div class="col-sm-8 col-md-8 col-lg-8">
             <h2>Points</h2>
             <app-gameweek-navigation (selectedGameweekChange)="onSelectedGameweekChange($event)"></app-gameweek-navigation>
             <mat-spinner *ngIf="!signal" style="margin: auto"></mat-spinner>
@@ -41,7 +41,7 @@
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             </div>
         </div>
-        <div class="col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-4 col-md-4 col-lg-4">
             <h2>Points Calculator</h2>
             <div class="row" style="padding-left: 20px;">
                 <h4>Calculate by date</h4>
@@ -63,7 +63,7 @@
                     </button>
                 </form>
             </div>
-            <div class="row" style="margin-top: 20px; padding-left: 20px;">
+            <div class="row" style="margin-top: 20px; padding-left: 20px; max-width: 500px;">
                 <h4 style="margin-bottom: 20px;">Calculate by gameweek</h4>
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Select an option</mat-label>
