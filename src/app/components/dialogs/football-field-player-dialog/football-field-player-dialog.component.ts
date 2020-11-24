@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Player } from 'src/app/models/player.model';
 import { TeamPlayer } from 'src/app/models/team-player.model';
 import { TeamService } from 'src/app/services/team.service';
@@ -46,6 +47,27 @@ export class FootballFieldPlayerDialogComponent implements OnInit {
       return playerImage;
     }
     return '../../../assets/person.png';
+  }
+
+  showRemoveBtn(): boolean {
+    if(this.mode == FootballFieldMode.TEAM_SELECTION || this.mode == FootballFieldMode.TRANSFERS) {
+      return true;
+    }
+    return false;
+  }
+
+  showSwitchBtn(): boolean {
+    if(this.mode == FootballFieldMode.PICK_TEAM) {
+      return true;
+    }
+    return false;
+  }
+
+  showCaptainBtn(): boolean {
+    if(this.mode == FootballFieldMode.PICK_TEAM) {
+      return true;
+    }
+    return false;
   }
 
 }

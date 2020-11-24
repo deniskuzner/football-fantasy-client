@@ -20,12 +20,12 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="mode == 'TEAM_SELECTION'">
+    <div class="row" *ngIf="showRemoveBtn()">
         <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="remove()">
             Remove Player
         </button>
     </div>
-    <div class="row" *ngIf="mode == 'PICK_TEAM'">
+    <div class="row" *ngIf="showSwitchBtn()">
         <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="switch()">
             Switch
         </button>
@@ -35,7 +35,7 @@
             Make Captain
         </button>
     </div>
-    <div class="row" *ngIf="mode == 'PICK_TEAM'">
+    <div class="row" *ngIf="showCaptainBtn()">
         <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="makeViceCaptain()">
             Make Vice Captain
         </button>
