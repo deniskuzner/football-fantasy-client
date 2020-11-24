@@ -1,3 +1,50 @@
 <div class="container">
-    <p>team-transfers works!</p>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="col-md-7 col-lg-7">
+            <div class="row" style="text-align: center;">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <button mat-raised-button color="primary" style="width: 80%;" (click)="reset()">Reset</button>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float: right;">
+                    <button mat-raised-button color="primary" style="width: 80%;" (click)="save()"
+                    [disabled]="teamPlayers.length != 15 || !changeSignal">Save</button>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px; text-align: center;">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="row">
+                        <b>Players Selected</b>
+                    </div>
+                    <div class="row">
+                        <h3 style="margin-top: 0px" [ngStyle]="{color: getPlayersSelectedColor()}">{{teamPlayers.length}}/15</h3>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="row">
+                        <b>Free Transfers</b>
+                    </div>
+                    <div class="row">
+                        <h3 style="margin-top: 0px" [ngStyle]="{color: getMoneyColor()}">{{freeTransfers}}</h3>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="row">
+                        <b>Money Remaining</b>
+                    </div>
+                    <div class="row">
+                        <h3 style="margin-top: 0px" [ngStyle]="{color: getMoneyColor()}">{{moneyRemaining}}</h3>
+                    </div>
+                </div>
+            </div>
+            <app-football-field *ngIf="signal" [mode]="footballFieldMode" [team]="team"></app-football-field>
+        </div>
+        <div class="col-md-5 col-lg-5">
+            <app-player-selection (playerAdded)="onPlayerAdded($event)"></app-player-selection>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 30px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <app-gameweek mode="USER"></app-gameweek>
+        </div>
+    </div>
 </div>

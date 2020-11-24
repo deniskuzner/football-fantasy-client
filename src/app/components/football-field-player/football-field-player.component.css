@@ -25,3 +25,7 @@
     background-color: lawngreen;
     border-color: lawngreen;
 }
+
+.mat-badge-content {
+  font-size: x-small;
+}

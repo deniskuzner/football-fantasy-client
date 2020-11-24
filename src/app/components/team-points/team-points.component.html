@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="col-md-7 col-lg-7">
-            <app-football-field *ngIf="signal" [mode]="footballFieldMode" [team]="team"></app-football-field>
+            <app-football-field *ngIf="team" [mode]="footballFieldMode" [team]="team"></app-football-field>
         </div>
         <div class="col-md-5 col-lg-5">
             <h1>Points</h1>
@@ -21,8 +21,8 @@
                         <div class="row">
                             <h3 class="points-card-header">Total Points</h3>
                         </div>
-                        <div class="row points-card-value" *ngIf="team">
-                            <b>{{team.totalPoints}}</b>
+                        <div class="row points-card-value">
+                            <b>{{team ? team.totalPoints : 0}}</b>
                         </div>
                     </mat-card>
                 </div>

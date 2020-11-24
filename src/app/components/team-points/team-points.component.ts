@@ -31,23 +31,31 @@ export class TeamPointsComponent implements OnInit {
 
   ngOnInit(): void {
     this.authData = this.authService.getAuthData();
-    this.getAllData();
+    this.getTeam();
+    this.getCurrentGameweek();
   }
 
-  getAllData() {
-    const team = this.teamService.getTeamById(this.authData.teamId);
-    const gameweek = this.fixturesService.getCurrentGameweek();
-
-    forkJoin([team, gameweek]).subscribe(
+  getTeam() {
+    this.teamService.getTeamById(this.authData.teamId).subscribe(
       res => {
-        this.team = res[0];
-        this.currentGameweek = res[1];
-        this.signal = true;
+        this.team = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getCurrentGameweek() {
+    this.fixturesService.getCurrentGameweek().subscribe(
+      res => {
+        this.currentGameweek = res;
         this.setGameweekData();
       },
       err => {
         console.log(err);
-      })
+      }
+    );
   }
 
   setGameweekData() {
