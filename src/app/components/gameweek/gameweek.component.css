@@ -19,3 +19,35 @@
 .example-headers-align .mat-form-field + .mat-form-field {
     margin-left: 8px;
 }
+
+.match-date {
+    width: 16.6%;
+}
+
+.match-venue {
+    width: 24.9%;
+}
+
+.match-club-name {
+    width: 16.6%;
+}
+
+.match-club-img {
+    width: 5%;
+}
+
+.match-result {
+    width: 8%;
+}
+
+@media (max-width: 768px) {
+    .match-venue {
+        display: none;
+    }
+    .match-result {
+        width: 12%;
+    }
+    .match-date {
+        width: 20%;
+    }
+}
