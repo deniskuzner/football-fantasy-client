@@ -1,21 +1,22 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-md-10 col-lg-10">
             <app-gameweek (selectedGameweekChange)="onSelectedGameweekChange($event)" mode="ADMIN" [hidden]="!signal"></app-gameweek>
             <mat-spinner *ngIf="!signal"></mat-spinner>
         </div>
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-md-2 col-lg-2">
             <h2>Settings</h2>
             <div class="row" style="padding-left: 20px;">
                 <h5>Fixtures</h5>
-                <button mat-raised-button color="primary" (click)="syncFixtures()" style="width: 100%;"
+                <button mat-raised-button color="primary" (click)="syncFixtures()" class="sync-btn"
                     [disabled]="!signal">
                     Sync Season
                 </button>
             </div>
             <div class="row" style="padding-left: 20px;">
                 <h5>Match events</h5>
-                <button mat-raised-button color="primary" (click)="syncGameweekMatchEvents()" [disabled]="!signal" style="width: 100%;">
+                <button mat-raised-button color="primary" (click)="syncGameweekMatchEvents()" class="sync-btn"
+                    [disabled]="!signal">
                     Sync Gameweek
                 </button>
             </div>

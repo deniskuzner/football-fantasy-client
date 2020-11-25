@@ -21,8 +21,8 @@
         Leagues
     </button>
     <span class="example-spacer"></span>
-    <button mat-button routerLink="/" *ngIf="authData.id" (click)="logout()">Logout</button>
     <button mat-raised-button color="accent" routerLink="/admin" *ngIf="authData.id">
-        ADMIN PANEL <mat-icon>admin_panel_settings</mat-icon>
+        ADMIN <mat-icon>admin_panel_settings</mat-icon>
     </button>
+    <button mat-button routerLink="/" *ngIf="authData.id" (click)="logout()">Logout</button>
 </mat-toolbar>
