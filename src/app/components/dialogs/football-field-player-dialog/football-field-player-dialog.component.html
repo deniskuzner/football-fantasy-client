@@ -20,6 +20,26 @@
             </div>
         </div>
     </div>
+    <div class="row" style="margin-top: 5px; text-align: center;" *ngIf="mode == 'POINTS'">
+        <h4 style="background-color: indigo; color: honeydew;">Performance</h4>
+    </div>
+    <div class="row" [hidden]="mode != 'POINTS'">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="gameweek">
+                <th mat-header-cell *matHeaderCellDef> Gameweek </th>
+                <td mat-cell *matCellDef="let element"> {{element.gameweek.orderNumber}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="points">
+                <th mat-header-cell *matHeaderCellDef> Points </th>
+                <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+        <mat-paginator pageSize="5" hidePageSize></mat-paginator>
+    </div>
     <div class="row" *ngIf="showRemoveBtn()">
         <button mat-raised-button [mat-dialog-close]="true" class="action-btn" (click)="remove()">
             Remove Player

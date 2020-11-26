@@ -12,6 +12,7 @@ import { PickTeamComponent } from './components/pick-team/pick-team.component';
 import { TeamTransfersComponent } from './components/team-transfers/team-transfers.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { TeamComponent } from './components/team/team.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: 'team-selection',
     component: TeamSelectionComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'team/:id',
+    component: TeamComponent,
+    canActivate: [AuthGuard, TeamGuard]
   },
   {
     path: 'team-points',

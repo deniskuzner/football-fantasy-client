@@ -33,12 +33,12 @@ export class ClubComponent implements OnInit {
     private playerService: PlayerService,
     private clubService: ClubService,
     private _snackBar: MatSnackBar,
-    private _Activatedroute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.clubId = +this._Activatedroute.snapshot.paramMap.get("id");
+    this.clubId = +this.activatedRoute.snapshot.paramMap.get("id");
     this.getPlayers();
     this.getClubs();
   }

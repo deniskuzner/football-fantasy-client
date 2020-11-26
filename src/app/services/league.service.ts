@@ -23,4 +23,12 @@ export class LeagueService {
     return this.http.get<League[]>(AppConstants.serverUrl + '/leagues/team/' + teamId);
   }
 
+  deleteLeagueById(id: number) {
+    return this.http.delete(AppConstants.serverUrl + '/leagues/league/' + id);
+  }
+
+  deleteMembership(teamId: number, leagueId: number) {
+    return this.http.delete(AppConstants.serverUrl + '/team-league-memberships/team/' + teamId + '/league/' + leagueId);
+  }
+
 }

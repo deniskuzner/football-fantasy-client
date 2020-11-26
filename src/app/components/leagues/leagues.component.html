@@ -3,7 +3,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="row">
                 <h1>Leagues</h1>
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <table mat-table [dataSource]="leaguesDataSource" class="mat-elevation-z8">
 
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -18,8 +18,8 @@
                     <ng-container matColumnDef="owner">
                         <th mat-header-cell *matHeaderCellDef> Owner </th>
                         <td mat-cell *matCellDef="let element">
-                            <mat-icon *ngIf="isOwner(element.ownerId)">check_circle_outline</mat-icon>
-                            <mat-icon *ngIf="!isOwner(element.ownerId)">highlight_off</mat-icon>
+                            <mat-icon *ngIf="isOwner(element)">check_circle_outline</mat-icon>
+                            <mat-icon *ngIf="!isOwner(element)">highlight_off</mat-icon>
                         </td>
                     </ng-container>
 
@@ -27,21 +27,51 @@
                         <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="row">
-                                <button mat-button color="primary" (click)="details(element)">Details</button>
-                                <button mat-button color="warn" (click)="remove(element)">
-                                    {{ isOwner(element.ownerId) ? 'Delete' : 'Leave' }}
+                                <button mat-button color="primary" class="action-btn" (click)="details(element)">
+                                    {{ isSelected(element) ? 'Hide' : 'Details' }}
+                                </button>
+                                <button mat-button color="warn" class="action-btn" (click)="remove(element)">
+                                    {{ isOwner(element) ? 'Delete' : 'Leave' }}
                                 </button>
                             </div>
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="leaguesColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: leaguesColumns;"></tr>
                 </table>
-                <mat-paginator pageSize="5" hidePageSize></mat-paginator>
+                <mat-paginator #leaguesPaginator pageSize="5" hidePageSize></mat-paginator>
             </div>
-            <div class="row">
-                <!-- DIV KOJI SE POJAVLJUJE KADA SE KLIKNE NA LIGU I PRIKAZUJE LISTU TIMOVA U LIGI -->
+            <div class="row" [hidden]="!selectedLeague">
+                <h2 *ngIf="selectedLeague">{{selectedLeague.name}}</h2>
+                <table mat-table [dataSource]="teamsDataSource" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="orderNumber">
+                        <th mat-header-cell *matHeaderCellDef> Rank </th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="teamName">
+                        <th mat-header-cell *matHeaderCellDef> Team </th>
+                        <td mat-cell *matCellDef="let element" (click)="selectTeam(element)" style="cursor: pointer;">
+                            {{element.name}} 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="user">
+                        <th mat-header-cell *matHeaderCellDef> User </th>
+                        <td mat-cell *matCellDef="let element"> {{element.user.firstName}} {{element.user.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalPoints">
+                        <th mat-header-cell *matHeaderCellDef> Points </th>
+                        <td mat-cell *matCellDef="let element"> {{element.totalPoints}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="teamsColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: teamsColumns;"></tr>
+                </table>
+                <mat-paginator #teamsPaginator pageSize="5" hidePageSize></mat-paginator>
             </div>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">

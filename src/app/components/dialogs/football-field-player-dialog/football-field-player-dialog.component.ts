@@ -1,8 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
-import { Player } from 'src/app/models/player.model';
+import { PlayerGameweekPerformance } from 'src/app/models/player-gameweek-performance.model';
 import { TeamPlayer } from 'src/app/models/team-player.model';
+import { PointsService } from 'src/app/services/points.service';
 import { TeamService } from 'src/app/services/team.service';
 
 @Component({
@@ -16,14 +19,39 @@ export class FootballFieldPlayerDialogComponent implements OnInit {
   mode: String;
   title: String;
 
+  performances: PlayerGameweekPerformance[] = [];
+  displayedColumns: string[] = ['gameweek', 'points'];
+  dataSource: MatTableDataSource<PlayerGameweekPerformance>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private pointsService: PointsService
   ) { }
 
   ngOnInit(): void {
     this.teamPlayer = this.data.teamPlayer;
     this.mode = this.data.mode;
+    this.findPlayerPerformances();
+  }
+
+  findPlayerPerformances() {
+    this.pointsService.findByPlayerId(this.teamPlayer.player.id).subscribe(
+      res => {
+        this.performances = res;
+        this.setTableData();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  setTableData() {
+    this.dataSource = new MatTableDataSource(this.performances);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator.firstPage();
   }
 
   remove() {

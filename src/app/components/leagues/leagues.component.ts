@@ -6,6 +6,10 @@ import { AuthData, AuthService } from 'src/app/services/auth.service';
 import { LeagueService } from 'src/app/services/league.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { TeamService } from 'src/app/services/team.service';
+import { Team } from 'src/app/models/team.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leagues',
@@ -17,15 +21,22 @@ export class LeaguesComponent implements OnInit {
   authData: AuthData;
   nameInput: String;
   idInput: number;
-  displayedColumns: string[] = ['id', 'name', 'owner', 'action'];
-  dataSource: MatTableDataSource<League>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  leaguesColumns: string[] = ['id', 'name', 'owner', 'action'];
+  teamsColumns: string[] = ['orderNumber', 'teamName', 'user', 'totalPoints'];
+  leaguesDataSource: MatTableDataSource<League>;
+  teamsDataSource: MatTableDataSource<Team>;
+  @ViewChild('leaguesPaginator', { static: true }) leaguesPaginator: MatPaginator;
+  @ViewChild('teamsPaginator', { static: true }) teamsPaginator: MatPaginator;
 
   leagues: League[] = [];
+  selectedLeague: League;
+  selectedLeagueTeams: Team[] = [];
 
   constructor(
     private authService: AuthService,
     private leagueService: LeagueService,
+    private teamService: TeamService,
+    private router: Router,
     private _snackBar: MatSnackBar
   ) { }
 
@@ -38,7 +49,7 @@ export class LeaguesComponent implements OnInit {
     this.leagueService.findByTeamId(this.authData.teamId).subscribe(
       res => {
         this.leagues = res;
-        this.setTableData();
+        this.setLeaguesTableData();
       },
       err => {
         console.log(err);
@@ -66,7 +77,7 @@ export class LeaguesComponent implements OnInit {
     this.leagueService.join(tlm).subscribe(
       res => {
         this.leagues.push(res);
-        this.setTableData();
+        this.setLeaguesTableData();
       },
       err => {
         console.log(err);
@@ -82,24 +93,104 @@ export class LeaguesComponent implements OnInit {
   }
 
   details(league: League) {
+    if (!this.selectedLeague) {
+      this.selectedLeague = league;
+    } else if (this.selectedLeague.id == league.id) {
+      this.selectedLeague = null;
+      this.selectedLeagueTeams = null;
+    } else {
+      this.selectedLeague = league;
+    }
+    if (this.selectedLeague) {
+      this.findLeagueTeams(this.selectedLeague.id);
+    }
+  }
 
+  findLeagueTeams(leagueId: number) {
+    this.teamService.getTeamsByLeagueId(leagueId).subscribe(
+      res => {
+        this.selectedLeagueTeams = res;
+        this.setTeamsTableData();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   remove(league: League) {
-    
+    if(this.isOwner(league)) {
+      this.deleteLeague(league);
+    } else {
+      this.leaveLeague(league);
+    }
   }
 
-  setTableData() {
-    this.dataSource = new MatTableDataSource(this.leagues);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator.firstPage();
+  selectTeam(team: Team) {
+    if(team.user.id == this.authData.id) {
+      this.router.navigate(['team-points']);
+    } else {
+      this.router.navigate(['team', team.id ]);
+    }
+
   }
 
-  isOwner(ownerId: number) {
-    if(ownerId == this.authData.id) {
+  deleteLeague(league: League) {
+    this.leagueService.deleteLeagueById(league.id).subscribe(
+      () => {
+        this.findTeamLeagues();
+        this.selectedLeague = null;
+      },
+      err => {
+        console.log(err);
+        this.openSnackBar('Error!');
+      }
+    );
+  }
+
+  leaveLeague(league: League) {
+    this.leagueService.deleteMembership(this.authData.teamId, league.id).subscribe(
+      () => {
+        this.findTeamLeagues();
+        this.selectedLeague = null;
+      },
+      err => {
+        console.log(err);
+        this.openSnackBar('Error!');
+      }
+    );
+  }
+
+  setLeaguesTableData() {
+    this.leaguesDataSource = new MatTableDataSource(this.leagues);
+    this.leaguesDataSource.paginator = this.leaguesPaginator;
+    this.leaguesDataSource.paginator.firstPage();
+  }
+
+  setTeamsTableData() {
+    this.teamsDataSource = new MatTableDataSource(this.selectedLeagueTeams);
+    this.teamsDataSource.paginator = this.teamsPaginator;
+    this.teamsDataSource.paginator.firstPage();
+  }
+
+  isOwner(league: League) {
+    if(!league) {
+      return false;
+    }
+    if (league.ownerId == this.authData.id) {
       return true;
     }
     return false;
+  }
+
+  isSelected(league: League) {
+    if (!this.selectedLeague) {
+      return false;
+    } else if (this.selectedLeague.id == league.id) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   openSnackBar(message: string) {

@@ -34,4 +34,8 @@ export class TeamService {
       (AppConstants.serverUrl + '/team-performances/stats/' + teamId + '/' + gameweekId);
   }
 
+  getTeamsByLeagueId(leagueId: number) {
+    return this.http.get<Team[]>(AppConstants.serverUrl + '/teams/league/' + leagueId);
+  }
+
 }

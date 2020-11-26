@@ -26,6 +26,26 @@ table {
     width: 30%;
 }
 
+.action-btn {
+    width: 40%;
+}
+
+.mat-column-orderNumber {
+    width: 20%;
+}
+
+.mat-column-teamName {
+    width: 30%;
+}
+
+.mat-column-user {
+    width: 30%;
+}
+
+.mat-column-totalPoints {
+    width: 20%;
+}
+
 @media (max-width: 768px) {
     .form {
         margin-left: 0px;
