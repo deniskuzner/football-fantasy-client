@@ -38,4 +38,12 @@ export class TeamService {
     return this.http.get<Team[]>(AppConstants.serverUrl + '/teams/league/' + leagueId);
   }
 
+  getAll() {
+    return this.http.get<Team[]>(AppConstants.serverUrl + '/teams/all');
+  }
+
+  calculateGameweekPoints(gameweekOrderNumber: number) {
+    return this.http.get<Team[]>(AppConstants.serverUrl + '/team-performances/calculate/gameweek/' + gameweekOrderNumber);
+  }
+
 }

@@ -8,6 +8,8 @@ import { FixturesService } from 'src/app/services/fixtures.service';
 import { PointsService } from 'src/app/services/points.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { TeamService } from 'src/app/services/team.service';
+import { Team } from 'src/app/models/team.model';
 
 @Component({
   selector: 'app-points',
@@ -27,18 +29,25 @@ export class PointsComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['image', 'clubImage', 'name', 'position', 'points'];
   dataSource = new MatTableDataSource<PlayerGameweekPerformance>(this.selectedGameweekPerformances);
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild('playersPaginator', {static: true}) playersPaginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  teamsColumns: string[] = ['orderNumber', 'teamName', 'user', 'totalPoints'];
+  teamsDataSource: MatTableDataSource<Team>;
+  @ViewChild('teamsPaginator', { static: true }) teamsPaginator: MatPaginator;
+
+  teams: Team[] = [];
 
   constructor(
     private fixturesService: FixturesService,
     private pointsService: PointsService,
+    private teamService: TeamService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.count();
     this.getCurrentGameweek();
+    this.getTeams();
     this.fixturesUpdatedSub = this.fixturesService.fixturesUpdated.subscribe(
       () => {
         this.count();
@@ -68,7 +77,7 @@ export class PointsComponent implements OnInit, OnDestroy {
         if(res) {
           this.selectedGameweekPerformances = res.playerGameweekPerformances;
         }
-        this.setTableData();
+        this.setPlayersTableData();
         this.signal = true;
       },
       err => {
@@ -84,7 +93,7 @@ export class PointsComponent implements OnInit, OnDestroy {
     this.fixturesService.getByOrderNumber(this.selectedGameweekNumber).subscribe(
       res => {
         this.selectedGameweekPerformances = res.playerGameweekPerformances;
-        this.setTableData();
+        this.setPlayersTableData();
         this.signal = true;
       },
       err => {
@@ -95,17 +104,35 @@ export class PointsComponent implements OnInit, OnDestroy {
     );
   }
 
-  setTableData() {
+  getTeams() {
+    this.teamService.getAll().subscribe(
+      res => {
+        this.teams = res;
+        this.setTeamsTableData();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  setPlayersTableData() {
     this.dataSource = new MatTableDataSource(this.selectedGameweekPerformances);
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.playersPaginator;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator.firstPage();
+  }
+
+  setTeamsTableData() {
+    this.teamsDataSource = new MatTableDataSource(this.teams);
+    this.teamsDataSource.paginator = this.teamsPaginator;
+    this.teamsDataSource.paginator.firstPage();
   }
 
   onSelectedGameweekChange(selectedGameweekNumber: number) {
     this.selectedGameweekNumber = selectedGameweekNumber;
     this.getSelectedGameweek();
-    this.setTableData();
+    this.setPlayersTableData();
   }
 
   getPlayerImage(playerImage: String): String {
@@ -124,8 +151,7 @@ export class PointsComponent implements OnInit, OnDestroy {
       this.pointsService.calculateByDate(searchRequest).subscribe(
         () => {
           this.getSelectedGameweek();
-          this.signal = true;
-          this.openSnackBar("Gameweek points calculated successfully!");
+          this.calculateTeamGWPoints();
         },
         err => {
           console.log(err);
@@ -144,8 +170,7 @@ export class PointsComponent implements OnInit, OnDestroy {
       this.pointsService.calculateByGameweek(this.selectedGameweekOption).subscribe(
         () => {
           this.getSelectedGameweek();
-          this.signal = true;
-          this.openSnackBar("Gameweek points calculated successfully!");
+          this.calculateTeamGWPoints();
         },
         err => {
           console.log(err);
@@ -156,6 +181,22 @@ export class PointsComponent implements OnInit, OnDestroy {
     } else {
       this.openSnackBar("Please select gameweek!");
     }
+  }
+
+  calculateTeamGWPoints() {
+    this.teamService.calculateGameweekPoints(this.selectedGameweekOption).subscribe(
+      res => {
+        this.teams = res;
+        this.setTeamsTableData();
+        this.signal = true;
+        this.openSnackBar("Gameweek points calculated successfully!");
+      },
+      err => {
+        console.log(err);
+          this.signal = true;
+          this.openSnackBar("Error!");
+      }
+    );
   }
 
   openSnackBar(message: string) {

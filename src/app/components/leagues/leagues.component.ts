@@ -132,7 +132,6 @@ export class LeaguesComponent implements OnInit {
     } else {
       this.router.navigate(['team', team.id ]);
     }
-
   }
 
   deleteLeague(league: League) {
