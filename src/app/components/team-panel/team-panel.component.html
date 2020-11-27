@@ -97,3 +97,45 @@
         </mat-card>
     </div>
 </div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <mat-card class="half-width-card">
+            <h4>GW Stats</h4>
+            <table mat-table [dataSource]="performancesDataSource">
+                <ng-container matColumnDef="orderNumber">
+                    <th mat-header-cell *matHeaderCellDef> GW </th>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{i+1}}. </td>
+                </ng-container>
+
+                <ng-container matColumnDef="points">
+                    <th mat-header-cell *matHeaderCellDef> Points </th>
+                    <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="performancesColumns" class="table-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: performancesColumns;" class="table-row"></tr>
+            </table>
+            <mat-paginator #performancesPaginator pageSize="5" hidePageSize></mat-paginator>
+        </mat-card>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <mat-card class="half-width-card">
+            <h4>Leagues</h4>
+            <table mat-table [dataSource]="leaguesDataSource">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="leaguesColumns" class="table-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: leaguesColumns;" class="table-row"></tr>
+            </table>
+            <mat-paginator #leaguesPaginator pageSize="5" hidePageSize></mat-paginator>
+        </mat-card>
+    </div>
+</div>

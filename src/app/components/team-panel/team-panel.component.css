@@ -17,3 +17,16 @@
 .team-details-card {
     min-width: 390px;
 }
+
+.half-width-card {
+    min-width: 190px;
+    min-height: 300px;
+}
+
+table {
+    width: 100%;
+}
+
+.table-row {
+    height: 30px !important;
+}

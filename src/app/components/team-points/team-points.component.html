@@ -2,6 +2,7 @@
     <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="col-md-7 col-lg-7">
             <app-football-field *ngIf="team" [mode]="footballFieldMode" [team]="team"></app-football-field>
+            <app-gameweek mode="USER"></app-gameweek>
         </div>
         <div class="col-md-5 col-lg-5">
             <h1 style="margin-top: 0px;">Points</h1>
@@ -73,11 +74,6 @@
             </div>
             <hr>
             <app-team-panel *ngIf="team" [team]="team"></app-team-panel>
-        </div>
-    </div>
-    <div class="row" style="margin-bottom: 30px;">
-        <div class="col-md-7 col-lg-7">
-            <app-gameweek mode="USER"></app-gameweek>
         </div>
     </div>
 </div>
