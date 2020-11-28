@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
 import { FootballFieldMode } from 'src/app/constants/football-field-mode.enum';
 import { Gameweek } from 'src/app/models/gameweek.model';
 import { Team } from 'src/app/models/team.model';

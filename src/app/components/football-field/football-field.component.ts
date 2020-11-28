@@ -66,9 +66,13 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
       return;
     }
     let teamPlayers = [...this.team.teamPlayers];
-    teamPlayers.forEach(tp => {
-      this.addPlayer(tp);
-    });
+    this.goalkeeper = teamPlayers.filter(tp => !tp.onBench && tp.player.position == "GK")[0];
+    this.defenders = teamPlayers.filter(tp => !tp.onBench && tp.player.position == "DF");
+    this.midfielders = teamPlayers.filter(tp => !tp.onBench && tp.player.position == "MF");
+    this.forwards = teamPlayers.filter(tp => !tp.onBench && tp.player.position == "FW");
+    teamPlayers.filter(tp => tp.onBench).forEach(
+      tp => this.addPlayer(tp)
+    );
   }
 
   onTeamPlayersChanged(teamPlayers: TeamPlayer[]) {
@@ -95,41 +99,50 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   }
 
   addGK(teamPlayer: TeamPlayer) {
-    if (!this.goalkeeper) {
-      this.goalkeeper = teamPlayer;
-    } else {
+    if(teamPlayer.onBench) {
       this.bench[0] = teamPlayer;
+    } else {
+      this.goalkeeper = teamPlayer;
     }
   }
 
   addDF(teamPlayer: TeamPlayer) {
-    for (let i = 0; i < this.defenders.length; i++) {
-      if (!this.defenders[i]) {
-        this.defenders[i] = teamPlayer;
-        return;
+    if(teamPlayer.onBench) {
+      this.bench[1] = teamPlayer;
+    } else {
+      for (let i = 0; i < this.defenders.length; i++) {
+        if (!this.defenders[i]) {
+          this.defenders[i] = teamPlayer;
+          return;
+        }
       }
     }
-    this.bench[1] = teamPlayer;
   }
 
   addMF(teamPlayer: TeamPlayer) {
-    for (let i = 0; i < this.midfielders.length; i++) {
-      if (!this.midfielders[i]) {
-        this.midfielders[i] = teamPlayer;
-        return;
+    if(teamPlayer.onBench) {
+      this.bench[2] = teamPlayer;
+    } else {
+      for (let i = 0; i < this.midfielders.length; i++) {
+        if (!this.midfielders[i]) {
+          this.midfielders[i] = teamPlayer;
+          return;
+        }
       }
     }
-    this.bench[2] = teamPlayer;
   }
 
   addFW(teamPlayer: TeamPlayer) {
-    for (let i = 0; i < this.forwards.length; i++) {
-      if (!this.forwards[i]) {
-        this.forwards[i] = teamPlayer;
-        return;
+    if(teamPlayer.onBench) {
+      this.bench[3] = teamPlayer;
+    } else {
+      for (let i = 0; i < this.forwards.length; i++) {
+        if (!this.forwards[i]) {
+          this.forwards[i] = teamPlayer;
+          return;
+        }
       }
     }
-    this.bench[3] = teamPlayer;
   }
 
   removePlayer(teamPlayer: TeamPlayer) {
@@ -149,12 +162,10 @@ export class FootballFieldComponent implements OnInit, OnDestroy {
   }
 
   removeGK(teamPlayer: TeamPlayer) {
-    if(!this.goalkeeper) {
+    if(teamPlayer.onBench) {
       this.bench[0] = null;
-    } else if(this.goalkeeper.player.id == teamPlayer.player.id){
-      this.goalkeeper = null;
     } else {
-      this.bench[0] = null;
+      this.goalkeeper = null;
     }
   }
 
