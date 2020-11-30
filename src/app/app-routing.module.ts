@@ -4,15 +4,16 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { HomeComponent } from './components/home/home.component';
 import { TeamSelectionComponent } from './components/team-selection/team-selection.component';
 import { ClubComponent } from './components/club/club.component';
-import { AuthGuard } from './auth-guard.service';
-import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
-import { TeamGuard } from './team-guard.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { LoggedInAuthGuard } from './guards/logged-in-auth-guard.service';
+import { TeamGuard } from './guards/team-guard.service';
 import { TeamPointsComponent } from './components/team-points/team-points.component';
 import { PickTeamComponent } from './components/pick-team/pick-team.component';
 import { TeamTransfersComponent } from './components/team-transfers/team-transfers.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TeamComponent } from './components/team/team.component';
+import { AdminGuard } from './guards/admin-guard.service';
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPanelComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'admin/club/:id',

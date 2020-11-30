@@ -38,6 +38,9 @@ export class GameweekComponent implements OnInit, OnDestroy {
 
   getSelectedGameweek() {
     this.signal = false;
+    if(!this.selectedGameweekNumber) {
+      this.selectedGameweekNumber = 1;
+    }
     this.fixturesService.getByOrderNumber(this.selectedGameweekNumber).subscribe(
       res => {
         this.gameweek = res;

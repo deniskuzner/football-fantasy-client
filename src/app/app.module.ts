@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -65,16 +65,18 @@ import { TitleHeaderComponent } from './components/title-header/title-header.com
 import { AccountComponent } from './components/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { AuthGuard } from './auth-guard.service';
-import { LoggedInAuthGuard } from './logged-in-auth-guard.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { LoggedInAuthGuard } from './guards/logged-in-auth-guard.service';
 import { TeamPointsComponent } from './components/team-points/team-points.component';
 import { PickTeamComponent } from './components/pick-team/pick-team.component';
 import { TeamTransfersComponent } from './components/team-transfers/team-transfers.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
-import { TeamGuard } from './team-guard.service';
+import { TeamGuard } from './guards/team-guard.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TeamPanelComponent } from './components/team-panel/team-panel.component';
 import { TeamComponent } from './components/team/team.component';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
+import { AdminGuard } from './guards/admin-guard.service';
 
 @NgModule({
   declarations: [
@@ -154,7 +156,13 @@ import { TeamComponent } from './components/team/team.component';
     PointsService,
     AuthGuard,
     LoggedInAuthGuard,
-    TeamGuard
+    TeamGuard,
+    AdminGuard,
+    { 
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true 
+    }
   ],
   bootstrap: [AppComponent]
 })

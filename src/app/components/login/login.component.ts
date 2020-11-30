@@ -33,8 +33,14 @@ export class LoginComponent implements OnInit {
       },
       err => {
         console.log(err);
-        if(err.error.includes('LOGIN_FAILED')) {
-          this.openSnackBar('Invalid username or password!');
+        if (err.status == 403) {
+          this.openSnackBar('Forbidden!');
+          return;
+        }
+        if (typeof err.error == 'string') {
+          if (err.error.includes('LOGIN_FAILED')) {
+            this.openSnackBar('Invalid username or password!');
+          }
         } else {
           this.openSnackBar('Error!');
         }

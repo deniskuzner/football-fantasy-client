@@ -47,7 +47,9 @@ export class GameweekNavigationComponent implements OnInit, OnDestroy {
     this.fixturesService.getCurrentGameweekNumber().subscribe(
       res => {
         this.selectedGameweekNumber = res;
-        this.selectedGameweekChange.emit(this.selectedGameweekNumber);
+        if(this.selectedGameweekNumber > 0) {
+          this.selectedGameweekChange.emit(this.selectedGameweekNumber);
+        }
       },
       err => {
         console.log(err);

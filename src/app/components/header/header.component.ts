@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   authData: AuthData;
   userSub: Subscription;
+  roles: String[];
 
   constructor(
     private authService: AuthService
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.user.subscribe(
       res => {
         this.authData = res;
+        this.setRoles();
       }
     );
   }
@@ -30,6 +32,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+  }
+
+  setRoles() {
+    if(!this.authData.roles) {
+      this.roles = [];
+    } else {
+      this.roles = this.authData.roles.split(',');
+    }
+  }
+
+  isAdmin() {
+    if(this.roles.includes('ADMIN')) {
+      return true;
+    }
+    return false;
   }
 
 }

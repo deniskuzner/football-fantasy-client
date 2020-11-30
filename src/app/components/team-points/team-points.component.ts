@@ -31,13 +31,13 @@ export class TeamPointsComponent implements OnInit {
   ngOnInit(): void {
     this.authData = this.authService.getAuthData();
     this.getTeam();
-    this.getCurrentGameweek();
   }
 
   getTeam() {
     this.teamService.getTeamById(this.authData.teamId).subscribe(
       res => {
         this.team = res;
+        this.getCurrentGameweek();
       },
       err => {
         console.log(err);

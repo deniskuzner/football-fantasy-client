@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private clubService: ClubService,
     private userService: UserService,
-    private _snackBar: MatSnackBar 
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
   }
 
   selectClub(index: number) {
-    if(this.selectedClub == index) {
+    if (this.selectedClub == index) {
       this.selectedClub = null;
       return;
     }
@@ -58,9 +58,17 @@ export class RegisterComponent implements OnInit {
         this.completedRegistration.emit();
       },
       err => {
-        if(err.error.includes("USERNAME_ALREADY_EXISTS")) {
-          stepper.selectedIndex = 0;
-          this.openSnackBar("Error! Username is already taken!");
+        if (err.status == 403) {
+          this.openSnackBar('Forbidden!');
+          return;
+        }
+        if (typeof err.error == 'string') {
+          if (err.error.includes("USERNAME_ALREADY_EXISTS")) {
+            stepper.selectedIndex = 0;
+            this.openSnackBar("Error! Username is already taken!");
+          }
+        } else {
+          this.openSnackBar('Error!');
         }
       }
     );

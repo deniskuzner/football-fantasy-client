@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { AppConstants } from '../constants/app-constants';
 import { BehaviorSubject } from 'rxjs';
@@ -7,9 +7,10 @@ import { tap } from 'rxjs/operators';
 import { Team } from '../models/team.model';
 
 export interface AuthData {
+  token: string;
   id: number;
   teamId: number;
-  // role: string;
+  roles: string;
 }
 
 @Injectable({
@@ -23,7 +24,10 @@ export class AuthService {
 
   login(credentials: { username: string; password: string }) {
     return this.http
-      .post<User>(AppConstants.serverUrl + '/users/login', credentials)
+      .post(AppConstants.serverUrl + '/login', credentials, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }), 
+        observe: 'response'
+      })
       .pipe(
         tap(
           res => {
@@ -35,27 +39,30 @@ export class AuthService {
   }
   
   logout() {
+    localStorage.removeItem('token');
     localStorage.removeItem('id');
     localStorage.removeItem('teamId');
+    localStorage.removeItem('roles');
     this.user.next(this.getAuthData());
   }
 
-  //DODATI KASNIJE I ROLE
   getAuthData() {
     return {
+      token: localStorage.getItem('token'),
       id: +localStorage.getItem('id'),
-      teamId: +localStorage.getItem('teamId')
-      // role: localStorage.getItem('role'),
+      teamId: +localStorage.getItem('teamId'),
+      roles: localStorage.getItem('roles')
     }
   }
 
-  //DODATI KASNIJE I ROLE
-  handleAuthData(user: User) {
-    localStorage.setItem('id', String(user.id));
-    if(user.team){
-      localStorage.setItem('teamId', String(user.team.id));
+  handleAuthData(res) {
+    const token = res.headers.get('authorization');
+    localStorage.setItem('token', token);
+    localStorage.setItem('id', String(res.body.userId));
+    if(res.body.teamId){
+      localStorage.setItem('teamId', String(res.body.teamId));
     }
-    //localStorage.setItem('role', user.role);
+    localStorage.setItem('roles', res.body.roles);
   }
 
   setTeam(team: Team) {
@@ -69,6 +76,19 @@ export class AuthService {
 
   isTeamCreated() {
     return !!localStorage.getItem('teamId');
+  }
+
+  isAdmin() {
+    let roles = localStorage.getItem('roles');
+    if(!roles) {
+      return false;
+    } else {
+      if(roles.split(',').includes('ADMIN')) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
 }
