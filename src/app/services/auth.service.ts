@@ -5,6 +5,7 @@ import { AppConstants } from '../constants/app-constants';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Team } from '../models/team.model';
+import { Router } from '@angular/router';
 
 export interface AuthData {
   token: string;
@@ -20,7 +21,10 @@ export class AuthService {
 
   user = new BehaviorSubject<AuthData>(this.getAuthData());
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   login(credentials: { username: string; password: string }) {
     return this.http
@@ -44,6 +48,7 @@ export class AuthService {
     localStorage.removeItem('teamId');
     localStorage.removeItem('roles');
     this.user.next(this.getAuthData());
+    this.router.navigate(['/']);
   }
 
   getAuthData() {
