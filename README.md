@@ -1,6 +1,9 @@
-# FootballFantasyClient
+# Football Fantasy Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.7.
+Football Fantasy Client application generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.7.
+
+![img1](https://i.ibb.co/5TxQKZx/football-fantasy-client.jpg)
+![img1](https://i.ibb.co/23CwBCG/football-fantasy-client-2.jpg)
 
 ## Development server
 
